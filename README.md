@@ -1,10 +1,13 @@
-# [ServUO]
+# [Dragons Legacy Alpha 1.0a]
 
-Servuo is a community driven Ultima Online server emulator written in c#.
+This is a complete code from ServUO latest Repo Dated Dec. 13th 2016, I have also went and added in the .Net 4.6.1 Framework support.
 
+All rights to the Original Code will be left in tacked, All modifications have been done by myself with the help of scripts i have found on ServUO as well as other sites, But have been fixed to work properly with the Latest Repo of ServUO.
 
-### Version
-Publish 54
+Use at own Risk... If you fix/change bugs please post them
+
+Thank you
+Veldian The Dragon Lord 
 
 ### Installation
 
