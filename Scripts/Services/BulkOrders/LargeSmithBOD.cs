@@ -8,15 +8,22 @@ namespace Server.Engines.BulkOrders
     {
         public static double[] m_BlacksmithMaterialChances = new double[]
         {
-            0.501953125, // None
-            0.250000000, // Dull Copper
-            0.125000000, // Shadow Iron
-            0.062500000, // Copper
-            0.031250000, // Bronze
-            0.015625000, // Gold
-            0.007812500, // Agapite
-            0.003906250, // Verite
-            0.001953125  // Valorite
+				//daat99 OWLTR start - custom resources
+				0.120, // None
+				0.100, // Dull Copper
+				0.090, // Shadow Iron
+				0.090, // Copper
+				0.080, // Bronze
+				0.080, // Gold
+				0.070, // Agapite
+				0.070, // Verite
+				0.060, // Valorite
+				0.060, // Blaze
+				0.050, // Ice
+				0.050, // Toxic
+				0.040, // Electrum
+				0.040  // Platinum
+				//daat99 OWLTR end - custom resources
         };
         [Constructable]
         public LargeSmithBOD()

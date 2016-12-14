@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Server;
 using Server.Gumps;
 using Server.Items;
 using Server.Mobiles;
@@ -307,42 +308,37 @@ namespace Server.Engines.BulkOrders
             switch ( f.Material )
             {
                 default:
-                case 0:
-                    return true;
-                case 1:
-                    return (deedType == BODType.Smith);
-                case 2:
-                    return (deedType == BODType.Tailor);
+                case 0: return true;
+                case 1: return (deedType == BODType.Smith);
+                case 2: return (deedType == BODType.Tailor);
 
-                case 3:
-                    return (mat == BulkMaterialType.None && BGTClassifier.Classify(deedType, itemType) == BulkGenericType.Iron);
-                case 4:
-                    return (mat == BulkMaterialType.DullCopper);
-                case 5:
-                    return (mat == BulkMaterialType.ShadowIron);
-                case 6:
-                    return (mat == BulkMaterialType.Copper);
-                case 7:
-                    return (mat == BulkMaterialType.Bronze);
-                case 8:
-                    return (mat == BulkMaterialType.Gold);
-                case 9:
-                    return (mat == BulkMaterialType.Agapite);
-                case 10:
-                    return (mat == BulkMaterialType.Verite);
-                case 11:
-                    return (mat == BulkMaterialType.Valorite);
+                case 3: return (mat == BulkMaterialType.None && BGTClassifier.Classify(deedType, itemType) == BulkGenericType.Iron);
+                case 4: return (mat == BulkMaterialType.DullCopper);
+                case 5: return (mat == BulkMaterialType.ShadowIron);
+                case 6: return (mat == BulkMaterialType.Copper);
+                case 7: return (mat == BulkMaterialType.Bronze);
+                case 8: return (mat == BulkMaterialType.Gold);
+                case 9: return (mat == BulkMaterialType.Agapite);
+                case 10: return (mat == BulkMaterialType.Verite);
+                case 11: return (mat == BulkMaterialType.Valorite);
+                case 12: return (mat == BulkMaterialType.Blaze);
+                case 13: return (mat == BulkMaterialType.Ice);
+                case 14: return (mat == BulkMaterialType.Toxic);
+                case 15: return (mat == BulkMaterialType.Electrum);
+                case 16: return (mat == BulkMaterialType.Platinum);
 
-                case 12:
-                    return (mat == BulkMaterialType.None && BGTClassifier.Classify(deedType, itemType) == BulkGenericType.Cloth);
-                case 13:
-                    return (mat == BulkMaterialType.None && BGTClassifier.Classify(deedType, itemType) == BulkGenericType.Leather);
-                case 14:
-                    return (mat == BulkMaterialType.Spined);
-                case 15:
-                    return (mat == BulkMaterialType.Horned);
-                case 16:
-                    return (mat == BulkMaterialType.Barbed);
+                case 17: return (mat == BulkMaterialType.None && BGTClassifier.Classify(deedType, itemType) == BulkGenericType.Cloth);
+                case 18: return (mat == BulkMaterialType.None && BGTClassifier.Classify(deedType, itemType) == BulkGenericType.Leather);
+                case 19: return (mat == BulkMaterialType.Spined);
+                case 20: return (mat == BulkMaterialType.Horned);
+                case 21: return (mat == BulkMaterialType.Barbed);
+                case 22: return (mat == BulkMaterialType.Polar);
+                case 23: return (mat == BulkMaterialType.Synthetic);
+                case 24: return (mat == BulkMaterialType.BlazeL);
+                case 25: return (mat == BulkMaterialType.Daemonic);
+                case 26: return (mat == BulkMaterialType.Shadow);
+                case 27: return (mat == BulkMaterialType.Frost);
+                case 28: return (mat == BulkMaterialType.Ethereal);
             }
         }
 
@@ -473,6 +469,13 @@ namespace Server.Engines.BulkOrders
                                 return 1018338;
                             case BulkMaterialType.Valorite:
                                 return 1018339;
+                            //daat9 OWLTR start - custom resources
+                            case BulkMaterialType.Blaze: return "Blaze";
+                            case BulkMaterialType.Ice: return "Ice";
+                            case BulkMaterialType.Toxic: return "Toxic";
+                            case BulkMaterialType.Electrum: return "Electrum";
+                            case BulkMaterialType.Platinum: return "Platinum";
+                            //daat9 OWLTR end - custom resources
                         }
 
                         break;
@@ -494,6 +497,15 @@ namespace Server.Engines.BulkOrders
                                 return 1062237;
                             case BulkMaterialType.Barbed:
                                 return 1062238;
+                            //daat9 OWLTR start - custom resources
+                            case BulkMaterialType.Polar: return "Polar";
+                            case BulkMaterialType.Synthetic: return "Synthetic";
+                            case BulkMaterialType.BlazeL: return "Blaze";
+                            case BulkMaterialType.Daemonic: return "Daemonic";
+                            case BulkMaterialType.Shadow: return "Shadow";
+                            case BulkMaterialType.Frost: return "Frost";
+                            case BulkMaterialType.Ethereal: return "Ethereal";
+                            //daat9 OWLTR end - custom resources
                         }
 
                         break;

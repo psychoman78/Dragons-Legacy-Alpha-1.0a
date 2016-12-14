@@ -1,7 +1,10 @@
 using System;
+using Server.Items;
+using Server.Network;
+using Server.Targeting;
 using Server.Engines.Craft;
 using Server.Mobiles;
-using Server.Targeting;
+using daat99;
 
 namespace Server.Items
 {
@@ -86,6 +89,23 @@ namespace Server.Items
                             case 8:
                                 info = OreInfo.Valorite;
                                 break;
+                            //daat99 OWLTR start - custom ores
+                            case 9: 
+								info = OreInfo.Blaze;
+								break;
+                            case 10: 
+								info = OreInfo.Ice; 
+								break;
+                            case 11: 
+								info = OreInfo.Toxic; 
+								break;
+                            case 12: 
+								info = OreInfo.Electrum; 
+								break;
+                            case 13: 
+								info = OreInfo.Platinum; 
+								break;
+                            //daat99 OWLTR end - custom ores
                             default:
                                 info = null;
                                 break;
@@ -177,7 +197,9 @@ namespace Server.Items
             else if (from.InRange(this.GetWorldLocation(), 2))
             {
                 from.SendLocalizedMessage(501971); // Select the forge on which to smelt the ore, or another pile of ore with which to combine it.
-                from.Target = new InternalTarget(this);
+                //daat99 OWLTR start - mule forge
+                from.Target = new InternalTarget(this, from);
+                //daat99 OWLTR end - mule forge
             }
             else
             {
@@ -189,9 +211,13 @@ namespace Server.Items
         {
             private readonly BaseOre m_Ore;
 
-            public InternalTarget(BaseOre ore)
+            //daat99 OWLTR start - mule forge
+            private Mobile player;
+            public InternalTarget(BaseOre ore, Mobile from)
                 : base(2, false, TargetFlags.None)
             {
+                player = from;
+                //daat99 OWLTR end - mule forge
                 this.m_Ore = ore;
             }
 
@@ -202,7 +228,23 @@ namespace Server.Items
 
                 if (obj.GetType().IsDefined(typeof(ForgeAttribute), false))
                     return true;
-
+                //daat99 OWLTR start - mule-forge
+                if (player != null && player as PlayerMobile != null && OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.MULE_FORGE))
+                {
+                    if (obj is Mule)
+                    {
+                        Mule mule = obj as Mule;
+                        if (mule.ControlMaster != player)
+                        {
+                            player.SendMessage(53, "You don't own that mule!!!");
+                            player.PlaySound(1074); //no
+                            return false;
+                        }
+                        else
+                            return true;
+                    }
+                }
+                //daat99 OWLTR end - mule-forge
                 int itemID = 0;
 
                 if (obj is Item)
@@ -236,7 +278,9 @@ namespace Server.Items
                     else if (this.m_Ore == ore)
                     {
                         from.SendLocalizedMessage(501972); // Select another pile or ore with which to combine this.
-                        from.Target = new InternalTarget(ore);
+                        //daat99 OWLTR start - mule forge
+                        from.Target = new InternalTarget(ore, from);
+                        //daat99 OWLTR end - mule forge
                         return;
                     }
                     else if (ore.Resource != this.m_Ore.Resource)
@@ -326,30 +370,21 @@ namespace Server.Items
                         default:
                             difficulty = 50.0;
                             break;
-                        case CraftResource.DullCopper:
-                            difficulty = 65.0;
-                            break;
-                        case CraftResource.ShadowIron:
-                            difficulty = 70.0;
-                            break;
-                        case CraftResource.Copper:
-                            difficulty = 75.0;
-                            break;
-                        case CraftResource.Bronze:
-                            difficulty = 80.0;
-                            break;
-                        case CraftResource.Gold:
-                            difficulty = 85.0;
-                            break;
-                        case CraftResource.Agapite:
-                            difficulty = 90.0;
-                            break;
-                        case CraftResource.Verite:
-                            difficulty = 95.0;
-                            break;
-                        case CraftResource.Valorite:
-                            difficulty = 99.0;
-                            break;
+                        //daat99 OWLTR start - custom ores difficulty
+                        case CraftResource.DullCopper: difficulty = 60.0; break;
+                        case CraftResource.ShadowIron: difficulty = 65.0; break;
+                        case CraftResource.Copper: difficulty = 70.0; break;
+                        case CraftResource.Bronze: difficulty = 75.0; break;
+                        case CraftResource.Gold: difficulty = 80.0; break;
+                        case CraftResource.Agapite: difficulty = 85.0; break;
+                        case CraftResource.Verite: difficulty = 90.0; break;
+                        case CraftResource.Valorite: difficulty = 95.0; break;
+                        case CraftResource.Blaze: difficulty = 100.0; break;
+                        case CraftResource.Ice: difficulty = 105.0; break;
+                        case CraftResource.Toxic: difficulty = 110.0; break;
+                        case CraftResource.Electrum: difficulty = 115.0; break;
+                        case CraftResource.Platinum: difficulty = 119.0; break;
+                        //daat99 OWLTR end - custom ores difficulty
                     }
 
                     double minSkill = difficulty - 25.0;
@@ -447,6 +482,7 @@ namespace Server.Items
         public IronOre(int amount)
             : base(CraftResource.Iron, amount)
         {
+            Name = "Iron Ore"; //daat99 OWLTR - custom resource name
         }
 
         public IronOre(bool fixedSize)
@@ -495,6 +531,7 @@ namespace Server.Items
         public DullCopperOre(int amount)
             : base(CraftResource.DullCopper, amount)
         {
+            Name = "Dull Copper Ore"; //daat99 OWLTR - custom resource name
         }
 
         public DullCopperOre(Serial serial)
@@ -536,6 +573,7 @@ namespace Server.Items
         public ShadowIronOre(int amount)
             : base(CraftResource.ShadowIron, amount)
         {
+            Name = "Shadow Iron Ore"; //daat99 OWLTR - custom resource name
         }
 
         public ShadowIronOre(Serial serial)
@@ -577,6 +615,7 @@ namespace Server.Items
         public CopperOre(int amount)
             : base(CraftResource.Copper, amount)
         {
+            Name = "Copper Ore"; //daat99 OWLTR - custom resource name
         }
 
         public CopperOre(Serial serial)
@@ -618,6 +657,7 @@ namespace Server.Items
         public BronzeOre(int amount)
             : base(CraftResource.Bronze, amount)
         {
+            Name = "Bronze Ore"; //daat99 OWLTR - custom resource name
         }
 
         public BronzeOre(Serial serial)
@@ -659,6 +699,7 @@ namespace Server.Items
         public GoldOre(int amount)
             : base(CraftResource.Gold, amount)
         {
+            Name = "Golden Ore"; //daat99 OWLTR - custom resource name
         }
 
         public GoldOre(Serial serial)
@@ -700,6 +741,7 @@ namespace Server.Items
         public AgapiteOre(int amount)
             : base(CraftResource.Agapite, amount)
         {
+            Name = "Agapite Ore"; //daat99 OWLTR - custom resource name
         }
 
         public AgapiteOre(Serial serial)
@@ -741,6 +783,7 @@ namespace Server.Items
         public VeriteOre(int amount)
             : base(CraftResource.Verite, amount)
         {
+            Name = "Verite Ore"; //daat99 OWLTR - custom resource name
         }
 
         public VeriteOre(Serial serial)
@@ -782,6 +825,7 @@ namespace Server.Items
         public ValoriteOre(int amount)
             : base(CraftResource.Valorite, amount)
         {
+            Name = "Valorite Ore"; //daat99 OWLTR - custom resource name
         }
 
         public ValoriteOre(Serial serial)
@@ -806,6 +850,202 @@ namespace Server.Items
         public override BaseIngot GetIngot()
         {
             return new ValoriteIngot();
+        }
+    }
+
+    public class BlazeOre : BaseOre
+    {
+        [Constructable]
+        public BlazeOre()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public BlazeOre(int amount)
+            : base(CraftResource.Blaze, amount)
+        {
+            Name = "Blaze Ore"; //daat99 OWLTR - custom resource name
+        }
+
+        public BlazeOre(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override BaseIngot GetIngot()
+        {
+            return new BlazeIngot();
+        }
+    }
+    public class IceOre : BaseOre
+    {
+        [Constructable]
+        public IceOre()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public IceOre(int amount)
+            : base(CraftResource.Ice, amount)
+        {
+            Name = "Ice Ore"; //daat99 OWLTR - custom resource name
+        }
+
+        public IceOre(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override BaseIngot GetIngot()
+        {
+            return new IceIngot();
+        }
+    }
+    public class ToxicOre : BaseOre
+    {
+        [Constructable]
+        public ToxicOre()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public ToxicOre(int amount)
+            : base(CraftResource.Toxic, amount)
+        {
+            Name = "Toxic Ore"; //daat99 OWLTR - custom resource name
+        }
+
+        public ToxicOre(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override BaseIngot GetIngot()
+        {
+            return new ToxicIngot();
+        }
+    }
+    public class ElectrumOre : BaseOre
+    {
+        [Constructable]
+        public ElectrumOre()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public ElectrumOre(int amount)
+            : base(CraftResource.Electrum, amount)
+        {
+            Name = "Electrum Ore"; //daat99 OWLTR - custom resource name
+        }
+
+        public ElectrumOre(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override BaseIngot GetIngot()
+        {
+            return new ElectrumIngot();
+        }
+    }
+    public class PlatinumOre : BaseOre
+    {
+        [Constructable]
+        public PlatinumOre()
+            : this(1)
+        {
+        }
+
+        [Constructable]
+        public PlatinumOre(int amount)
+            : base(CraftResource.Platinum, amount)
+        {
+            Name = "Platinum Ore"; //daat99 OWLTR - custom resource name
+        }
+
+        public PlatinumOre(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+
+        public override BaseIngot GetIngot()
+        {
+            return new PlatinumIngot();
         }
     }
 }

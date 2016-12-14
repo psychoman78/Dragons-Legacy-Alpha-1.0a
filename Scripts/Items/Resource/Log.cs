@@ -1,7 +1,9 @@
 using System;
+using Server.Items;
 
 namespace Server.Items
 {
+	//daat99 OWLTR start - added base log class
 	[FlipableAttribute( 0x1bdd, 0x1be0 )]
 	public class BaseLog : Item, ICommodity, IAxe
 	{
@@ -16,6 +18,7 @@ namespace Server.Items
 
 		int ICommodity.DescriptionNumber { get { return CraftResources.IsStandard( m_Resource ) ? LabelNumber : 1075062 + ( (int)m_Resource - (int)CraftResource.RegularWood ); } }
 		bool ICommodity.IsDeedable { get { return true; } }
+
 		[Constructable]
 		public BaseLog() : this( 1 )
 		{
@@ -71,7 +74,7 @@ namespace Server.Items
 		}
 
 		public static bool UpdatingBaseLogClass;
-		public override void Deserialize(GenericReader reader)
+		public override void Deserialize( GenericReader reader )
 		{
 			base.Deserialize( reader );
 
@@ -79,7 +82,7 @@ namespace Server.Items
 
 			if (version == 1)
 				UpdatingBaseLogClass = true;
-			m_Resource = (CraftResource)reader.ReadInt();
+						m_Resource = (CraftResource)reader.ReadInt();
 
 			if ( version == 0 )
 				m_Resource = CraftResource.RegularWood;
@@ -89,7 +92,7 @@ namespace Server.Items
 		{
 			if ( Deleted || !from.CanSee( this ) ) 
 				return false;
-			if ( from.Skills.Carpentry.Value < skill &&
+			else if ( from.Skills.Carpentry.Value < skill &&
 				from.Skills.Lumberjacking.Value < skill )
 			{
 				item.Delete();
@@ -152,8 +155,9 @@ namespace Server.Items
 			return true;
 		}
 	}
+	//daat99 OWLTR end - adding base log class
 
-    public class HeartwoodLog : BaseLog
+	public class HeartwoodLog : BaseLog
     {
         [Constructable]
         public HeartwoodLog()
@@ -404,4 +408,216 @@ namespace Server.Items
             return true;
         }
     }
+
+	//daat99 OWLTR start - custom woods
+	public class EbonyLog : BaseLog
+	{
+		[Constructable]
+		public EbonyLog()
+			: this( 1 )
+		{
+		}
+
+		[Constructable]
+		public EbonyLog( int amount )
+			: base( CraftResource.Ebony, amount )
+		{
+		}
+
+		public EbonyLog( Serial serial )
+			: base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int)0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+
+		public override bool Axe( Mobile from, BaseAxe axe )
+		{
+			if ( !TryCreateBoards( from , 95, new EbonyBoard() ) )
+				return false;
+
+			return true;
+		}
+	}
+	
+	public class BambooLog : BaseLog
+	{
+		[Constructable]
+		public BambooLog()
+			: this( 1 )
+		{
+		}
+
+		[Constructable]
+		public BambooLog( int amount )
+			: base( CraftResource.Bamboo, amount )
+		{
+		}
+
+		public BambooLog( Serial serial )
+			: base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int)0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+
+		public override bool Axe( Mobile from, BaseAxe axe )
+		{
+			if ( !TryCreateBoards( from , 95, new BambooBoard() ) )
+				return false;
+
+			return true;
+		}
+	}
+	
+	public class PurpleHeartLog : BaseLog
+	{
+		[Constructable]
+		public PurpleHeartLog()
+			: this( 1 )
+		{
+		}
+
+		[Constructable]
+		public PurpleHeartLog( int amount )
+			: base( CraftResource.PurpleHeart, amount )
+		{
+		}
+
+		public PurpleHeartLog( Serial serial )
+			: base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int)0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+
+		public override bool Axe( Mobile from, BaseAxe axe )
+		{
+			if ( !TryCreateBoards( from , 95, new PurpleHeartBoard() ) )
+				return false;
+
+			return true;
+		}
+	}
+	
+	public class RedwoodLog : BaseLog
+	{
+		[Constructable]
+		public RedwoodLog()
+			: this( 1 )
+		{
+		}
+
+		[Constructable]
+		public RedwoodLog( int amount )
+			: base( CraftResource.Redwood, amount )
+		{
+		}
+
+		public RedwoodLog( Serial serial )
+			: base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int)0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+
+		public override bool Axe( Mobile from, BaseAxe axe )
+		{
+			if ( !TryCreateBoards( from , 95, new RedwoodBoard() ) )
+				return false;
+
+			return true;
+		}
+	}
+	
+	public class PetrifiedLog : BaseLog
+	{
+		[Constructable]
+		public PetrifiedLog()
+			: this( 1 )
+		{
+		}
+
+		[Constructable]
+		public PetrifiedLog( int amount )
+			: base( CraftResource.Petrified, amount )
+		{
+		}
+
+		public PetrifiedLog( Serial serial )
+			: base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int)0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+
+		public override bool Axe( Mobile from, BaseAxe axe )
+		{
+			if ( !TryCreateBoards( from , 95, new PetrifiedBoard() ) )
+				return false;
+
+			return true;
+		}
+	}
+	//daat99 OWLTR end - custom woods
 }

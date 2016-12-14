@@ -267,6 +267,10 @@ namespace Server.Engines.Craft
             this.MarkOption = true;
             this.Repair = Core.AOS;
 			this.CanEnhance = Core.ML;
+
+            //daat99 OWLTR start - custom wood
+            daat99.ResourceHelper.AddWoodResources(this);
+            //daat99 OWLTR end - custom wood 
         }
     }
 }

@@ -38,6 +38,10 @@ namespace Server.Engines.Harvest
                 this.m_ChanceToFallback = value;
             }
         }
+        //daat99 OWLTR start - custom harvesting
+        private bool b_IsProspected = false;
+        public bool IsProspected { get { return b_IsProspected; } set { b_IsProspected = value; } }
+        //daat99 OWLTR end - custom harvesting
         public HarvestResource PrimaryResource
         {
             get

@@ -7,10 +7,19 @@ namespace Server.Engines.BulkOrders
     {
         public static double[] m_TailoringMaterialChances = new double[]
         {
-            0.857421875, // None
-            0.125000000, // Spined
-            0.015625000, // Horned
-            0.001953125  // Barbed
+				//daat99 OWLTR start - custom leather
+				0.15, // None
+				0.13, // Spined
+				0.12, // Horned
+				0.11, // Barbed
+				0.10, // Polar
+				0.09, // Synthetic
+				0.08, // Blaze
+				0.07, // Daemonic
+				0.06, // Shadow
+				0.05, // Frost
+				0.04, // Ethereal
+				//daat99 OWLTR end - custom leather
         };
         [Constructable]
         public LargeTailorBOD()

@@ -3,6 +3,7 @@ using Server.Factions;
 using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
+using daat99;
 
 namespace Server.Engines.Craft
 {
@@ -566,6 +567,127 @@ namespace Server.Engines.Craft
             this.AddRes(index, typeof(IronIngot), 1044036, 10, 1044037);
             #endregion
 
+            //daat99 OWLTR start - custom craftables
+            #region Customs
+
+            //bank hive
+            index = AddCraft(typeof(BankHive), "Customs", "Bank Hive", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Carpentry, 100.0, 150.0);
+            AddSkill(index, SkillName.Blacksmith, 100.0, 150.0);
+            AddSkill(index, SkillName.Tailoring, 100.0, 150.0);
+            AddRes(index, typeof(Gold), "Gold", 6000, "You need more Gold");
+            AddRes(index, typeof(PlatinumIngot), "Platinum Ingots", 100, "You need more Platinum Ingots");
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 20, "You need more Petrified Boards");
+
+            //mobile forge
+            index = AddCraft(typeof(MobileForge), "Customs", "Mobile Forge", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Blacksmith, 100.0, 150.0);
+            AddSkill(index, SkillName.Mining, 100.0, 150.0);
+            AddRes(index, typeof(PlatinumIngot), "Platinum Ingots", 150, "You need more Platinum Ingots");
+            AddRes(index, typeof(PlatinumGranite), "Platinum Granite", 20, "You need more Platinum Granite");
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 50, "You need more Petrified Boards");
+
+            //Tool Storage
+            index = AddCraft(typeof(ToolStorageDeed), "Customs", "Tool Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Carpentry, 100.0, 150.0);
+            AddSkill(index, SkillName.Blacksmith, 100.0, 150.0);
+            AddSkill(index, SkillName.Tailoring, 100.0, 150.0);
+            AddRes(index, typeof(PlatinumIngot), "Platinum Ingots", 100, "You need more Platinum Ingots");
+            AddRes(index, typeof(SpinedLeather), "Spined Leather", 100, "You need more Spined Leather");
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 20, "You need more Petrified Boards");
+
+            //Runic Storage
+            index = AddCraft(typeof(RunicStorageDeed), "Customs", "Runic Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Carpentry, 100.0, 150.0);
+            AddSkill(index, SkillName.Blacksmith, 100.0, 150.0);
+            AddSkill(index, SkillName.Tailoring, 100.0, 150.0);
+            AddRes(index, typeof(PlatinumIngot), "Platinum Ingots", 100, "You need more Platinum Ingots");
+            AddRes(index, typeof(SpinedLeather), "Spined Leather", 100, "You need more Spined Leather");
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 20, "You need more Petrified Boards");
+
+            // Alchemist Storage
+            index = AddCraft(typeof(AlchemistStorageDeed), "Customs", "Alchemist Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Alchemy, 100.0, 150.0);
+            AddSkill(index, SkillName.Carpentry, 100.0, 150.0);
+            AddSkill(index, SkillName.ItemID, 100.0, 150.0);
+            AddRes(index, typeof(Bottle), "Empty Bottles", 150, "You need more Empty Bottles");
+            AddRes(index, typeof(BlazeIngot), "Blaze Ingots", 180, "You need more Blaze Ingots");
+            AddRes(index, typeof(EbonyBoard), "Ebony Boards", 345, "You need more Ebony Boards");
+
+
+            // Bards Storage
+            index = AddCraft(typeof(BardStorageDeed), "Customs", "Bard Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Discordance, 100.0, 150.0);
+            AddSkill(index, SkillName.Provocation, 100.0, 150.0);
+            AddRes(index, typeof(OilCloth), "Oil Cloth", 200, "You need more Oil Cloth");
+            AddRes(index, typeof(DaemonicLeather), "Daemonic Leather", 100, "You need more Daemonic Leather");
+            AddRes(index, typeof(BambooBoard), "Bamboo Boards", 100, "You need more Bamboo Boards");
+
+            // Miner Storage				
+            index = AddCraft(typeof(MinerStorageDeed), "Customs", "Miner Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Blacksmith, 100.0, 150.0);
+            AddSkill(index, SkillName.Mining, 100.0, 150.0);
+            AddRes(index, typeof(PlatinumIngot), "Platinum Ingots", 150, "You need more Platinum Ingots");
+            AddRes(index, typeof(PlatinumGranite), "Platinum Granite", 25, "You need more Platinum Granite");
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 50, "You need more Petrified Boards");
+
+            // Scriber Storage
+            index = AddCraft(typeof(ScriberStorageDeed), "Customs", "Scriber Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Magery, 100.0, 150.0);
+            AddSkill(index, SkillName.Inscribe, 100.0, 150.0);
+            AddRes(index, typeof(BlankScroll), "Blank Scrolls", 150, "You need more Blank Scrolls");
+            AddRes(index, typeof(FrostLeather), "Frost Leather", 50, "You need more Frost Leather");
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 50, "You need more Petrified Boards");
+
+            // Mage Storage
+            index = AddCraft(typeof(MageStorageDeed), "Customs", "Mage Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Magery, 100.0, 150.0);
+            AddSkill(index, SkillName.Necromancy, 100.0, 150.0);
+            AddRes(index, typeof(SpringWater), "Spring Water", 10, "You need more Spring Water"); // this line use druidic reagent, if you have it then remove the // from //AddRes
+            AddRes(index, typeof(BlankScroll), "Blank Scrolls", 50, "You need more Blank Scrolls");
+            AddRes(index, typeof(Sand), "Sand", 15, "You need more Sand");
+
+            // Tailor Storage
+            index = AddCraft(typeof(TailorStorageDeed), "Customs", "Tailor Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Tailoring, 100.0, 150.0);
+            AddRes(index, typeof(Cloth), "Cloth", 125, "You need more Cloth");
+            AddRes(index, typeof(BarbedLeather), "Barbed Leather", 150, "You need more Barbed Leather");
+            AddRes(index, typeof(OilCloth), "Oil Cloth", 20, "You need more Oil Cloth");
+
+            // Woodworker Storage				
+            index = AddCraft(typeof(WoodworkerStorageDeed), "Customs", "Woodworker Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Carpentry, 100.0, 150.0);
+            AddSkill(index, SkillName.Lumberjacking, 100.0, 150.0);
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 250, "You need more Petrified Boards");
+            AddRes(index, typeof(Shaft), "Shafts", 150, "You need more Shafts");
+            AddRes(index, typeof(FertileDirt), "Fertile Dirt", 50, "You need more Fertile Dirt");
+
+            // MLResource Storage				
+            index = AddCraft(typeof(MLResourceStorageDeed), "Customs", "MLResource Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Blacksmith, 100.0, 150.0);
+            AddSkill(index, SkillName.Mining, 100.0, 150.0);
+            AddRes(index, typeof(PlatinumIngot), "Platinum Ingots", 150, "You need more Platinum Ingots");
+            AddRes(index, typeof(PlatinumGranite), "Platinum Granite", 25, "You need more Platinum Granite");
+            AddRes(index, typeof(PetrifiedBoard), "Petrified Boards", 50, "You need more Petrified Boards");
+
+            // Gem Storage
+            index = AddCraft(typeof(JewelerStorageDeed), "Customs", "Jeweler Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Mining, 100.0, 150.0);
+            AddSkill(index, SkillName.ItemID, 100.0, 150.0);
+            AddRes(index, typeof(ElectrumIngot), "Electrum Ingots", 150, "You need more Electrum Ingots");
+            AddRes(index, typeof(SyntheticLeather), "Synthetic Leather", 50, "You need more Synthetic Leather");
+            AddRes(index, typeof(EbonyBoard), "Ebony Boards", 50, "You need more Ebony Boards");
+
+            // Cook Storage
+            index = AddCraft(typeof(CookStorageDeed), "Customs", "Cook Storage", 100.0, 150.0, typeof(KeyRing), "KeyRing", 2, "You need more Key Rings");
+            AddSkill(index, SkillName.Mining, 100.0, 150.0);
+            AddSkill(index, SkillName.Cooking, 100.0, 150.0);
+            AddRes(index, typeof(BlazeIngot), "Blaze Ingots", 150, "You need more Blaze Ingots");
+            AddRes(index, typeof(HornedLeather), "Horned Leather", 50, "You need more Horned Leather");
+            AddRes(index, typeof(CopperScales), "Copper Scales", 50, "You need more Copper Scales");
+            //daat99 OWLTR end - custom craftables
+            #endregion Customs
+
             #region Mondain's Legacy Magic Jewlery
             if (Core.ML)
             {
@@ -656,20 +778,9 @@ namespace Server.Engines.Craft
             }               
             #endregion
 
-            // Set the overridable material
-            this.SetSubRes(typeof(IronIngot), 1044022);
-
-            // Add every material you want the player to be able to choose from
-            // This will override the overridable material
-            this.AddSubRes(typeof(IronIngot), 1044022, 00.0, 1044036, 1044267);
-            this.AddSubRes(typeof(DullCopperIngot), 1044023, 65.0, 1044036, 1044268);
-            this.AddSubRes(typeof(ShadowIronIngot), 1044024, 70.0, 1044036, 1044268);
-            this.AddSubRes(typeof(CopperIngot), 1044025, 75.0, 1044036, 1044268);
-            this.AddSubRes(typeof(BronzeIngot), 1044026, 80.0, 1044036, 1044268);
-            this.AddSubRes(typeof(GoldIngot), 1044027, 85.0, 1044036, 1044268);
-            this.AddSubRes(typeof(AgapiteIngot), 1044028, 90.0, 1044036, 1044268);
-            this.AddSubRes(typeof(VeriteIngot), 1044029, 95.0, 1044036, 1044268);
-            this.AddSubRes(typeof(ValoriteIngot), 1044030, 99.0, 1044036, 1044268);
+            //daat99 OWLTR start - custom ores
+            daat99.ResourceHelper.AddMetalResources(this);
+            //daat99 OWLTR end - custom ores
 
             this.MarkOption = true;
             this.Repair = true;

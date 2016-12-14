@@ -1,4 +1,6 @@
 using System;
+using Server;
+using Server.Mobiles; //daat99 OWLTR
 using Server.Gumps;
 using Server.Network;
 
@@ -48,23 +50,15 @@ namespace Server.Engines.BulkOrders
                 this.AddHtmlLocalized(75, 144, 300, 20, 1045141, 0x7FFF, false, false); // All items must be exceptional.
 
             if (deed.Material != BulkMaterialType.None)
-                this.AddHtmlLocalized(75, deed.RequireExceptional ? 168 : 144, 300, 20, GetMaterialNumberFor(deed.Material), 0x7FFF, false, false); // All items must be made with x material.
+                //daat99 OWLTR start - custom resources
+                AddHtml(75, deed.RequireExceptional ? 168 : 144, 400, 25, "<basefont color=#FF0000>All items must be crafted with " + LargeBODGump.GetMaterialStringFor(deed.Material), false, false);
+            //daat99 OWLTR end - custom resources
 
             this.AddButton(125, 192, 4005, 4007, 2, GumpButtonType.Reply, 0);
             this.AddHtmlLocalized(160, 192, 300, 20, 1045154, 0x7FFF, false, false); // Combine this deed with the item requested.
 
             this.AddButton(125, 216, 4005, 4007, 1, GumpButtonType.Reply, 0);
             this.AddHtmlLocalized(160, 216, 120, 20, 1011441, 0x7FFF, false, false); // EXIT
-        }
-
-        public static int GetMaterialNumberFor(BulkMaterialType material)
-        {
-            if (material >= BulkMaterialType.DullCopper && material <= BulkMaterialType.Valorite)
-                return 1045142 + (int)(material - BulkMaterialType.DullCopper);
-            else if (material >= BulkMaterialType.Spined && material <= BulkMaterialType.Barbed)
-                return 1049348 + (int)(material - BulkMaterialType.Spined);
-
-            return 0;
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
@@ -77,6 +71,47 @@ namespace Server.Engines.BulkOrders
                 this.m_From.SendGump(new SmallBODGump(this.m_From, this.m_Deed));
                 this.m_Deed.BeginCombine(this.m_From);
             }
+            //daat99 OWLTR start - bods
+            else if (info.ButtonID >= 3)
+            {
+                bool IsFound = false;
+                IPooledEnumerable eable = m_From.GetMobilesInRange(6);
+                foreach (Mobile vendor in eable)
+                {
+                    switch (info.ButtonID)
+                    {
+                        case 3: IsFound = (vendor is Blacksmith || vendor is Weaponsmith || vendor is Armorer); break;
+                        case 4: IsFound = (vendor is Tailor || vendor is Weaver); break;
+                        case 5: IsFound = (vendor is Carpenter); break;
+                        case 6: IsFound = (vendor is Bowyer); break;
+                    }
+                    if (IsFound == true)
+                        break;
+                }
+                if (IsFound == false)
+                    switch (info.ButtonID)
+                    {
+                        case 3: m_From.SendMessage("You must be near a Blacksmith, Weaponsmith or Armorer to claim that."); break;
+                        case 4: m_From.SendMessage("You must be near a Tailor or Weaver to claim that."); break;
+                        case 5: m_From.SendMessage("You must be near a Carpenter to claim that."); break;
+                        case 6: m_From.SendMessage("You must be near a Bowyer to claim that."); break;
+                    }
+                else
+                    daat99.daat99.ClaimBods(m_From, m_Deed);
+            }
+            //daat99 OWLTR end - bods
         }
+        //daat99 OWLTR start - REMOVED - make sure nobody calls this!
+        /*
+        public static int GetMaterialNumberFor( BulkMaterialType material )
+        {
+            if ( material >= BulkMaterialType.DullCopper && material <= BulkMaterialType.Valorite )
+                return 1045142 + (int)(material - BulkMaterialType.DullCopper);
+            else if ( material >= BulkMaterialType.Spined && material <= BulkMaterialType.Barbed )
+                return 1049348 + (int)(material - BulkMaterialType.Spined);
+
+            return 0;
+        }*/
+        //daat99 OWLTR end - REMOVED - make sure nobody calls this!
     }
 }

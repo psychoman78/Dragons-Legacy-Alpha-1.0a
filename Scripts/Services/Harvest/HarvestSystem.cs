@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Server;
 using Server.Items;
 using Server.Targeting;
+using daat99;
 
 namespace Server.Engines.Harvest
 {
@@ -149,12 +152,25 @@ namespace Server.Engines.Harvest
 
             Type type = null;
 
-            if (skillBase >= resource.ReqSkill && from.CheckSkill(def.Skill, resource.MinSkill, resource.MaxSkill))
-            {
-                type = this.GetResourceType(from, tool, def, map, loc, resource);
+           	//daat99 OWLTR start - daat99 harvesting
+			type = GetResourceType(from, tool, def, map, loc, resource);
+			bool daatHarvesting = false;
+			if (daat99.OWLTROptionsManager.IsEnabled(daat99.OWLTROptionsManager.OPTIONS_ENUM.DAAT99_MINING) && (type.IsSubclassOf(typeof(BaseOre)) || type.IsSubclassOf(typeof(BaseGranite))))
+				daatHarvesting = true;
+			else if (daat99.OWLTROptionsManager.IsEnabled(daat99.OWLTROptionsManager.OPTIONS_ENUM.DAAT99_LUMBERJACKING) && type.IsSubclassOf(typeof(BaseLog)))
+				daatHarvesting = true;
+			if ( daatHarvesting || (skillBase >= resource.ReqSkill && from.CheckSkill( def.Skill, resource.MinSkill, resource.MaxSkill )) )
+			{
+				type = GetResourceType( from, tool, def, map, loc, resource );
 
-                if (type != null)
-                    type = this.MutateType(type, from, tool, def, map, loc, resource);
+				if ( type != null )
+					type = MutateType( type, from, tool, def, map, loc, resource );
+				if (daatHarvesting)
+				{
+					type = ResourceHelper.GetDaat99HarvestedType(type, bank.Vein.IsProspected, skillValue);
+					from.CheckSkill(def.Skill, 0.0, from.Skills[def.Skill].Cap + (vein.IsProspected?10.0:0.0));
+				}
+				//daat99 OWLTR end - daat99 harvesting
 
                 if (type != null)
                 {
@@ -192,9 +208,51 @@ namespace Server.Engines.Harvest
                         }
 
                         bank.Consume(item.Amount, from);
-						EventSink.InvokeResourceHarvestSuccess(new ResourceHarvestSuccessEventArgs(from, tool,item, this));
-
-
+                        						//daat99 OWLTR start - custom harvesting
+						CraftResource craftResourceFromType = CraftResources.GetFromType(type);
+						string s_Type = "UNKNOWN";
+						int i_Tokens = 1;
+						if (craftResourceFromType != CraftResource.None)
+						{
+							s_Type = CraftResources.GetInfo(craftResourceFromType).Name;
+							i_Tokens = CraftResources.GetIndex(craftResourceFromType) + 1;
+						}
+						if (craftResourceFromType != CraftResource.None && daat99.OWLTROptionsManager.IsEnabled(daat99.OWLTROptionsManager.OPTIONS_ENUM.DAAT99_MINING) && def.Skill == SkillName.Mining && (type.IsSubclassOf(typeof(Server.Items.BaseOre)) || type.IsSubclassOf(typeof(Server.Items.BaseGranite))))
+						{
+							if (type.IsSubclassOf(typeof(Server.Items.BaseOre)))
+							{
+								if ( Give( from, item, def.PlaceAtFeetIfFull ) )
+									from.SendMessage("You dig some {0} ore and placed it in your backpack.", s_Type);
+								else
+								{
+									from.SendMessage("Your backpack is full, so the ore you mined is lost.");
+									item.Delete();
+								}
+							}
+							else
+							{
+								if ( Give( from, item, def.PlaceAtFeetIfFull ) )
+									from.SendMessage("You carefully extract some workable stone from the ore vein.");
+								else
+								{
+									from.SendMessage("Your backpack is full, so the ore you mined is lost.");
+									item.Delete();
+								}
+							}
+						}
+						else if (craftResourceFromType != CraftResource.None && OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.DAAT99_LUMBERJACKING) && def.Skill == SkillName.Lumberjacking)
+						{
+							if ( Give( from, item, def.PlaceAtFeetIfFull ) )
+								from.SendMessage("You placed some {0} logs in your backpack.", s_Type);
+							else
+							{
+								from.SendMessage("You can't place any wood into your backpack!");
+								item.Delete();
+							}
+						}
+						else
+						{
+						//daat99 OWLTR end - custom harvesting
                         if (this.Give(from, item, def.PlaceAtFeetIfFull))
                         {
 							
@@ -205,7 +263,13 @@ namespace Server.Engines.Harvest
                             this.SendPackFullTo(from, item, def, resource);
                             item.Delete();
                         }
-
+						//daat99 OWLTR start - custom harvesting
+						}
+						if (from.Map == Map.Felucca)
+							i_Tokens = (int)(i_Tokens*1.5);
+						if ( OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.HARVEST_GIVE_TOKENS) )
+							TokenSystem.GiveTokensToPlayer(from as Server.Mobiles.PlayerMobile, i_Tokens);
+						//daat99 OWLTR end - custom harvesting
                         BonusHarvestResource bonus = def.GetBonusResource();
 
                         if (bonus != null && bonus.Type != null && skillBase >= bonus.ReqSkill)
@@ -250,11 +314,21 @@ namespace Server.Engines.Harvest
 
             if (type == null)
                 def.SendMessageTo(from, def.FailMessage);
+			//daat99 OWLTR start - custom harvesting
+			if ( this is Lumberjacking || this is Mining )
+				OnHarvestFinished( from, tool, def, vein, bank, resource, toHarvest, type );
+			else
+			//daat99 OWLTR end - custom harvesting
+			OnHarvestFinished( from, tool, def, vein, bank, resource, toHarvest );
+		}
 
-            this.OnHarvestFinished(from, tool, def, vein, bank, resource, toHarvest);
-        }
+		//daat99 OWLTR start - custom resources
+		public virtual void OnHarvestFinished( Mobile from, Item tool, HarvestDefinition def, HarvestVein vein, HarvestBank bank, HarvestResource resource, object harvested, Type type )
+		{
+		}
+		//daat99 OWLTR end - custom resources
 
-        public virtual void OnToolUsed(Mobile from, Item tool, bool caughtSomething)
+		public virtual void OnToolUsed(Mobile from, Item tool, bool caughtSomething)
         {
         }
 

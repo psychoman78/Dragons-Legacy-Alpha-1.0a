@@ -1,4 +1,5 @@
 using System;
+using Server;
 using Server.Engines.Craft;
 
 namespace Server.Items
@@ -81,5 +82,42 @@ namespace Server.Items
 
             int version = reader.ReadInt();
         }
-    }
+
+		//daat99 OWTLR start - runic storage
+		public override Type GetCraftableType()
+		{
+			switch (Resource)
+			{
+				case CraftResource.DullCopper:
+					return typeof(DullCopperRunicHammer);
+				case CraftResource.ShadowIron:
+					return typeof(ShadowIronRunicHammer);
+				case CraftResource.Copper:
+					return typeof(CopperRunicHammer);
+				case CraftResource.Bronze:
+					return typeof(BronzeRunicHammer);
+				case CraftResource.Gold:
+					return typeof(GoldRunicHammer);
+				case CraftResource.Agapite:
+					return typeof(AgapiteRunicHammer);
+				case CraftResource.Verite:
+					return typeof(VeriteRunicHammer);
+				case CraftResource.Valorite:
+					return typeof(ValoriteRunicHammer);
+				case CraftResource.Blaze:
+					return typeof(BlazeRunicHammer);
+				case CraftResource.Ice:
+					return typeof(IceRunicHammer);
+				case CraftResource.Toxic:
+					return typeof(ToxicRunicHammer);
+				case CraftResource.Electrum:
+					return typeof(ElectrumRunicHammer);
+				case CraftResource.Platinum:
+					return typeof(PlatinumRunicHammer);
+				default:
+					return null;
+			}
+		} 
+		//daat99 OWLTR end - runic storage
+	}
 }

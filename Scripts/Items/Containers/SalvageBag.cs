@@ -115,36 +115,10 @@ namespace Server.Items
 
                 if (craftResource.Amount < 2)
                     return false; // Not enough metal to resmelt
-					
-                double difficulty = 0.0;
 
-                switch ( resource )
-                {
-                    case CraftResource.DullCopper:
-                        difficulty = 65.0;
-                        break;
-                    case CraftResource.ShadowIron:
-                        difficulty = 70.0;
-                        break;
-                    case CraftResource.Copper:
-                        difficulty = 75.0;
-                        break;
-                    case CraftResource.Bronze:
-                        difficulty = 80.0;
-                        break;
-                    case CraftResource.Gold:
-                        difficulty = 85.0;
-                        break;
-                    case CraftResource.Agapite:
-                        difficulty = 90.0;
-                        break;
-                    case CraftResource.Verite:
-                        difficulty = 95.0;
-                        break;
-                    case CraftResource.Valorite:
-                        difficulty = 99.0;
-                        break;
-                }
+                //daat99 OWLTR start - smelting difficulty
+                double difficulty = daat99.ResourceHelper.GetMinSkill(resource);
+                //daat99 OWLTR end - smelting difficulty
 
                 Type resourceType = info.ResourceTypes[0];
                 Item ingot = (Item)Activator.CreateInstance(resourceType);
@@ -298,7 +272,9 @@ namespace Server.Items
 			
             foreach (Item i in ((Container)this).FindItemsByType(typeof(Item), true))
             {
-                if ((i is Leather) || (i is Cloth) || (i is SpinedLeather) || (i is HornedLeather) || (i is BarbedLeather) || (i is Bandage) || (i is Bone))
+                //daat99 OWLTR start - custom leathers
+                if ((i is BaseLeather) || (i is Cloth) || (i is Bandage) || (i is Bone))
+                //daat99 OWLTR end - custom leathers
                 {
                     from.AddToBackpack(i);
                 }

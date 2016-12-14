@@ -19,6 +19,7 @@ using Server.Spells.Ninjitsu;
 using Server.Spells.Second;
 using Server.Spells.Spellweaving;
 using Server.Targeting;
+using daat99;
 #endregion
 
 namespace Server.Spells
@@ -370,7 +371,10 @@ namespace Server.Spells
 			{
 				return true;
 			}
-
+            //daat99 OWLTR start - use SpellCastersKey
+            if (OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.USE_STORAGE_RESOURCES) && MasterStorageUtils.ConsumePlayersStorageItems(m_Caster as PlayerMobile, m_Info.Reagents, m_Info.Amounts))
+                return true;
+            //daat99 OWLTR end - use SpellCastersKey
 			return false;
 		}
 

@@ -3380,6 +3380,8 @@ namespace Server.Mobiles
 		private DateTime m_SessionStart;
 		private DateTime m_NextSmithBulkOrder;
 		private DateTime m_NextTailorBulkOrder;
+		private DateTime m_NextFletcherBulkOrder;
+        private DateTime m_NextCarpenterBulkOrder;
 		private DateTime m_SavagePaintExpiration;
 		private SkillName m_Learning = (SkillName)(-1);
 
@@ -3451,6 +3453,44 @@ namespace Server.Mobiles
 				{ }
 			}
 		}
+
+		[CommandProperty(AccessLevel.GameMaster)]
+        public TimeSpan NextFletcherBulkOrder
+        {
+            get
+            {
+                TimeSpan ts = m_NextFletcherBulkOrder - DateTime.Now;
+
+                if (ts < TimeSpan.Zero)
+                    ts = TimeSpan.Zero;
+
+                return ts;
+            }
+            set
+            {
+                try { m_NextFletcherBulkOrder = DateTime.Now + value; }
+                catch { }
+            }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public TimeSpan NextCarpenterBulkOrder
+        {
+            get
+            {
+                TimeSpan ts = m_NextCarpenterBulkOrder - DateTime.Now;
+
+                if (ts < TimeSpan.Zero)
+                    ts = TimeSpan.Zero;
+
+                return ts;
+            }
+            set
+            {
+                try { m_NextCarpenterBulkOrder = DateTime.Now + value; }
+                catch { }
+            }
+        }
 
 		[CommandProperty(AccessLevel.GameMaster)]
 		public DateTime LastEscortTime { get; set; }
@@ -3775,8 +3815,14 @@ namespace Server.Mobiles
 
 			switch (version)
 			{
-                case 32:
-                case 31:
+                case 33:
+					{
+                        NextFletcherBulkOrder = reader.ReadTimeSpan();
+                        NextCarpenterBulkOrder = reader.ReadTimeSpan();
+						goto case 32;
+					}
+                case 32: goto case 31;
+				case 31:
                     {
                         m_ShowGuildAbbreviation = version > 31 ? reader.ReadBool() : false;
                         m_FameKarmaTitle = reader.ReadString();
@@ -4200,7 +4246,10 @@ namespace Server.Mobiles
 
 			base.Serialize(writer);
 
-			writer.Write(32); // version
+			writer.Write(33); // version
+
+			writer.Write(NextFletcherBulkOrder);
+            writer.Write(NextCarpenterBulkOrder);
 
             // Version 31/32 Titles
             writer.Write(m_ShowGuildAbbreviation);

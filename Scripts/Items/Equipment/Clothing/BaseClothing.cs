@@ -1078,93 +1078,21 @@ namespace Server.Items
 
         public override void AddNameProperty(ObjectPropertyList list)
         {
-            int oreType;
+            //daat99 OWLTR start - custom resources
+            string oreType = CraftResources.GetName(m_Resource);
+            int level = CraftResources.GetIndex(m_Resource) + 1;
 
-            switch ( this.m_Resource )
-            {
-                case CraftResource.DullCopper:
-                    oreType = 1053108;
-                    break; // dull copper
-                case CraftResource.ShadowIron:
-                    oreType = 1053107;
-                    break; // shadow iron
-                case CraftResource.Copper:
-                    oreType = 1053106;
-                    break; // copper
-                case CraftResource.Bronze:
-                    oreType = 1053105;
-                    break; // bronze
-                case CraftResource.Gold:
-                    oreType = 1053104;
-                    break; // golden
-                case CraftResource.Agapite:
-                    oreType = 1053103;
-                    break; // agapite
-                case CraftResource.Verite:
-                    oreType = 1053102;
-                    break; // verite
-                case CraftResource.Valorite:
-                    oreType = 1053101;
-                    break; // valorite
-                case CraftResource.SpinedLeather:
-                    oreType = 1061118;
-                    break; // spined
-                case CraftResource.HornedLeather:
-                    oreType = 1061117;
-                    break; // horned
-                case CraftResource.BarbedLeather:
-                    oreType = 1061116;
-                    break; // barbed
-                case CraftResource.RedScales:
-                    oreType = 1060814;
-                    break; // red
-                case CraftResource.YellowScales:
-                    oreType = 1060818;
-                    break; // yellow
-                case CraftResource.BlackScales:
-                    oreType = 1060820;
-                    break; // black
-                case CraftResource.GreenScales:
-                    oreType = 1060819;
-                    break; // green
-                case CraftResource.WhiteScales:
-                    oreType = 1060821;
-                    break; // white
-                case CraftResource.BlueScales:
-                    oreType = 1060815;
-                    break; // blue
-                default:
-                    oreType = 0;
-                    break;
-            }
-
-            if (m_ReforgedPrefix != ReforgedPrefix.None || m_ReforgedSuffix != ReforgedSuffix.None)
-            {
-                if (m_ReforgedPrefix != ReforgedPrefix.None)
-                {
-                    int prefix = RunicReforging.GetPrefixName(m_ReforgedPrefix);
-
-                    if (m_ReforgedSuffix == ReforgedSuffix.None)
-                        list.Add(1151757, String.Format("#{0}\t{1}", prefix, GetNameString())); // ~1_PREFIX~ ~2_ITEM~
-                    else
-                        list.Add(1151756, String.Format("#{0}\t{1}\t#{2}", prefix, GetNameString(), RunicReforging.GetSuffixName(m_ReforgedSuffix))); // ~1_PREFIX~ ~2_ITEM~ of ~3_SUFFIX~
-                }
-                else if (m_ReforgedSuffix != ReforgedSuffix.None)
-                {
-                    if (m_ReforgedSuffix == ReforgedSuffix.Blackthorn)
-                        list.Add(1154548, String.Format("{0}", GetNameString())); // ~1_TYPE~ bearing the crest of Blackthorn
-                    else if (m_ReforgedSuffix == ReforgedSuffix.Minax)
-                        list.Add(1154507, String.Format("{0}", GetNameString())); // ~1_ITEM~ bearing the crest of Minax
-                    else
-                        list.Add(1151758, String.Format("{0}\t#{1}", GetNameString(), RunicReforging.GetSuffixName(m_ReforgedSuffix))); // ~1_ITEM~ of ~2_SUFFIX~
-                }
-            }
-            else if (oreType != 0)
-                list.Add(1053099, "#{0}\t{1}", oreType, this.GetNameString()); // ~1_oretype~ ~2_armortype~
-            else if (this.Name == null)
-                list.Add(this.LabelNumber);
+            if (level > 1 && !string.IsNullOrEmpty(oreType))
+                list.Add(1053099, "{0}\t{1}", oreType, GetNameString()); // ~1_oretype~ ~2_armortype~
             else
-                list.Add(this.Name);
+            {
+                string name = GetNameString();
+                if (!string.IsNullOrEmpty(name))
+                    list.Add(GetNameString());
+                else
+                    list.Add(LabelNumber);
+            }
+            //daat99 OWLTR end - custom resources
         }
 
         public override void AddWeightProperty(ObjectPropertyList list)

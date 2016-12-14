@@ -128,37 +128,11 @@ namespace Server.Engines.Craft
                     if (craftResource.Amount < 2)
                         return SmeltResult.Invalid; // Not enough metal to resmelt
 
-                    double difficulty = 0.0;
+					//daat99 OWLTR start - smelting difficulty
+					double difficulty = daat99.ResourceHelper.GetMinSkill(resource);
+					//daat99 OWLTR end - smelting difficulty
 
-                    switch ( resource )
-                    {
-                        case CraftResource.DullCopper:
-                            difficulty = 65.0;
-                            break;
-                        case CraftResource.ShadowIron:
-                            difficulty = 70.0;
-                            break;
-                        case CraftResource.Copper:
-                            difficulty = 75.0;
-                            break;
-                        case CraftResource.Bronze:
-                            difficulty = 80.0;
-                            break;
-                        case CraftResource.Gold:
-                            difficulty = 85.0;
-                            break;
-                        case CraftResource.Agapite:
-                            difficulty = 90.0;
-                            break;
-                        case CraftResource.Verite:
-                            difficulty = 95.0;
-                            break;
-                        case CraftResource.Valorite:
-                            difficulty = 99.0;
-                            break;
-                    }
-
-                    if (difficulty > from.Skills[SkillName.Mining].Value)
+					if ( difficulty > from.Skills[SkillName.Mining].Value)
                         return SmeltResult.NoSkill;
 
                     Type resourceType = info.ResourceTypes[0];

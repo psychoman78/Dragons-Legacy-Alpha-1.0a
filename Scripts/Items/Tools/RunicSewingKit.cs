@@ -1,6 +1,6 @@
 using System;
+using Server;
 using Server.Engines.Craft;
-
 namespace Server.Items
 {
     public class RunicSewingKit : BaseRunicTool
@@ -82,6 +82,37 @@ namespace Server.Items
 
             if (this.ItemID == 0x13E4 || this.ItemID == 0x13E3)
                 this.ItemID = 0xF9D;
-        }
-    }
+       }
+
+		//daat99 OWTLR start - runic storage
+		public override Type GetCraftableType()
+		{
+			switch (Resource)
+			{
+				case CraftResource.SpinedLeather:
+					return typeof(SpinedRunicSewingKit);
+				case CraftResource.HornedLeather:
+					return typeof(HornedRunicSewingKit);
+				case CraftResource.BarbedLeather:
+					return typeof(BarbedRunicSewingKit);
+				case CraftResource.PolarLeather:
+					return typeof(PolarRunicSewingKit);
+				case CraftResource.SyntheticLeather:
+					return typeof(SyntheticRunicSewingKit);
+				case CraftResource.BlazeLeather:
+					return typeof(BlazeRunicSewingKit);
+				case CraftResource.DaemonicLeather:
+					return typeof(DaemonicRunicSewingKit);
+				case CraftResource.ShadowLeather:
+					return typeof(ShadowRunicSewingKit);
+				case CraftResource.FrostLeather:
+					return typeof(FrostRunicSewingKit);
+				case CraftResource.EtherealLeather:
+					return typeof(EtherealRunicSewingKit);
+				default:
+					return null;
+			}
+		}
+		//daat99 OWLTR end - runic storage
+	}
 }

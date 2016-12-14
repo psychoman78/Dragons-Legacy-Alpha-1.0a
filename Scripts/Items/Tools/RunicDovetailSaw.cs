@@ -1,4 +1,5 @@
 using System;
+using Server;
 using Server.Engines.Craft;
 
 namespace Server.Items
@@ -58,5 +59,38 @@ namespace Server.Items
 
             int version = reader.ReadInt();
         }
-    }
+
+		//daat99 OWTLR start - runic storage
+		public override System.Type GetCraftableType()
+		{
+			switch (Resource)
+			{
+				case CraftResource.OakWood:
+                    return typeof(OakRunicDovetailSaw);
+				case CraftResource.AshWood:
+                    return typeof(AshRunicDovetailSaw);
+				case CraftResource.YewWood:
+                    return typeof(YewRunicDovetailSaw);
+				case CraftResource.Heartwood:
+                    return typeof(HeartwoodRunicDovetailSaw);
+				case CraftResource.Bloodwood:
+                    return typeof(BloodwoodRunicDovetailSaw);
+				case CraftResource.Frostwood:
+                    return typeof(FrostwoodRunicDovetailSaw);
+				case CraftResource.Ebony:
+                    return typeof(EbonyRunicDovetailSaw);
+				case CraftResource.Bamboo:
+                    return typeof(BambooRunicDovetailSaw);
+				case CraftResource.PurpleHeart:
+                    return typeof(PurpleHeartRunicDovetailSaw);
+				case CraftResource.Redwood:
+                    return typeof(RedwoodRunicDovetailSaw);
+				case CraftResource.Petrified:
+                    return typeof(PetrifiedRunicDovetailSaw);
+				default:
+					return null;
+			}
+		}
+		//daat99 OWLTR end - runic storage
+	}
 }

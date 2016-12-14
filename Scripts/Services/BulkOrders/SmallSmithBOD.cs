@@ -9,15 +9,22 @@ namespace Server.Engines.BulkOrders
     {
         public static double[] m_BlacksmithMaterialChances = new double[]
         {
-            0.501953125, // None
-            0.250000000, // Dull Copper
-            0.125000000, // Shadow Iron
-            0.062500000, // Copper
-            0.031250000, // Bronze
-            0.015625000, // Gold
-            0.007812500, // Agapite
-            0.003906250, // Verite
-            0.001953125  // Valorite
+				//daat99 OWLTR start - custom resources
+				0.120, // None
+				0.100, // Dull Copper
+				0.090, // Shadow Iron
+				0.090, // Copper
+				0.080, // Bronze
+				0.080, // Gold
+				0.070, // Agapite
+				0.070, // Verite
+				0.060, // Valorite
+				0.060, // Blaze
+				0.050, // Ice
+				0.050, // Toxic
+				0.040, // Electrum
+				0.040  // Platinum
+				//daat99 OWLTR end - custom resources
         };
         [Constructable]
         public SmallSmithBOD()
@@ -117,39 +124,42 @@ namespace Server.Engines.BulkOrders
 
                         switch ( check )
                         {
-                            case BulkMaterialType.DullCopper:
-                                skillReq = 65.0;
-                                break;
-                            case BulkMaterialType.ShadowIron:
-                                skillReq = 70.0;
-                                break;
-                            case BulkMaterialType.Copper:
-                                skillReq = 75.0;
-                                break;
-                            case BulkMaterialType.Bronze:
-                                skillReq = 80.0;
-                                break;
-                            case BulkMaterialType.Gold:
-                                skillReq = 85.0;
-                                break;
-                            case BulkMaterialType.Agapite:
-                                skillReq = 90.0;
-                                break;
-                            case BulkMaterialType.Verite:
-                                skillReq = 95.0;
-                                break;
-                            case BulkMaterialType.Valorite:
-                                skillReq = 100.0;
-                                break;
-                            case BulkMaterialType.Spined:
-                                skillReq = 65.0;
-                                break;
-                            case BulkMaterialType.Horned:
-                                skillReq = 80.0;
-                                break;
-                            case BulkMaterialType.Barbed:
-                                skillReq = 99.0;
-                                break;
+                            //daat99 OWLTR start - custom resources
+                            case BulkMaterialType.DullCopper: skillReq = 52.0; break;
+                            case BulkMaterialType.ShadowIron: skillReq = 56.0; break;
+                            case BulkMaterialType.Copper: skillReq = 60.0; break;
+                            case BulkMaterialType.Bronze: skillReq = 64.0; break;
+                            case BulkMaterialType.Gold: skillReq = 68.0; break;
+                            case BulkMaterialType.Agapite: skillReq = 72.0; break;
+                            case BulkMaterialType.Verite: skillReq = 76.0; break;
+                            case BulkMaterialType.Valorite: skillReq = 80.0; break;
+                            case BulkMaterialType.Blaze: skillReq = 84.0; break;
+                            case BulkMaterialType.Ice: skillReq = 88.0; break;
+                            case BulkMaterialType.Toxic: skillReq = 92.0; break;
+                            case BulkMaterialType.Electrum: skillReq = 96.0; break;
+                            case BulkMaterialType.Platinum: skillReq = 100.0; break;
+                            case BulkMaterialType.Spined: skillReq = 64.0; break;
+                            case BulkMaterialType.Horned: skillReq = 68.0; break;
+                            case BulkMaterialType.Barbed: skillReq = 72.0; break;
+                            case BulkMaterialType.Polar: skillReq = 76.0; break;
+                            case BulkMaterialType.Synthetic: skillReq = 80.0; break;
+                            case BulkMaterialType.BlazeL: skillReq = 84.0; break;
+                            case BulkMaterialType.Daemonic: skillReq = 88.0; break;
+                            case BulkMaterialType.Shadow: skillReq = 92.0; break;
+                            case BulkMaterialType.Frost: skillReq = 96.0; break;
+                            case BulkMaterialType.Ethereal: skillReq = 100.0; break;
+                            case BulkMaterialType.Heartwood: skillReq = 60.0; break;
+                            case BulkMaterialType.Bloodwood: skillReq = 64.0; break;
+                            case BulkMaterialType.Frostwood: skillReq = 68.0; break;
+                            case BulkMaterialType.OakWood: skillReq = 72.0; break;
+                            case BulkMaterialType.AshWood: skillReq = 76.0; break;
+                            case BulkMaterialType.YewWood: skillReq = 80.0; break;
+                            case BulkMaterialType.Ebony: skillReq = 84.0; break;
+                            case BulkMaterialType.Bamboo: skillReq = 88.0; break;
+                            case BulkMaterialType.PurpleHeart: skillReq = 92.0; break;
+                            case BulkMaterialType.Redwood: skillReq = 96.0; break;
+                            case BulkMaterialType.Petrified: skillReq = 100.0; break;
+                            //daat99 OWLTR end - custom resources
                         }
 
                         if (theirSkill >= skillReq)

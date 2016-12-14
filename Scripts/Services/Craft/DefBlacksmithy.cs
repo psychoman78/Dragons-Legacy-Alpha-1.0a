@@ -950,31 +950,12 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(SmallPieceofBlackrock), 1150016, 10, 1044253);
             this.ForceNonExceptional(index);
             this.SetNeededExpansion(index, Expansion.SA);
-            #endregion
+             #endregion
 
-            // Set the overridable material
-            SetSubRes(typeof(IronIngot), 1044022);
-
-            // Add every material you want the player to be able to choose from
-            // This will override the overridable material
-            AddSubRes(typeof(IronIngot), 1044022, 00.0, 1044036, 1044267);
-            AddSubRes(typeof(DullCopperIngot), 1044023, 65.0, 1044036, 1044268);
-            AddSubRes(typeof(ShadowIronIngot), 1044024, 70.0, 1044036, 1044268);
-            AddSubRes(typeof(CopperIngot), 1044025, 75.0, 1044036, 1044268);
-            AddSubRes(typeof(BronzeIngot), 1044026, 80.0, 1044036, 1044268);
-            AddSubRes(typeof(GoldIngot), 1044027, 85.0, 1044036, 1044268);
-            AddSubRes(typeof(AgapiteIngot), 1044028, 90.0, 1044036, 1044268);
-            AddSubRes(typeof(VeriteIngot), 1044029, 95.0, 1044036, 1044268);
-            AddSubRes(typeof(ValoriteIngot), 1044030, 99.0, 1044036, 1044268);
-
-            SetSubRes2(typeof(RedScales), 1060875);
-
-            AddSubRes2(typeof(RedScales), 1060875, 0.0, 1053137, 1044268);
-            AddSubRes2(typeof(YellowScales), 1060876, 0.0, 1053137, 1044268);
-            AddSubRes2(typeof(BlackScales), 1060877, 0.0, 1053137, 1044268);
-            AddSubRes2(typeof(GreenScales), 1060878, 0.0, 1053137, 1044268);
-            AddSubRes2(typeof(WhiteScales), 1060879, 0.0, 1053137, 1044268);
-            AddSubRes2(typeof(BlueScales), 1060880, 0.0, 1053137, 1044268);
+            //daat99 OWLTR start - custom resources
+            daat99.ResourceHelper.AddMetalResources(this);
+            daat99.ResourceHelper.AddScaleResources(this);
+            //daat99 OWLTR end - custom resources
 
             Resmelt = true;
             Repair = true;

@@ -1,4 +1,6 @@
 using System;
+using Server.Items;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -97,6 +99,7 @@ namespace Server.Items
         public Granite()
             : base(CraftResource.Iron)
         {
+            Name = "Granite"; //daat99 OWLTR - granite name
         }
 
         public Granite(Serial serial)
@@ -125,6 +128,7 @@ namespace Server.Items
         public DullCopperGranite()
             : base(CraftResource.DullCopper)
         {
+            Name = "Dull Copper Granite"; //daat99 OWLTR - granite name
         }
 
         public DullCopperGranite(Serial serial)
@@ -153,6 +157,7 @@ namespace Server.Items
         public ShadowIronGranite()
             : base(CraftResource.ShadowIron)
         {
+            Name = "Shadow Iron Granite"; //daat99 OWLTR - granite name
         }
 
         public ShadowIronGranite(Serial serial)
@@ -181,6 +186,7 @@ namespace Server.Items
         public CopperGranite()
             : base(CraftResource.Copper)
         {
+            Name = "Copper Granite"; //daat99 OWLTR - granite name
         }
 
         public CopperGranite(Serial serial)
@@ -209,6 +215,7 @@ namespace Server.Items
         public BronzeGranite()
             : base(CraftResource.Bronze)
         {
+            Name = "Bronze Granite"; //daat99 OWLTR - granite name
         }
 
         public BronzeGranite(Serial serial)
@@ -237,6 +244,7 @@ namespace Server.Items
         public GoldGranite()
             : base(CraftResource.Gold)
         {
+            Name = "Gold Granite"; //daat99 OWLTR - granite name
         }
 
         public GoldGranite(Serial serial)
@@ -265,6 +273,7 @@ namespace Server.Items
         public AgapiteGranite()
             : base(CraftResource.Agapite)
         {
+            Name = "Agapite Granite"; //daat99 OWLTR - granite name
         }
 
         public AgapiteGranite(Serial serial)
@@ -293,6 +302,7 @@ namespace Server.Items
         public VeriteGranite()
             : base(CraftResource.Verite)
         {
+            Name = "Verite Granite"; //daat99 OWLTR - granite name
         }
 
         public VeriteGranite(Serial serial)
@@ -321,9 +331,155 @@ namespace Server.Items
         public ValoriteGranite()
             : base(CraftResource.Valorite)
         {
+            Name = "Valorite Granite"; //daat99 OWLTR - granite name
         }
 
         public ValoriteGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+    }
+
+    public class BlazeGranite : BaseGranite
+    {
+        [Constructable]
+        public BlazeGranite()
+            : base(CraftResource.Blaze)
+        {
+            Name = "Blaze Granite"; //daat99 OWLTR - granite name
+        }
+
+        public BlazeGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+    }
+
+    public class IceGranite : BaseGranite
+    {
+        [Constructable]
+        public IceGranite()
+            : base(CraftResource.Ice)
+        {
+            Name = "Ice Granite"; //daat99 OWLTR - granite name
+        }
+
+        public IceGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+    }
+
+    public class ToxicGranite : BaseGranite
+    {
+        [Constructable]
+        public ToxicGranite()
+            : base(CraftResource.Toxic)
+        {
+            Name = "Toxic Granite"; //daat99 OWLTR - granite name
+        }
+
+        public ToxicGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+    }
+
+    public class ElectrumGranite : BaseGranite
+    {
+        [Constructable]
+        public ElectrumGranite()
+            : base(CraftResource.Electrum)
+        {
+            Name = "Electrum Granite"; //daat99 OWLTR - granite name
+        }
+
+        public ElectrumGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+        }
+    }
+
+    public class PlatinumGranite : BaseGranite
+    {
+        [Constructable]
+        public PlatinumGranite()
+            : base(CraftResource.Platinum)
+        {
+            Name = "Platinum Granite"; //daat99 OWLTR - granite name
+        }
+
+        public PlatinumGranite(Serial serial)
             : base(serial)
         {
         }

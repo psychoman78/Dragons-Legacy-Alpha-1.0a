@@ -184,6 +184,45 @@ namespace Server.Engines.BulkOrders
                 return GetEntries("Tailoring", "wizard");
             }
         }
+        //--<< Custom BODs Edit>>-------------------------------[Start 1 of 1]  
+        public static SmallBulkEntry[] AllBow
+        {
+            get 
+			{ 
+				return GetEntries("Fletcher", "allbows"); 
+			}
+        }
+
+        public static SmallBulkEntry[] Bow
+        {
+            get { return GetEntries("Fletcher", "bows"); }
+        }
+
+        public static SmallBulkEntry[] CrossBow
+        {
+            get { return GetEntries("Fletcher", "crossbows"); }
+        }
+
+        public static SmallBulkEntry[] Staff
+        {
+            get { return GetEntries("Carpenter", "staffs"); }
+        }
+
+        public static SmallBulkEntry[] AllInstrument
+        {
+            get { return GetEntries("Carpenter", "allinstruments"); }
+        }
+        public static SmallBulkEntry[] String
+        {
+            get { return GetEntries("Carpenter", "string"); }
+        }
+
+        public static SmallBulkEntry[] Percussion
+        {
+            get { return GetEntries("Carpenter", "percussion"); }
+        }
+
+        //--<< Custom BODs Edit>>-------------------------------[End 1 of 1] 
         public LargeBOD Owner
         {
             get

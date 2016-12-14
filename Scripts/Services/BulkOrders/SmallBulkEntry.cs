@@ -39,13 +39,30 @@ namespace Server.Engines.BulkOrders
                 return GetEntries("Tailoring", "cloth");
             }
         }
-        public static SmallBulkEntry[] TailorLeather
+         public static SmallBulkEntry[] TailorLeather
         {
             get
             {
                 return GetEntries("Tailoring", "leather");
             }
         }
+        //--<< Custom BODs Edit>>-------------------------------[Start 1 of 1]  
+        public static SmallBulkEntry[] CarpenterStaff
+        {
+            get { return GetEntries("Carpenter", "staffs"); }
+        }
+
+        public static SmallBulkEntry[] CarpenterInstrument
+        {
+            get { return GetEntries("Carpenter", "instruments"); }
+        }
+
+        public static SmallBulkEntry[] FletcherAllBow
+        {
+            get { return GetEntries("Fletcher", "allbows"); }
+        }
+
+        //--<< Custom BODs Edit>>-------------------------------[End 1 of 1] 
         public Type Type
         {
             get

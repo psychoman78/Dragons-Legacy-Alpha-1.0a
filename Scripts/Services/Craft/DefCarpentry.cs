@@ -129,7 +129,7 @@ namespace Server.Engines.Craft
             {
                 index = this.AddCraft(typeof(Board), 1044294, 1027127, 0.0, 0.0, typeof(Log), 1044466, 1, 1044465);
                 this.SetUseAllRes(index, true);
-				this.SetForceTypeRes(index, true);
+				//this.SetForceTypeRes(index, true);
             }
 
             this.AddCraft(typeof(BarrelStaves), 1044294, 1027857, 00.0, 25.0, typeof(Board), 1044041, 5, 1044351);
@@ -852,17 +852,9 @@ namespace Server.Engines.Craft
             this.Repair = Core.AOS;
             this.CanEnhance = Core.ML;
 
-            this.SetSubRes(typeof(Board), 1072643);
-
-            // Add every material you want the player to be able to choose from
-            // This will override the overridable material	TODO: Verify the required skill amount
-            this.AddSubRes(typeof(Board), 1072643, 00.0, 1044041, 1072652);
-            this.AddSubRes(typeof(OakBoard), 1072644, 65.0, 1044041, 1072652);
-            this.AddSubRes(typeof(AshBoard), 1072645, 80.0, 1044041, 1072652);
-            this.AddSubRes(typeof(YewBoard), 1072646, 95.0, 1044041, 1072652);
-            this.AddSubRes(typeof(HeartwoodBoard), 1072647, 100.0, 1044041, 1072652);
-            this.AddSubRes(typeof(BloodwoodBoard), 1072648, 100.0, 1044041, 1072652);
-            this.AddSubRes(typeof(FrostwoodBoard), 1072649, 100.0, 1044041, 1072652);
+            //daat99 OWLTR start - custom resources
+            daat99.ResourceHelper.AddWoodResources(this);
+            //daat99 OWLTR end - custom resources
         }
     }
 }

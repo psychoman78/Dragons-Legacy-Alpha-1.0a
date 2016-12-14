@@ -218,15 +218,9 @@ namespace Server.Engines.Craft
 
             this.SetSubRes(typeof(Granite), 1044525);
 
-            this.AddSubRes(typeof(Granite), 1044525, 00.0, 1044514, 1044526);
-            this.AddSubRes(typeof(DullCopperGranite), 1044023, 65.0, 1044514, 1044527);
-            this.AddSubRes(typeof(ShadowIronGranite), 1044024, 70.0, 1044514, 1044527);
-            this.AddSubRes(typeof(CopperGranite), 1044025, 75.0, 1044514, 1044527);
-            this.AddSubRes(typeof(BronzeGranite), 1044026, 80.0, 1044514, 1044527);
-            this.AddSubRes(typeof(GoldGranite), 1044027, 85.0, 1044514, 1044527);
-            this.AddSubRes(typeof(AgapiteGranite), 1044028, 90.0, 1044514, 1044527);
-            this.AddSubRes(typeof(VeriteGranite), 1044029, 95.0, 1044514, 1044527);
-            this.AddSubRes(typeof(ValoriteGranite), 1044030, 99.0, 1044514, 1044527);
+            //daat99 OWLTR start - custom granites
+            daat99.ResourceHelper.AddStoneResources(this);
+            //daat99 OWLTR end - custom granites
         }
     }
 }

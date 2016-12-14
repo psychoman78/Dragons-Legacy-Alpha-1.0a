@@ -222,7 +222,17 @@ namespace Server
                 typeof(TerathanDrone), typeof(TerathanMatriarch), typeof(TerathanWarrior),
                 typeof(TimberWolf), typeof(Titan), typeof(Troll),
                 typeof(Unicorn), typeof(ValoriteElemental), typeof(VeriteElemental),
-                typeof(CoMWarHorse), typeof(MinaxWarHorse), typeof(SLWarHorse),
+				//daat99 OWLTR start - elementals
+				//typeof( Elementals ),		typeof( BlazeOreElemental ), typeof( IceOreElemental ),
+				//typeof( ToxicOreElemental ), typeof( ElectrumOreElemental ), typeof( PlatinumOreElemental ),
+				//typeof( PolarLeatherElemental ), typeof( SyntheticLeatherElemental ), typeof( BlazeLeatherElemental ),
+				//typeof( DaemonicLeatherElemental ), typeof( ShadowLeatherElemental ), typeof( FrostLeatherElemental ),
+				//typeof( EtherealLeatherElemental ), typeof( HeartwoodElemental ), typeof( BloodwoodElemental ),
+				//typeof( FrostwoodElemental ), typeof( OakWoodElemental ), typeof( AshWoodElemental ),
+				//typeof( YewWoodElemental ), typeof( EbonyWoodElemental ), typeof( BambooWoodElemental ),
+				//typeof( PurpleHeartWoodElemental ), typeof( RedwoodElemental ), typeof( PetrifiedWoodElemental ),
+				//daat99 OWLTR end - elementals
+				typeof(CoMWarHorse), typeof(MinaxWarHorse), typeof(SLWarHorse),
                 typeof(TBWarHorse), typeof(WaterElemental), typeof(WhippingVine),
                 typeof(WhiteWolf), typeof(Wraith), typeof(Wyvern),
                 typeof(KhaldunZealot), typeof(KhaldunSummoner), typeof(SavageRidgeback),

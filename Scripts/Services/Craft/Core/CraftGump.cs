@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Server.Gumps;
-using Server.Items;
 using Server.Network;
+using Server.Items;
+using daat99;
 
 namespace Server.Engines.Craft
 {
@@ -186,14 +188,16 @@ namespace Server.Engines.Craft
 
                     for (int i = 0; i < items.Length; ++i)
                         resourceCount += items[i].Amount;
-
-                    if (resourceType2 != null)
-                    {
-                        Item[] items2 = m_From.Backpack.FindItemsByType(resourceType2, true);
-
-                        for (int i = 0; i < items2.Length; ++i)
-                            resourceCount += items2[i].Amount;
-                    }
+					//daat99 OWLTR start - craft from storage
+					ulong storageCount = MasterStorageUtils.GetPlayersStorageItemCount(from as Mobiles.PlayerMobile, resourceType);
+					if (storageCount > 0)
+					{
+						if (storageCount < int.MaxValue && storageCount + (ulong)resourceCount < int.MaxValue)
+							resourceCount += (int)storageCount;
+						else
+							resourceCount = int.MaxValue;
+					}
+					//daat99 OWLTR end - craft from storage
                 }
 
                 this.AddButton(15, 382, 4005, 4007, GetButtonID(6, 0), GumpButtonType.Reply, 0);
@@ -237,6 +241,16 @@ namespace Server.Engines.Craft
 
                     for (int i = 0; i < items.Length; ++i)
                         resourceCount += items[i].Amount;
+					//daat99 OWLTR start - craft from storage
+					ulong storageCount = MasterStorageUtils.GetPlayersStorageItemCount(from as Mobiles.PlayerMobile, resourceType);
+					if (storageCount > 0)
+					{
+						if (storageCount < int.MaxValue && storageCount + (ulong)resourceCount < int.MaxValue)
+							resourceCount += (int)storageCount;
+						else
+							resourceCount = int.MaxValue;
+					}
+					//daat99 OWLTR end - craft from storage
                 }
 
                 this.AddButton(15, 402, 4005, 4007, GetButtonID(6, 7), GumpButtonType.Reply, 0);
@@ -287,8 +301,57 @@ namespace Server.Engines.Craft
         public void CreateResList(bool opt, Mobile from)
         {
             CraftSubResCol res = (opt ? this.m_CraftSystem.CraftSubRes2 : this.m_CraftSystem.CraftSubRes);
+			//daat99 OWLTR start - recipe craft
+			bool b_RecipeCraft = OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.RECIPE_CRAFT),
+				b_Blacksmithy = OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.BLACKSMITH_RECIPES),
+				b_BowFletching = OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.BOWFLETCH_RECIPES),
+				b_Carpentry = OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.CARPENTRY_RECIPES),
+				b_Masonry = OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.MASONRY_RECIPES),
+				b_Tailoring = OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.TAILORING_RECIPES),
+				b_Tinkering = OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.TINKERING_RECIPES);
+			if ( b_RecipeCraft )
+			{
+				NewDaat99Holder dh = (NewDaat99Holder)daat99.Daat99OWLTR.TempHolders[m_From];
+				int	i_Lenght = 0;
+				for ( int i = 0; i < res.Count; ++i )
+				{
+					int index = i_Lenght % 10;
 
-            for (int i = 0; i < res.Count; ++i)
+					CraftSubRes subResource = res.GetAt( i );
+					if ( !dh.Resources.Contains(CraftResources.GetFromType( subResource.ItemType )) || (!b_Blacksmithy && m_CraftSystem is DefBlacksmithy)
+						|| (!b_BowFletching && m_CraftSystem is DefBowFletching) || (!b_Carpentry && m_CraftSystem is DefCarpentry)
+						|| (!b_Masonry && m_CraftSystem is DefMasonry) || (!b_Tailoring && m_CraftSystem is DefTailoring)
+						|| (!b_Tinkering && m_CraftSystem is DefTinkering) )
+					{
+						if ( index == 0 )
+						{
+							if ( i > 0 )
+								AddButton( 485, 260, 4005, 4007, 0, GumpButtonType.Page, (i / 10) + 1 );
+
+							AddPage( (i / 10) + 1 );
+
+							if ( i > 0 )
+								AddButton( 455, 260, 4014, 4015, 0, GumpButtonType.Page, i / 10 );
+
+							CraftContext context = m_CraftSystem.GetContext( m_From );
+
+							AddButton( 220, 260, 4005, 4007, GetButtonID( 6, 4 ), GumpButtonType.Reply, 0 );
+							AddHtmlLocalized( 255, 263, 200, 18, (context == null || !context.DoNotColor) ? 1061591 : 1061590, LabelColor, false, false );
+						}
+
+						AddButton( 220, 60 + (index * 20), 4005, 4007, GetButtonID( 5, i ), GumpButtonType.Reply, 0 );
+
+						if ( subResource.NameNumber > 0 )
+							AddHtmlLocalized( 255, 63 + (index * 20), 250, 18, subResource.NameNumber, LabelColor, false, false );
+						else
+							AddLabel( 255, 60 + (index * 20), LabelHue, subResource.NameString );
+						i_Lenght++;
+					}
+				}	
+			}
+			else 
+			//daat99 OWLTR end - recipe craft
+			for  (int i = 0; i < res.Count; ++i)
             {
                 int index = i % 10;
 
@@ -318,7 +381,17 @@ namespace Server.Engines.Craft
 
                     for (int j = 0; j < items.Length; ++j)
                         resourceCount += items[j].Amount;
-                }
+					//daat99 OWLTR start - craft from storage
+					ulong storageCount = MasterStorageUtils.GetPlayersStorageItemCount(from as Mobiles.PlayerMobile, subResource.ItemType);
+					if (storageCount > 0)
+					{
+						if (storageCount < int.MaxValue && storageCount + (ulong)resourceCount < int.MaxValue)
+							resourceCount += (int)storageCount;
+						else
+							resourceCount = int.MaxValue;
+					}
+					//daat99 OWLTR end - craft from storage
+				}
 
                 this.AddButton(220, 70 + (index * 20), 4005, 4007, GetButtonID(5, i), GumpButtonType.Reply, 0);
 
