@@ -424,7 +424,6 @@ namespace Server.SkillHandlers
 						{
 							if (m_Creature.Owners.Count == 0) // First tame
 							{
-                                m_Creature.OnBeforeTame(); //daat99 on before tame
 								if (m_Creature is GreaterDragon)
 								{
 									ScaleSkills(m_Creature, 0.72, 0.90); // 72% of original skills trainable to 90%
@@ -444,6 +443,14 @@ namespace Server.SkillHandlers
 								{
 									ScaleStats(m_Creature, 0.50);
 								}
+
+                                foreach (Skill sk in m_Creature.Skills)
+                                {
+                                    if (sk.Base > 100)
+                                        sk.Cap = sk.Base;
+                                    else
+                                        sk.Cap = 100;
+                                }
 							}
 
 							if (alreadyOwned)
