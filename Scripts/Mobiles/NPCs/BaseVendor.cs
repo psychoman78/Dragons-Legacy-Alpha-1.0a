@@ -166,6 +166,16 @@ namespace Server.Mobiles
 							{
 								m_From.SendGump(new SmallBODAcceptGump(m_From, (SmallBOD)bulkOrder));
 							}
+							/*#region FS Edits
+                            else if (bulkOrder is LargeMobileBOD)
+                            {
+                                m_From.SendGump(new LargeMobileBODAcceptGump(m_From, (LargeMobileBOD)bulkOrder));
+                            }
+                            else if (bulkOrder is SmallMobileBOD)
+                            {
+                                m_From.SendGump(new SmallMobileBODAcceptGump(m_From, (SmallMobileBOD)bulkOrder));
+                            }
+                            #endregion*/
 						}
 					}
 					else

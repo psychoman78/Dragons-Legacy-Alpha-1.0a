@@ -6,6 +6,7 @@
 
 #region References
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Server.ContextMenus;
@@ -13,6 +14,8 @@ using Server.Gumps;
 using Server.Items;
 using Server.Network;
 using Server.Targeting;
+using Server.Engines.BulkOrders;
+using CustomsFramework.Systems.AnimalBODSystem;
 #endregion
 
 namespace Server.Mobiles
@@ -53,6 +56,158 @@ namespace Server.Mobiles
 
 			AddItem(Utility.RandomBool() ? new QuarterStaff() : (Item)new ShepherdsCrook());
 		}
+
+		#region FS Taming BOD System
+        private class TamingBulkOrderInfoEntry : ContextMenuEntry
+		{
+			private readonly Mobile m_From;
+			private readonly AnimalTrainer m_Vendor;
+
+			public TamingBulkOrderInfoEntry(Mobile from, AnimalTrainer vendor)
+				: base(6152)
+			{
+				this.m_From = from;
+				this.m_Vendor = vendor;
+			}
+
+			public override void OnClick()
+			{
+				if (this.m_Vendor.SupportsTamingBulkOrders(this.m_From))
+				{
+					TimeSpan ts = this.m_Vendor.GetNextBulkOrder(this.m_From);
+
+					int totalSeconds = (int)ts.TotalSeconds;
+					int totalHours = (totalSeconds + 3599) / 3600;
+					int totalMinutes = (totalSeconds + 59) / 60;
+
+					if (((Core.AOS) ? totalMinutes == 0 : totalHours == 0))
+					{
+						this.m_From.SendLocalizedMessage(1049038); // You can get an order now.
+
+						if (Core.AOS)
+						{
+							Item bulkOrder = this.m_Vendor.CreateBulkOrder(this.m_From, true);
+
+							if (bulkOrder is LargeMobileBOD)
+								this.m_From.SendGump(new LargeMobileBODAcceptGump(this.m_From, (LargeMobileBOD)bulkOrder));
+							else if (bulkOrder is SmallMobileBOD)
+								this.m_From.SendGump(new SmallMobileBODAcceptGump(this.m_From, (SmallMobileBOD)bulkOrder));
+						}
+					}
+					else
+					{
+						int oldSpeechHue = this.m_Vendor.SpeechHue;
+						this.m_Vendor.SpeechHue = 0x3B2;
+
+						if (Core.AOS)
+							this.m_Vendor.SayTo(this.m_From, 1072058, totalMinutes.ToString()); // An offer may be available in about ~1_minutes~ minutes.
+						else
+							this.m_Vendor.SayTo(this.m_From, 1049039, totalHours.ToString()); // An offer may be available in about ~1_hours~ hours.
+
+						this.m_Vendor.SpeechHue = oldSpeechHue;
+					}
+				}
+			}
+		}
+        
+		public override Item CreateBulkOrder( Mobile from, bool fromContextMenu )
+		{
+			AnimalBODModule module = from.GetModule( typeof( AnimalBODModule ) ) as AnimalBODModule ?? new AnimalBODModule(from);
+
+			if ( from != null && module.NextTamingBulkOrder == TimeSpan.Zero && (fromContextMenu || 0.2 > Utility.RandomDouble()) )
+			{
+				double theirSkill = from.Skills[SkillName.AnimalTaming].Base;
+
+				if ( theirSkill >= 100.1 )
+					module.NextTamingBulkOrder = TimeSpan.FromMinutes( 360.0 );
+				else if ( theirSkill >= 70.1 )
+					module.NextTamingBulkOrder = TimeSpan.FromMinutes( 240.0 );
+				else if ( theirSkill >= 50.1 )
+					module.NextTamingBulkOrder = TimeSpan.FromMinutes( 120.0 );
+				else
+					module.NextTamingBulkOrder = TimeSpan.FromMinutes( 60.0 );
+
+				if ( theirSkill >= 100.1 && ((theirSkill - 40.0) / 300.0) > Utility.RandomDouble() )
+					return new LargeTamingBOD();
+
+				return SmallTamingBOD.CreateRandomFor( from );
+			}
+
+			return null;
+		}
+
+		public override bool IsValidBulkOrder( Item item )
+		{
+			return ( item is SmallTamingBOD || item is LargeTamingBOD );
+		}
+
+		public virtual bool SupportsTamingBulkOrders( Mobile from )
+		{
+			return ( from is PlayerMobile && from.Skills[SkillName.AnimalTaming].Base > 0 );
+		}
+
+		public override TimeSpan GetNextBulkOrder( Mobile from )
+		{
+			AnimalBODModule module = from.GetModule( typeof( AnimalBODModule ) ) as AnimalBODModule ?? new AnimalBODModule(from);
+			
+			return module.NextTamingBulkOrder;
+		}
+		
+		public override bool OnDragDrop( Mobile from, Item dropped )
+		{
+			if ( dropped is SmallTamingBOD || dropped is LargeTamingBOD )
+			{
+				if ( !AnimalBODCore.Core.Enabled )
+				{
+					from.SendMessage( "The animal taming BOD system is currently offline. Please contact a game master for details." );
+					return false;
+				}
+				else if ( !IsValidBulkOrder( dropped ) || !SupportsTamingBulkOrders( from ) )
+				{
+					SayTo( from, 1045130 ); // That order is for some other shopkeeper.
+					return false;
+				}
+				else if ( (dropped is SmallMobileBOD && !((SmallMobileBOD)dropped).Complete) || (dropped is LargeMobileBOD && !((LargeMobileBOD)dropped).Complete) )
+				{
+					SayTo( from, 1045131 ); // You have not completed the order yet.
+					return false;
+				}
+
+				Item reward;
+				int gold, fame;
+
+				if ( dropped is LargeMobileBOD )
+					((LargeMobileBOD)dropped).GetRewards( out reward, out gold, out fame );
+				else
+					((SmallMobileBOD)dropped).GetRewards( out reward, out gold, out fame );
+
+				from.SendSound( 0x3D );
+
+				SayTo( from, 1045132 ); // Thank you so much!  Here is a reward for your effort.
+
+				if ( reward != null )
+					from.AddToBackpack( reward );
+
+				if ( gold > 1000 )
+					from.AddToBackpack( new BankCheck( gold ) );
+				else if ( gold > 0 )
+					from.AddToBackpack( new Gold( gold ) );
+
+				//Titles.AwardFame( from, fame, true );
+
+				OnSuccessfulBulkOrderReceive( from );
+
+				dropped.Delete();
+				return true;
+			}
+
+			return base.OnDragDrop( from, dropped );
+		}
+
+		public override void OnSuccessfulBulkOrderReceive(Mobile from)
+		{
+		}
+		#endregion
 
 		public override void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
 		{

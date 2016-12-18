@@ -36,6 +36,14 @@ namespace Server.Items
         Parasitic,
         Darkglow,
 		ExplodingTarPotion,
+		#region FS:ATS Edits
+        PetResurrect,
+        PetShrink,
+        PetHeal,
+        PetGreaterHeal,
+        PetCure,
+        PetGreaterCure,
+        #endregion
     }
 
     public abstract class BasePotion : Item, ICraftable, ICommodity

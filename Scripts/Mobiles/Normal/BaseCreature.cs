@@ -6,6 +6,7 @@
 
 #region References
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -196,6 +197,374 @@ namespace Server.Mobiles
 
     public class BaseCreature : Mobile, IHonorTarget
     {
+		#region FS:ATS Edits
+		private int m_RoarAttack;
+		private int m_PetPoisonAttack;
+		private int m_FireBreathAttack;
+
+		private bool m_IsMating;
+
+		private int m_ABPoints;
+		private int m_Exp;
+		private int m_NextLevel;
+		private int m_Level = 1;
+		private int m_MaxLevel;
+
+		private bool m_AllowMating;
+
+		private bool m_Evolves;
+		private int m_Gen = 1;
+
+		private DateTime m_MatingDelay;
+
+		private int m_Form1;
+		private int m_Form2;
+		private int m_Form3;
+		private int m_Form4;
+		private int m_Form5;
+		private int m_Form6;
+		private int m_Form7;
+		private int m_Form8;
+		private int m_Form9;
+
+		private int m_Sound1;
+		private int m_Sound2;
+		private int m_Sound3;
+		private int m_Sound4;
+		private int m_Sound5;
+		private int m_Sound6;
+		private int m_Sound7;
+		private int m_Sound8;
+		private int m_Sound9;
+
+		private bool m_UsesForm1;
+		private bool m_UsesForm2;
+		private bool m_UsesForm3;
+		private bool m_UsesForm4;
+		private bool m_UsesForm5;
+		private bool m_UsesForm6;
+		private bool m_UsesForm7;
+		private bool m_UsesForm8;
+		private bool m_UsesForm9;
+
+		public bool m_F0;
+		public bool m_F1;
+		public bool m_F2;
+		public bool m_F3;
+		public bool m_F4;
+		public bool m_F5;
+		public bool m_F6;
+		public bool m_F7;
+		public bool m_F8;
+		public bool m_F9;
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int RoarAttack
+		{
+			get{ return m_RoarAttack; }
+			set{ m_RoarAttack = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int PetPoisonAttack
+		{
+			get{ return m_PetPoisonAttack; }
+			set{ m_PetPoisonAttack = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int FireBreathAttack
+		{
+			get{ return m_FireBreathAttack; }
+			set{ m_FireBreathAttack = value; }
+		}
+
+		[CommandProperty( AccessLevel.Administrator )]
+		public DateTime MatingDelay
+		{
+			get{ return m_MatingDelay; }
+			set{ m_MatingDelay = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int Generation
+		{
+			get{ return m_Gen; }
+			set{ m_Gen = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int AbilityPoints
+		{
+			get{ return m_ABPoints; }
+			set{ m_ABPoints = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int Exp
+		{
+			get{ return m_Exp; }
+			set{ m_Exp = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int NextLevel
+		{
+			get{ return m_NextLevel; }
+			set{ m_NextLevel = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int Level
+		{
+			get{ return m_Level; }
+			set{ m_Level = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int MaxLevel
+		{
+			get{ return m_MaxLevel; }
+			set{ m_MaxLevel = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public bool Evolves
+		{
+			get{ return m_Evolves; }
+			set{ m_Evolves = value; }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public bool AllowMating
+		{
+			get{ return m_AllowMating; }
+			set{ m_AllowMating = value; }
+		}
+
+		public int Form1
+		{
+			get{ return m_Form1; }
+			set{ m_Form1 = value; }
+		}
+
+		public int Form2
+		{
+			get{ return m_Form2; }
+			set{ m_Form2 = value; }
+		}
+
+		public int Form3
+		{
+			get{ return m_Form3; }
+			set{ m_Form3 = value; }
+		}
+
+		public int Form4
+		{
+			get{ return m_Form4; }
+			set{ m_Form4 = value; }
+		}
+
+		public int Form5
+		{
+			get{ return m_Form5; }
+			set{ m_Form5 = value; }
+		}
+
+		public int Form6
+		{
+			get{ return m_Form6; }
+			set{ m_Form6 = value; }
+		}
+
+		public int Form7
+		{
+			get{ return m_Form7; }
+			set{ m_Form7 = value; }
+		}
+
+		public int Form8
+		{
+			get{ return m_Form8; }
+			set{ m_Form8 = value; }
+		}
+
+		public int Form9
+		{
+			get{ return m_Form9; }
+			set{ m_Form9 = value; }
+		}
+
+		public int Sound1
+		{
+			get{ return m_Sound1; }
+			set{ m_Sound1 = value; }
+		}
+
+		public int Sound2
+		{
+			get{ return m_Sound2; }
+			set{ m_Sound2 = value; }
+		}
+
+		public int Sound3
+		{
+			get{ return m_Sound3; }
+			set{ m_Sound3 = value; }
+		}
+
+		public int Sound4
+		{
+			get{ return m_Sound4; }
+			set{ m_Sound4 = value; }
+		}
+
+		public int Sound5
+		{
+			get{ return m_Sound5; }
+			set{ m_Sound5 = value; }
+		}
+
+		public int Sound6
+		{
+			get{ return m_Sound6; }
+			set{ m_Sound6 = value; }
+		}
+
+		public int Sound7
+		{
+			get{ return m_Sound7; }
+			set{ m_Sound7 = value; }
+		}
+
+		public int Sound8
+		{
+			get{ return m_Sound8; }
+			set{ m_Sound8 = value; }
+		}
+
+		public int Sound9
+		{
+			get{ return m_Sound9; }
+			set{ m_Sound9 = value; }
+		}
+
+		public bool UsesForm1
+		{
+			get{ return m_UsesForm1; }
+			set{ m_UsesForm1 = value; }
+		}
+
+		public bool UsesForm2
+		{
+			get{ return m_UsesForm2; }
+			set{ m_UsesForm2 = value; }
+		}
+
+		public bool UsesForm3
+		{
+			get{ return m_UsesForm3; }
+			set{ m_UsesForm3 = value; }
+		}
+
+		public bool UsesForm4
+		{
+			get{ return m_UsesForm4; }
+			set{ m_UsesForm4 = value; }
+		}
+
+		public bool UsesForm5
+		{
+			get{ return m_UsesForm5; }
+			set{ m_UsesForm5 = value; }
+		}
+
+		public bool UsesForm6
+		{
+			get{ return m_UsesForm6; }
+			set{ m_UsesForm6 = value; }
+		}
+
+		public bool UsesForm7
+		{
+			get{ return m_UsesForm7; }
+			set{ m_UsesForm7 = value; }
+		}
+
+		public bool UsesForm8
+		{
+			get{ return m_UsesForm8; }
+			set{ m_UsesForm8 = value; }
+		}
+
+		public bool UsesForm9
+		{
+			get{ return m_UsesForm9; }
+			set{ m_UsesForm9 = value; }
+		}
+
+		public bool F0
+		{
+			get{ return m_F0; }
+			set{ m_F0 = value; }
+		}
+
+		public bool F1
+		{
+			get{ return m_F1; }
+			set{ m_F1 = value; }
+		}
+
+		public bool F2
+		{
+			get{ return m_F2; }
+			set{ m_F2 = value; }
+		}
+
+		public bool F3
+		{
+			get{ return m_F3; }
+			set{ m_F3 = value; }
+		}
+
+		public bool F4
+		{
+			get{ return m_F4; }
+			set{ m_F4 = value; }
+		}
+
+		public bool F5
+		{
+			get{ return m_F5; }
+			set{ m_F5 = value; }
+		}
+
+		public bool F6
+		{
+			get{ return m_F6; }
+			set{ m_F6 = value; }
+		}
+
+		public bool F7
+		{
+			get{ return m_F7; }
+			set{ m_F7 = value; }
+		}
+
+		public bool F8
+		{
+			get{ return m_F8; }
+			set{ m_F8 = value; }
+		}
+
+		public bool F9
+		{
+			get{ return m_F9; }
+			set{ m_F9 = value; }
+		}
+		#endregion
+
         public const int MaxLoyalty = 100;
 
         #region Var declarations
@@ -1915,6 +2284,44 @@ namespace Server.Mobiles
         public BaseCreature(
             AIType ai, FightMode mode, int iRangePerception, int iRangeFight, double dActiveSpeed, double dPassiveSpeed)
         {
+			#region FS:ATS Edits
+			bool alwaysMale = false;
+			Type typ = this.GetType();
+			string nam = typ.Name;
+
+			bool alwaysFemale = false;
+			Type typ2 = this.GetType();
+			string nam2 = typ2.Name;
+
+			foreach ( string check in FSATS.AlwaysMale )
+			{
+  				if ( check == nam )
+    					alwaysMale = true;
+			}
+
+			foreach ( string check2 in FSATS.AlwaysFemale )
+			{
+  				if ( check2 == nam2 )
+    					alwaysFemale = true;
+			}
+
+			if ( alwaysMale == true )
+				this.Female = false;
+			else if ( alwaysFemale == true )
+				this.Female = true;
+			else
+			{
+				switch ( Utility.Random( 2 ) ) 
+				{ 
+         				case 0: this.Female = true; break;
+					
+					case 1: this.Female = false; break;
+				}
+			}
+
+			m_MaxLevel = Utility.RandomMinMax( 10, 30 );
+			#endregion
+
             if (iRangePerception == OldRangePerception)
             {
                 iRangePerception = DefaultRangePerception;
@@ -2117,6 +2524,58 @@ namespace Server.Mobiles
 
             //Version 20 Queens Loyalty
             //writer.Write(m_QLPoints);
+
+			// Version 21 FS:ATS EDITS
+			writer.Write( (bool) m_IsMating );
+			writer.Write( (int) m_ABPoints );
+			writer.Write( (int) m_Exp );
+			writer.Write( (int) m_NextLevel );
+			writer.Write( (int) m_Level );
+			writer.Write( (int) m_MaxLevel );
+			writer.Write( (bool) m_AllowMating );
+			writer.Write( (bool) m_Evolves );
+			writer.Write( (int) m_Gen );
+			writer.Write( (DateTime) m_MatingDelay );
+			writer.Write( (int) m_Form1 );
+			writer.Write( (int) m_Form2 );
+			writer.Write( (int) m_Form3 );
+			writer.Write( (int) m_Form4 );
+			writer.Write( (int) m_Form5 );
+			writer.Write( (int) m_Form6 );
+			writer.Write( (int) m_Form7 );
+			writer.Write( (int) m_Form8 );
+			writer.Write( (int) m_Form9 );
+			writer.Write( (int) m_Sound1 );
+			writer.Write( (int) m_Sound2 );
+			writer.Write( (int) m_Sound3 );
+			writer.Write( (int) m_Sound4 );
+			writer.Write( (int) m_Sound5 );
+			writer.Write( (int) m_Sound6 );
+			writer.Write( (int) m_Sound7 );
+			writer.Write( (int) m_Sound8 );
+			writer.Write( (int) m_Sound9 );
+			writer.Write( (bool) m_UsesForm1 );
+			writer.Write( (bool) m_UsesForm2 );
+			writer.Write( (bool) m_UsesForm3 );
+			writer.Write( (bool) m_UsesForm4 );
+			writer.Write( (bool) m_UsesForm5 );
+			writer.Write( (bool) m_UsesForm6 );
+			writer.Write( (bool) m_UsesForm7 );
+			writer.Write( (bool) m_UsesForm8 );
+			writer.Write( (bool) m_UsesForm9 );
+			writer.Write( (bool) m_F0 );
+			writer.Write( (bool) m_F1 );
+			writer.Write( (bool) m_F2 );
+			writer.Write( (bool) m_F3 );
+			writer.Write( (bool) m_F4 );
+			writer.Write( (bool) m_F5 );
+			writer.Write( (bool) m_F6 );
+			writer.Write( (bool) m_F7 );
+			writer.Write( (bool) m_F8 );
+			writer.Write( (bool) m_F9 );
+			writer.Write( (int) m_RoarAttack );
+			writer.Write( (int) m_PetPoisonAttack );
+			writer.Write( (int) m_FireBreathAttack );
         }
 
         private static readonly double[] m_StandardActiveSpeeds = new[] { 0.175, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.8 };
@@ -2392,6 +2851,62 @@ namespace Server.Mobiles
             {
                 reader.ReadInt();
             }
+
+			// FS ATS Starts
+			if ( version >= 21 )
+			{
+				m_IsMating = reader.ReadBool();
+				m_ABPoints = reader.ReadInt();
+				m_Exp = reader.ReadInt();
+				m_NextLevel = reader.ReadInt();
+				m_Level = reader.ReadInt();
+				m_MaxLevel = reader.ReadInt();
+				m_AllowMating = reader.ReadBool();
+				m_Evolves = reader.ReadBool();
+				m_Gen = reader.ReadInt();
+				m_MatingDelay = reader.ReadDateTime();
+				m_Form1 = reader.ReadInt();
+				m_Form2 = reader.ReadInt();
+				m_Form3 = reader.ReadInt();
+				m_Form4 = reader.ReadInt();
+				m_Form5 = reader.ReadInt();
+				m_Form6 = reader.ReadInt();
+				m_Form7 = reader.ReadInt();
+				m_Form8 = reader.ReadInt();
+				m_Form9 = reader.ReadInt();
+				m_Sound1 = reader.ReadInt();
+				m_Sound2 = reader.ReadInt();
+				m_Sound3 = reader.ReadInt();
+				m_Sound4 = reader.ReadInt();
+				m_Sound5 = reader.ReadInt();
+				m_Sound6 = reader.ReadInt();
+				m_Sound7 = reader.ReadInt();
+				m_Sound8 = reader.ReadInt();
+				m_Sound9 = reader.ReadInt();
+				m_UsesForm1 = reader.ReadBool();
+				m_UsesForm2 = reader.ReadBool();
+				m_UsesForm3 = reader.ReadBool();
+				m_UsesForm4 = reader.ReadBool();
+				m_UsesForm5 = reader.ReadBool();
+				m_UsesForm6 = reader.ReadBool();
+				m_UsesForm7 = reader.ReadBool();
+				m_UsesForm8 = reader.ReadBool();
+				m_UsesForm9 = reader.ReadBool();
+				m_F0 = reader.ReadBool();
+				m_F1 = reader.ReadBool();
+				m_F2 = reader.ReadBool();
+				m_F3 = reader.ReadBool();
+				m_F4 = reader.ReadBool();
+				m_F5 = reader.ReadBool();
+				m_F6 = reader.ReadBool();
+				m_F7 = reader.ReadBool();
+				m_F8 = reader.ReadBool();
+				m_F9 = reader.ReadBool();
+				m_RoarAttack = reader.ReadInt();
+				m_PetPoisonAttack = reader.ReadInt();
+				m_FireBreathAttack = reader.ReadInt();
+			}
+			// FS ATS Ends
 
             if (version <= 14 && m_Paragon && Hue == 0x31)
             {
@@ -3712,7 +4227,28 @@ namespace Server.Mobiles
         }
 
         public virtual void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
-        { }
+        {
+			#region FS:ATS Edits
+			if ( this is BaseBioCreature || this is BioCreature || this is BioMount )
+			{
+			}
+			else if ( from.Alive && this.Alive && this.Controlled == true && this.Summoned == false && FSATS.EnablePetLeveling == true )
+			{
+				bool nolevel = false;
+				Type typ = this.GetType();
+				string nam = typ.Name;
+
+				foreach ( string check in FSATS.NoLevelCreatures )
+				{
+  					if ( check == nam )
+    						nolevel = true;
+				}
+
+				if ( nolevel != true )
+					list.Add( new ContextMenus.PetMenu( from, this ) );
+			}
+			#endregion
+        }
 
         public virtual bool CanDrop { get { return IsBonded; } }
 
@@ -4902,6 +5438,32 @@ namespace Server.Mobiles
         {
             base.AddNameProperties(list);
 
+			#region FS:ATS Edits
+			if ( this.Tamable == true && FSATS.EnablePetBreeding == true )
+			{
+				bool nolevel = false;
+				Type typ = this.GetType();
+				string nam = typ.Name;
+
+				foreach ( string check in FSATS.NoLevelCreatures )
+				{
+  					if ( check == nam )
+    						nolevel = true;
+				}
+
+				if ( nolevel != true )
+				{
+					if ( this.Female == true )
+						list.Add( 1060658, "Gender\tFemale" );
+					else
+						list.Add( 1060658, "Gender\tMale" );
+
+					if ( this.Controlled == false )
+						list.Add( 1060659, "Max Level\t{0}", this.MaxLevel );
+				}
+			}
+			#endregion
+
             if (Core.ML)
             {
                 if (DisplayWeight)
@@ -4975,11 +5537,49 @@ namespace Server.Mobiles
         }
         //daat99 OWLTR start - On Before (Re) Tame methods
 
-
 		public override bool OnBeforeDeath()
         {
+			#region FS:ATS Edits
+			if ( FSATS.EnablePetLeveling == true )
+			{
+				ArrayList toCheck = new ArrayList();
+				List<DamageEntry> rights = this.DamageEntries;
+
+				foreach ( DamageEntry entry in rights )
+				{
+					if ( entry.Damager is BaseCreature )
+					{
+						BaseCreature bc = (BaseCreature)entry.Damager;
+
+						if ( bc.Controlled == true && bc.ControlMaster != null )
+							toCheck.Add( entry.Damager );		
+					}
+				}
+
+				foreach ( Mobile mob in toCheck )
+				{
+					if ( mob is BaseCreature )
+					{
+						BaseCreature bc = (BaseCreature)mob;
+						PetLeveling.CheckLevel( this, bc, toCheck.Count );
+					}
+				}
+			}
+			#endregion
+
             int treasureLevel = TreasureMapLevel;
-            GetLootingRights();
+
+			#region FS:ATS Edits
+			if ( this is BaseBioCreature || this is BioCreature || this is BioMount )
+			{
+				PetLeveling.DoBioDeath( this );
+			}
+			else
+			{
+				if ( FSATS.EnablePetLeveling == true )
+					PetLeveling.DoDeathCheck( this );
+			}
+			#endregion
 
             if (treasureLevel == 1 && Map == Map.Trammel && TreasureMap.IsInHavenIsland(this))
             {
@@ -6646,6 +7246,24 @@ namespace Server.Mobiles
         public virtual void OnThink()
         {
             long tc = Core.TickCount;
+
+			//FS:ATS BEGIN
+			if ( this.Tamable == true )
+			{
+				if ( this.NextLevel == 0 )
+				{
+					int totalstats = this.Str + this.Dex + this.Int + this.HitsMax + this.StamMax + this.ManaMax + this.PhysicalResistance + this.FireResistance + this.ColdResistance + this.EnergyResistance + this.PoisonResistance + this.DamageMin + this.DamageMax + this.VirtualArmor;
+					int nextlevel = totalstats * 10;
+
+					this.NextLevel = nextlevel;
+				}
+
+				if ( this.MaxLevel == 0 )
+				{
+					this.MaxLevel = Utility.RandomMinMax( 10, 30 );
+				}
+			}
+			//FS:ATS END (modified by Regnak)
 
             if (EnableRummaging && CanRummageCorpses && !Summoned && !Controlled && tc - m_NextRummageTime >= 0)
             {

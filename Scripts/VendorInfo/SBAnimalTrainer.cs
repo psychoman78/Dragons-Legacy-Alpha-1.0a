@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Server.Items;
 
 namespace Server.Mobiles
 {
@@ -46,6 +47,25 @@ namespace Server.Mobiles
                     this.Add(new AnimalBuyInfo(1, typeof(TimberWolf), 768, 10, 225, 0));
                     this.Add(new AnimalBuyInfo(1, typeof(Rat), 107, 10, 238, 0));
                 }
+
+				// FS ATS Edit Start
+				if ( FSATS.EnableTamingCraft == true )
+					Add( new AnimalBuyInfo( 1, typeof( Brush ), 72, 10, 0x1373, 0 ) );
+
+				if ( FSATS.EnableTamingCraft == false )
+				{
+					Add( new AnimalBuyInfo( 1, typeof( PetShrinkPotion ), 16, 10, 0xE26, 0 ) );
+					Add( new AnimalBuyInfo( 1, typeof( PetLeash ), 1456, 10, 0x1374, 0 ) );
+					Add( new AnimalBuyInfo( 1, typeof( HitchingPostEastDeed ), 1456, 10, 0x14F0, 0 ) );
+					Add( new AnimalBuyInfo( 1, typeof( HitchingPostSouthDeed ), 1456, 10, 0x14F0, 0 ) );
+				}
+
+				if ( FSATS.EnableTamingBODs == false && FSATS.EnableBioEngineer == false )
+				{
+					Add( new AnimalBuyInfo( 1, typeof( BioTool ), 72, 10, 0x1373, 1175 ) );
+					Add( new AnimalBuyInfo( 1, typeof( BioEnginerBook ), 10001, 10, 4084, 0 ) );
+				}
+				// FS ATS Edit Ends
             }
         }
 

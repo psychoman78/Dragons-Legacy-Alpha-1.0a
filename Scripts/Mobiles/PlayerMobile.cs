@@ -112,6 +112,49 @@ namespace Server.Mobiles
 
 	public class PlayerMobile : Mobile, IHonorTarget
 	{
+		#region FS:ATS Edtis
+        private DateTime m_NextTamingBulkOrder;
+        private bool m_Bioenginer;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public TimeSpan NextTamingBulkOrder
+        {
+            get
+            {
+                TimeSpan ts = m_NextTamingBulkOrder - DateTime.UtcNow;
+
+				if (ts < TimeSpan.Zero)
+				{
+					ts = TimeSpan.Zero;
+				}
+
+                return ts;
+            }
+            set
+			{
+				try
+				{
+					m_NextTamingBulkOrder = DateTime.UtcNow + value; 
+				}
+                catch
+				{ }
+            }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool Bioenginer
+        {
+            get
+            {
+				return m_Bioenginer; 
+			}
+            set 
+			{ 
+				m_Bioenginer = value; 
+			}
+        }
+        #endregion
+
 		#region Mount Blocking
 		public void SetMountBlock(BlockMountType type, TimeSpan duration, bool dismount)
 		{
@@ -3517,7 +3560,11 @@ namespace Server.Mobiles
 			m_AntiMacroTable = new Hashtable();
 			m_RecentlyReported = new List<Mobile>();
 
-			m_BOBFilter = new BOBFilter();
+			this.m_BOBFilter = new Engines.BulkOrders.BOBFilter();
+
+			#region FS:ATS Edits
+			m_TamingBOBFilter = new Engines.BulkOrders.TamingBOBFilter();
+			#endregion
 
 			m_GameTime = TimeSpan.Zero;
 			m_ShortTermElapse = TimeSpan.FromHours(8.0);
@@ -3804,10 +3851,27 @@ namespace Server.Mobiles
 			SetHairMods(-1, -1);
 		}
 
-		private BOBFilter m_BOBFilter;
+		private Engines.BulkOrders.BOBFilter m_BOBFilter;
+		
+		#region FS:ATS Edits
+		private Engines.BulkOrders.TamingBOBFilter m_TamingBOBFilter;
+		#endregion
 
-		public BOBFilter BOBFilter { get { return m_BOBFilter; } }
-
+		public Engines.BulkOrders.BOBFilter BOBFilter
+		{
+			get
+			{
+				return this.m_BOBFilter;
+			}
+		}
+		
+		#region FS:ATS Edits
+		public Engines.BulkOrders.TamingBOBFilter TamingBOBFilter
+		{
+			get{ return m_TamingBOBFilter; }
+		}
+		#endregion
+		
 		public override void Deserialize(GenericReader reader)
 		{
 			base.Deserialize(reader);
@@ -3815,6 +3879,18 @@ namespace Server.Mobiles
 
 			switch (version)
 			{
+				case 36:
+				case 35:
+				{
+					m_TamingBOBFilter = new Engines.BulkOrders.TamingBOBFilter( reader );
+					goto case 34;
+				}
+                case 34:
+				{
+					m_Bioenginer = reader.ReadBool();
+					NextTamingBulkOrder = reader.ReadTimeSpan();
+					goto case 33;
+				}
                 case 33:
 					{
                         NextFletcherBulkOrder = reader.ReadTimeSpan();
@@ -4178,12 +4254,19 @@ namespace Server.Mobiles
 				m_JusticeProtectors = new List<Mobile>();
 			}
 
-			if (m_BOBFilter == null)
+			if (this.m_BOBFilter == null)
 			{
-				m_BOBFilter = new BOBFilter();
+				this.m_BOBFilter = new Engines.BulkOrders.BOBFilter();
 			}
 
-			if (m_GuildRank == null)
+			#region FS:ATS Edits
+			if ( m_TamingBOBFilter == null )
+			{
+				m_TamingBOBFilter = new Engines.BulkOrders.TamingBOBFilter();
+			}
+			#endregion
+
+			if  (m_GuildRank == null)
 			{
 				m_GuildRank = RankDefinition.Member;
 				//Default to member if going from older version to new version (only time it should be null)
@@ -4246,8 +4329,16 @@ namespace Server.Mobiles
 
 			base.Serialize(writer);
 
-			writer.Write(33); // version
+			writer.Write(36); // version
 
+			// Version 35 FS:ATS
+			m_TamingBOBFilter.Serialize( writer );
+			
+			// Version 34 FS:ATS
+			writer.Write( m_Bioenginer );
+			writer.Write( NextTamingBulkOrder );
+			
+			//Version 33 
 			writer.Write(NextFletcherBulkOrder);
             writer.Write(NextCarpenterBulkOrder);
 
