@@ -1369,16 +1369,16 @@ namespace Server.Items
         /// </summary>
         public static CraftResourceType GetType(CraftResource resource)
         {
-            if (resource >= CraftResource.Iron && resource <= CraftResource.Valorite)
+            if (resource >= CraftResource.Iron && resource <= CraftResource.Platinum)
                 return CraftResourceType.Metal;
 
-            if (resource >= CraftResource.RegularLeather && resource <= CraftResource.BarbedLeather)
+            if (resource >= CraftResource.RegularLeather && resource <= CraftResource.EtherealLeather)
                 return CraftResourceType.Leather;
 
-            if (resource >= CraftResource.RedScales && resource <= CraftResource.BlueScales)
+            if (resource >= CraftResource.RedScales && resource <= CraftResource.GoldScales)
                 return CraftResourceType.Scales;
 
-            if (resource >= CraftResource.RegularWood && resource <= CraftResource.Frostwood)
+            if (resource >= CraftResource.RegularWood && resource <= CraftResource.Petrified)
                 return CraftResourceType.Wood;
 
             return CraftResourceType.None;
