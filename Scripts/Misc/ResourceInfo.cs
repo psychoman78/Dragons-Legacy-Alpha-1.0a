@@ -1366,6 +1366,7 @@ namespace Server.Items
 
         /// <summary>
         /// Returns a <see cref="CraftResourceType"/> value indiciating the type of '<paramref name="resource"/>'.
+		/// Changed For New OWLTR
         /// </summary>
         public static CraftResourceType GetType(CraftResource resource)
         {

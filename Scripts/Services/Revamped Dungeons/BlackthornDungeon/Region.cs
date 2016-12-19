@@ -138,7 +138,15 @@ namespace Server.Engines.Blackthorn
 
             if (m.Mount != null)
             {
-                m.Mount.Rider = null;
+                if (m is PlayerMobile)
+                {
+                    (m as PlayerMobile).SetMountBlock(BlockMountType.DismountRecovery, TimeSpan.FromSeconds(30), true);
+                }
+                else
+                {
+                    m.Mount.Rider = null;
+                }
+
                 m.SendLocalizedMessage(1153052); // Mounts and flying are not permitted in this area.
 
                 if (m.Mount is BaseCreature && ((BaseCreature)m.Mount).Controlled)
@@ -217,4 +225,5 @@ namespace Server.Engines.Blackthorn
             return type > TravelCheckType.Mark;
         }
     }
+
 }

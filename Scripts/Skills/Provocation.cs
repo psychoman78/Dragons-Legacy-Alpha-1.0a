@@ -204,14 +204,27 @@ namespace Server.SkillHandlers
 
             public bool QuestTargets(BaseCreature creature, Mobile from)
             {
-                if (creature.GetMaster() is PlayerMobile)
-                    return false;
+                if (creature != null)
+                {
+                    Mobile getmaster = creature.GetMaster();
 
-                if (creature != null && from is PlayerMobile && (m_Creature.GetType() == typeof(Rabbit) || m_Creature.GetType() == typeof(JackRabbit)) && ((creature is WanderingHealer) || (creature is EvilWanderingHealer)))
-                    return true;
+                    if (getmaster != null)
+                    {
+                        if (getmaster is PlayerMobile)
+                            return false;
+                    }
+
+                if (from is PlayerMobile && (m_Creature.GetType() == typeof(Rabbit) || m_Creature.GetType() == typeof(JackRabbit)) && ((creature is WanderingHealer) || (creature is EvilWanderingHealer)))
+                        return true;
 
                 return false;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }
+
 }

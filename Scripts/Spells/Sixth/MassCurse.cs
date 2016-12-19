@@ -69,7 +69,7 @@ namespace Server.Spells.Sixth
                 {
                     Mobile m = targets[i];
 
-					CurseSpell.DoCurse(this.Caster, m);
+					CurseSpell.DoCurse(this.Caster, m, true);
                 }
             }
 
@@ -99,4 +99,5 @@ namespace Server.Spells.Sixth
             }
         }
     }
+
 }
