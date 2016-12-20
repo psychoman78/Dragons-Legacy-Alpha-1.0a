@@ -212,7 +212,11 @@ namespace Server
 
 			DeleteFiles("Scripts.CS*.dll");
 
+#if !MONO
 			using (CSharpCodeProvider provider = new CSharpCodeProvider())
+#else
+            using (CSharpCodeProvider provider = new CSharpCodeProvider())
+#endif
 			{
 				string path = GetUnusedPath("Scripts.CS");
 
