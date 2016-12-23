@@ -2123,7 +2123,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		public virtual double TransformMoveDelay(double delay)
+		public double TransformMoveDelay(double delay)
 		{
 			bool isPassive = (delay == m_Mobile.PassiveSpeed);
 			bool isControlled = (m_Mobile.Controlled || m_Mobile.Summoned);
