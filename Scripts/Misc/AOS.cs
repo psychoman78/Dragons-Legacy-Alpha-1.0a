@@ -268,29 +268,11 @@ namespace Server
                 }
             }
 
-            m.Damage(totalDamage, from, true, false);
-
 			#region Berserk
-            if (((float)(m.Hits - totalDamage) / m.HitsMax) < 0.5 && m.Hits > totalDamage)
-            {
-                if (BerserkImpl.CheckBestialArmor(m))
-                {
-                    m.Berserk = Berserk.SetBerserk;
-                }
-            }
-
-            if (m is PlayerMobile && m.Race == Race.Gargoyle && !m.GargoyleBerserk)
-            {
-                if (((float)(m.Hits - totalDamage) / m.HitsMax) < 0.8)
-                {
-                    if (m.GargoyleBerserkTimer != null)
-                        m.GargoyleBerserkTimer.Stop();
-
-                    m.GargoyleBerserkTimer = new BerserkImpl.GargoyleBerserkTimer(m);
-                    m.GargoyleBerserkTimer.Start();
-                }
-            }
+            BestialSetHelper.OnDamage(m, from, ref totalDamage);
             #endregion
+
+			m.Damage(totalDamage, from, true, false);
 
             #region Stygian Abyss
             if (m.Spell != null)
@@ -512,6 +494,11 @@ namespace Server
                 #region SA
                 if (TransformationSpellHelper.UnderTransformation(m, typeof(Spells.Mystic.StoneFormSpell)))
                     value -= 10;
+
+				if (m is PlayerMobile && m.Race == Race.Gargoyle)
+                {
+                    value += ((PlayerMobile)m).GetRacialBerserkBuff(false);
+                }
                 #endregion
 
                 #region High Seas
@@ -532,11 +519,12 @@ namespace Server
                 if (context != null && context.Spell is ReaperFormSpell)
                     value += ((ReaperFormSpell)context.Spell).SpellDamageBonus;
 
-				if (m.GargoyleBerserk)
-                    value += 3 * (int)(((float)(m.HitsMax - m.Hits) / m.HitsMax) * 5.0);
-
-                if (m.Berserk != null)
-                    value += 3 * (int)(((float)(m.HitsMax - m.Hits) / m.HitsMax) * m.Berserk.EquipBestial.Count);
+				#region SA
+                if (m is PlayerMobile && m.Race == Race.Gargoyle)
+                {
+                    value += ((PlayerMobile)m).GetRacialBerserkBuff(true);
+                }
+                #endregion
 
                 #region City Loyalty
                 if (CityLoyaltySystem.HasTradeDeal(m, TradeDeal.GuildOfArcaneArts))

@@ -2114,7 +2114,9 @@ namespace Server.Items
             WeaponAbility a = WeaponAbility.GetCurrentAbility(attacker);
             SpecialMove move = SpecialMove.GetCurrentMove(attacker);
 
-            bool ignoreArmor = (a is ArmorIgnore || (move != null && move.IgnoreArmor(attacker)));
+            WeaponAbility weavabil;
+            bool bladeweaving = Bladeweave.BladeWeaving(attacker, out weavabil);
+            bool ignoreArmor = (a is ArmorIgnore || (move != null && move.IgnoreArmor(attacker)) || (bladeweaving && weavabil is ArmorIgnore));
 
             // object is not a mobile, so we end here
             if (defender == null)
@@ -2265,11 +2267,9 @@ namespace Server.Items
                     percentageBonus -= 47;
             }
 
-            if (attacker.GargoyleBerserk)
-                percentageBonus += Math.Min(60, 15 * (int)(((float)(attacker.HitsMax - attacker.Hits) / attacker.HitsMax) * 5.0));
+            if (RunedSashOfWarding.IsUnderEffects(defender, WardingEffect.WeaponDamage))
+                percentageBonus -= 10;
 
-            if (attacker.Berserk != null)
-                percentageBonus += Math.Min(60, 15 * (int)(((float)(attacker.HitsMax - attacker.Hits) / attacker.HitsMax) * attacker.Berserk.EquipBestial.Count));
 			#endregion
 
 			#region Mondain's Legacy
@@ -4810,6 +4810,9 @@ namespace Server.Items
 			{
 				list.Add(1073491, Pieces.ToString()); // Part of a Weapon/Armor Set (~1_val~ pieces)
 
+				if (SetID == SetItem.Bestial)
+                    list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
+
                 if (this.BardMasteryBonus)
                     list.Add(1151553); // Activate: Bard Mastery Bonus x2<br>(Effect: 1 min. Cooldown: 30 min.)
 
@@ -5752,8 +5755,6 @@ namespace Server.Items
 
 		public virtual SetItem SetID { get { return SetItem.None; } }
 		public virtual int Pieces { get { return 0; } }
-
-        public virtual int Berserk { get { return 0; } }
 
         public virtual bool BardMasteryBonus
         {
