@@ -3020,7 +3020,8 @@ namespace Server.Mobiles
         {
 			// Some Stygian Abyss Monsters eat Metal..
 			typeof(IronIngot), typeof(DullCopperIngot), typeof(ShadowIronIngot), typeof(CopperIngot), typeof(BronzeIngot),
-            typeof(GoldIngot), typeof(AgapiteIngot), typeof(VeriteIngot), typeof(ValoriteIngot)
+            typeof(GoldIngot), typeof(AgapiteIngot), typeof(VeriteIngot), typeof(ValoriteIngot), typeof(BlazeIngot),
+			typeof(IceIngot), typeof(ToxicIngot), typeof(ElectrumIngot), typeof(PlatinumIngot)
         };
 
         public virtual bool CheckFoodPreference(Item f)
