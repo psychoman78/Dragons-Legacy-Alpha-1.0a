@@ -173,7 +173,8 @@ namespace Server.Misc
                 string timeStamp = GetTimeStamp();
                 string fileName = String.Format("Crash {0}.log", timeStamp);
 
-                string root = GetRoot();
+                //string root = GetRoot();
+				string directory = "Logs/Crashes";
                 string filePath = Combine(root, fileName);
 
                 using (StreamWriter op = new StreamWriter(filePath))
