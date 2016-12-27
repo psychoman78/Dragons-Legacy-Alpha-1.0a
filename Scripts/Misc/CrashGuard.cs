@@ -175,7 +175,7 @@ namespace Server.Misc
 
                 //string root = GetRoot();
 				string directory = "Logs/Crashes";
-                string filePath = Combine(root, fileName);
+                string filePath = Combine(directory, fileName);
 
                 using (StreamWriter op = new StreamWriter(filePath))
                 {
