@@ -255,13 +255,13 @@ namespace Server.Engines.Craft
 
             // Add every material you want the player to be able to choose from
             // This will override the overridable material	TODO: Verify the required skill amount
-            this.AddSubRes(typeof(Board), 1072643, 00.0, 1044041, 1072652);
+            /*this.AddSubRes(typeof(Board), 1072643, 00.0, 1044041, 1072652);
             this.AddSubRes(typeof(OakBoard), 1072644, 65.0, 1044041, 1072652);
             this.AddSubRes(typeof(AshBoard), 1072645, 80.0, 1044041, 1072652);
             this.AddSubRes(typeof(YewBoard), 1072646, 95.0, 1044041, 1072652);
             this.AddSubRes(typeof(HeartwoodBoard), 1072647, 100.0, 1044041, 1072652);
             this.AddSubRes(typeof(BloodwoodBoard), 1072648, 100.0, 1044041, 1072652);
-            this.AddSubRes(typeof(FrostwoodBoard), 1072649, 100.0, 1044041, 1072652);
+            this.AddSubRes(typeof(FrostwoodBoard), 1072649, 100.0, 1044041, 1072652);*/
             #endregion
 
             this.MarkOption = true;
