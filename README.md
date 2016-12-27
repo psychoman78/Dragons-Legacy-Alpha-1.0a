@@ -1,6 +1,7 @@
 # [Dragons Legacy Alpha 1.0a]
 
-[![PayPayl donate button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/DragonsLegacy"Help US support this project using Paypal")
+[![PayPayl donate button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/DragonsLegacy)
+Help US support this project using Paypal
 
 This is a complete code from ServUO latest Repo Dated Dec. 17th 2016,
 
