@@ -1,0 +1,5 @@
+Folder added to store Crash logs so they do not clutter up the main Dir
+
+Changed By:
+Veldian
+Dragon's Legacy Uo Shard
