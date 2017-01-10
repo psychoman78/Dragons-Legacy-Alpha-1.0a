@@ -724,5 +724,4 @@ namespace Server.Engines.Points
             }
         }
     }
-
 }

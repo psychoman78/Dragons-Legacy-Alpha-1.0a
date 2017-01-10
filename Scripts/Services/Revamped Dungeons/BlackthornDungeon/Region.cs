@@ -146,7 +146,7 @@ namespace Server.Engines.Blackthorn
                 {
                     m.Mount.Rider = null;
                 }
-
+		
                 m.SendLocalizedMessage(1153052); // Mounts and flying are not permitted in this area.
 
                 if (m.Mount is BaseCreature && ((BaseCreature)m.Mount).Controlled)
@@ -225,5 +225,4 @@ namespace Server.Engines.Blackthorn
             return type > TravelCheckType.Mark;
         }
     }
-
 }

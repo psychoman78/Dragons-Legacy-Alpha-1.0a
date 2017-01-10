@@ -76,5 +76,4 @@ namespace Server.Spells.Mystic
 			FinishSequence();
 		}
 	}
-
 }

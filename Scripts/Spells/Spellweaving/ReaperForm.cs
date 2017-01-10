@@ -105,7 +105,7 @@ namespace Server.Spells.Spellweaving
         {
             m.PlaySound(0x1BA);
 
-			BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.ReaperForm, 1071034, 1153781, "10\t10\t5\t5\t5\t5\t25"));
+            BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.ReaperForm, 1071034, 1153781, "10\t10\t5\t5\t5\t5\t25"));
 
             m.Send(SpeedControl.WalkSpeed);
         }
@@ -113,7 +113,7 @@ namespace Server.Spells.Spellweaving
         public override void RemoveEffect(Mobile m)
         {
             m.Send(SpeedControl.Disable);
-			BuffInfo.RemoveBuff(m, BuffIcon.ReaperForm);
+            BuffInfo.RemoveBuff(m, BuffIcon.ReaperForm);
         }
     }
 }

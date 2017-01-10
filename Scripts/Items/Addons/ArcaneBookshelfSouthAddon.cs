@@ -2,7 +2,7 @@ using System;
 
 namespace Server.Items
 {
-	public class ArcaneBookShelfAddonSouth : BaseAddonContainer
+    public class ArcaneBookShelfAddonSouth : BaseAddonContainer
     {
         public override BaseAddonContainerDeed Deed { get { return new ArcaneBookShelfDeedSouth(); } }
         public override bool RetainDeedHue { get { return true; } }
@@ -64,26 +64,6 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadEncodedInt();
-
-			Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
-        }
-
-        private void Replace()
-        {
-            Server.Multis.BaseHouse house = Server.Multis.BaseHouse.FindHouseAt(this);
-
-            if (house != null)
-            {
-                Point3D p = this.Location;
-                Map map = this.Map;
-
-                house.Addons.Remove(this);
-                Delete();
-
-                var addon = new ArcaneBookShelfAddonEast();
-                addon.MoveToWorld(new Point3D(p.X, p.Y + 1, p.Z), map);
-                house.Addons.Add(addon);
-            }
         }
     }
 
@@ -120,6 +100,26 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadEncodedInt();
+
+            Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
+        }
+
+        private void Replace()
+        {
+            Server.Multis.BaseHouse house = Server.Multis.BaseHouse.FindHouseAt(this);
+
+            if (house != null)
+            {
+                Point3D p = this.Location;
+                Map map = this.Map;
+
+                house.Addons.Remove(this);
+                Delete();
+
+                var addon = new ArcaneBookShelfAddonEast();
+                addon.MoveToWorld(new Point3D(p.X, p.Y + 1, p.Z), map);
+                house.Addons.Add(addon);
+            }
         }
     }
 
@@ -162,7 +162,7 @@ namespace Server.Items
 
             int version = reader.ReadEncodedInt();
 
-			Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
+            Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
         }
 
         private void Replace()
@@ -185,10 +185,10 @@ namespace Server.Items
                 deed.IsSecure = IsSecure;
                 deed.Movable = Movable;
 
-                if (house != null && house.LockDowns.Contains(this))
+                if (house != null && house.LockDowns.ContainsKey(this))
                 {
                     house.LockDowns.Remove(this);
-                    house.LockDowns.Add(deed);
+                    house.LockDowns.Add(deed, house.Owner);
                 }
                 else if (house != null && house.Secures.Contains(this))
                 {

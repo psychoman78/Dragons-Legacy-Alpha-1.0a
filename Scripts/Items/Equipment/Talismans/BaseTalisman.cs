@@ -19,7 +19,7 @@ namespace Server.Items
         Wildfire = 2843
     }
 
-    public class BaseTalisman : Item, IWearableDurability, IVvVItem, IOwnerRestricted
+    public class BaseTalisman : Item, IWearableDurability, IVvVItem, IOwnerRestricted, ITalismanProtection, ITalismanKiller
     {
         private bool _VvVItem;
         private Mobile _Owner;
@@ -875,16 +875,26 @@ namespace Server.Items
             if (this is ManaPhasingOrb)
                 list.Add(1116158); //Mana Phase
 
-            if (this.m_Slayer != TalismanSlayerName.None)
+            if (m_Slayer != TalismanSlayerName.None)
             {
-                if (this.m_Slayer == TalismanSlayerName.Wolf)
-                    list.Add(1075462);
-                else if (this.m_Slayer == TalismanSlayerName.Goblin)
+                if (m_Slayer == TalismanSlayerName.Goblin)
                     list.Add(1095010);
-                else if (this.m_Slayer == TalismanSlayerName.Undead)
+                else if (m_Slayer == TalismanSlayerName.Undead)
                     list.Add(1060479);
+                else if (m_Slayer <= TalismanSlayerName.Wolf)
+                    list.Add(1072503 + (int)m_Slayer);
                 else
-                    list.Add(1072503 + (int)this.m_Slayer);
+                {
+                    switch (m_Slayer)
+                    {
+                        case TalismanSlayerName.Repond: list.Add(1079750); break;
+                        case TalismanSlayerName.Elemental: list.Add(1079749); break;
+                        case TalismanSlayerName.Demon: list.Add(1079748); break;
+                        case TalismanSlayerName.Arachnid: list.Add(1079747); break;
+                        case TalismanSlayerName.Reptile: list.Add(1079751); break;
+                        case TalismanSlayerName.Fey: list.Add(1154652); break;
+                    }
+                }
             }
 
             if (this.m_MaxHitPoints > 0)
@@ -1483,6 +1493,9 @@ namespace Server.Items
                             MagicReflectSpell.EndReflect(target);
                             ReactiveArmorSpell.EndArmor(target);
                             ProtectionSpell.EndProtection(target);
+
+                            EodonianPotion.RemoveEffects(target, PotionEffect.Barrab);
+                            EodonianPotion.RemoveEffects(target, PotionEffect.Urali);
 
                             target.SendLocalizedMessage(1072402); // Your wards have been removed!
 

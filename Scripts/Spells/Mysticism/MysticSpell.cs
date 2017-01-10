@@ -164,5 +164,4 @@ namespace Server.Spells.Mystic
             }
         }
     }
-
 }

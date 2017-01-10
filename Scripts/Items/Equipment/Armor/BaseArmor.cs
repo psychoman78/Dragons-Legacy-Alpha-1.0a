@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Server.Items
 {
-    public abstract class BaseArmor : Item, IScissorable, IFactionItem, ICraftable, IWearableDurability, ISetItem, IVvVItem, IOwnerRestricted
+    public abstract class BaseArmor : Item, IScissorable, IFactionItem, ICraftable, IWearableDurability, ISetItem, IVvVItem, IOwnerRestricted, ITalismanProtection
     {
         #region Factions
         private FactionItem m_FactionState;
@@ -113,6 +113,8 @@ namespace Server.Items
         private AosSkillBonuses m_AosSkillBonuses;
         private SAAbsorptionAttributes m_SAAbsorptionAttributes;
         private NegativeAttributes m_NegativeAttributes;
+
+        private TalismanAttribute m_TalismanProtection;
 
         // Overridable values. These values are provided to override the defaults which get defined in the individual armor scripts.
         private int m_ArmorBase = -1;
@@ -307,6 +309,7 @@ namespace Server.Items
             armor.m_SetAttributes = new AosAttributes(newItem, this.m_SetAttributes);
             armor.m_SetSkillBonuses = new AosSkillBonuses(newItem, this.m_SetSkillBonuses);
             armor.m_NegativeAttributes = new NegativeAttributes(newItem, m_NegativeAttributes);
+            armor.m_TalismanProtection = new TalismanAttribute(m_TalismanProtection);
         }
 
         #region Personal Bless Deed
@@ -1001,6 +1004,13 @@ namespace Server.Items
             }
         }
 
+        [CommandProperty(AccessLevel.GameMaster)]
+        public TalismanAttribute Protection
+        {
+            get { return m_TalismanProtection; }
+            set { m_TalismanProtection = value; InvalidateProperties(); }
+        }
+
         public override double DefaultWeight
         {
             get
@@ -1533,7 +1543,8 @@ namespace Server.Items
             xAbsorptionAttributes = 0x02000000,
             //TimesImbued = 0x04000000,
             NegativeAttributes  = 0x08000000,
-            Altered = 0x10000000
+            Altered = 0x10000000, 
+            TalismanProtection = 0x20000000
         }
 
         #region Mondain's Legacy Sets
@@ -1673,6 +1684,7 @@ namespace Server.Items
             // Version 7
             SaveFlag flags = SaveFlag.None;
 
+            SetSaveFlag(ref flags, SaveFlag.TalismanProtection, !m_TalismanProtection.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.NegativeAttributes, !this.m_NegativeAttributes.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.Attributes, !this.m_AosAttributes.IsEmpty);
             SetSaveFlag(ref flags, SaveFlag.ArmorAttributes, !this.m_AosArmorAttributes.IsEmpty);
@@ -1704,6 +1716,9 @@ namespace Server.Items
             SetSaveFlag(ref flags, SaveFlag.Altered, m_Altered);
 
             writer.WriteEncodedInt((int)flags);
+
+            if (GetSaveFlag(flags, SaveFlag.TalismanProtection))
+                m_TalismanProtection.Serialize(writer);
 
             if (GetSaveFlag(flags, SaveFlag.NegativeAttributes))
                 m_NegativeAttributes.Serialize(writer);
@@ -1898,6 +1913,11 @@ namespace Server.Items
                 case 5:
                     {
                         SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
+
+                        if (GetSaveFlag(flags, SaveFlag.TalismanProtection))
+                            m_TalismanProtection = new TalismanAttribute(reader);
+                        else
+                            m_TalismanProtection = new TalismanAttribute();
 
                         if (GetSaveFlag(flags, SaveFlag.NegativeAttributes))
                             m_NegativeAttributes = new NegativeAttributes(this, reader);
@@ -2278,6 +2298,7 @@ namespace Server.Items
             #endregion
             this.m_AosSkillBonuses = new AosSkillBonuses(this);
             m_NegativeAttributes = new NegativeAttributes(this);
+            m_TalismanProtection = new TalismanAttribute();
 
             // Mod to randomly add sockets and socketability features to armor. These settings will yield
             // 2% drop rate of socketed/socketable items
@@ -2498,7 +2519,9 @@ namespace Server.Items
             if (Absorbed < 2)
                 Absorbed = 2;
 
-            if (25 > Utility.Random(100)) // 25% chance to lower durability
+            double chance = NegativeAttributes.Antique > 0 ? 80 : 25;
+
+            if (chance >= Utility.Random(100)) // 25% chance to lower durability
             {
                 if (Core.AOS && this.m_AosArmorAttributes.SelfRepair + (this.IsSetItem && this.m_SetEquipped ? this.m_SetSelfRepair : 0) > Utility.Random(10))
                 {
@@ -2668,7 +2691,7 @@ namespace Server.Items
                 else
                     list.Add(1072376, this.Pieces.ToString()); // Part of an Armor Set (~1_val~ pieces)
 
-				if (SetID == SetItem.Bestial)
+                if (SetID == SetItem.Bestial)
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
 
                 if (this.BardMasteryBonus)
@@ -2701,6 +2724,9 @@ namespace Server.Items
 
             if ((prop = this.ArtifactRarity) > 0)
                 list.Add(1061078, prop.ToString()); // artifact rarity ~1_val~
+
+            if (m_TalismanProtection != null && !m_TalismanProtection.IsEmpty && m_TalismanProtection.Amount > 0)
+                list.Add(1072387, "{0}\t{1}", m_TalismanProtection.Name != null ? m_TalismanProtection.Name.ToString() : "Unknown", m_TalismanProtection.Amount); // ~1_NAME~ Protection: +~2_val~%
 
             if ((prop = this.m_AosAttributes.WeaponDamage) != 0)
                 list.Add(1060401, prop.ToString()); // damage increase ~1_val~%
@@ -3290,6 +3316,11 @@ namespace Server.Items
             return 0;
         }
         #endregion
+
+        public virtual void SetProtection(Type type, TextDefinition name, int amount)
+        {
+            m_TalismanProtection = new TalismanAttribute(type, name, amount);
+        }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool Altered

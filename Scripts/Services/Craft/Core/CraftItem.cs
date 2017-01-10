@@ -71,6 +71,24 @@ namespace Server.Engines.Craft
         public bool RequiresResTarget { get; set; }
         public bool RequiresMechanicalLife { get; set; }
         #endregion
+		
+		#region TOL
+        private object m_Data;
+        private int m_DisplayID;
+
+        public object Data
+        {
+            get { return m_Data; }
+            set { m_Data = value; }
+        }
+
+        public int DisplayID
+        {
+            get { return m_DisplayID; }
+            set { m_DisplayID = value; }
+        }
+        #endregion
+
 
         private Recipe m_Recipe;
 
@@ -1044,7 +1062,6 @@ namespace Server.Engines.Craft
 
 				if (talisman.Skill == system.MainSkill)
 				{
-					chance -= talisman.SuccessBonus / 100.0;
 					bonus = talisman.ExceptionalBonus / 100.0;
 				}
 			}

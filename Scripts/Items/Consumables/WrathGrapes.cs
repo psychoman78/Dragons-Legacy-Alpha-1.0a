@@ -10,7 +10,7 @@ namespace Server.Items
         {
             this.Weight = 1.0;
             this.Hue = 0x482;
-			this.Stackable = true;
+            this.Stackable = true;
         }
 
         public WrathGrapes(Serial serial)
@@ -47,7 +47,7 @@ namespace Server.Items
             }
         }// The grapes of wrath invigorate you for a short time, allowing you to deal extra damage.
 
-		public override bool Eat(Mobile from)
+        public override bool Eat(Mobile from)
         {
             if (base.Eat(from))
             {

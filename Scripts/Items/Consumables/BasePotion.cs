@@ -36,6 +36,14 @@ namespace Server.Items
         Parasitic,
         Darkglow,
 		ExplodingTarPotion,
+        #region TOL Publish 93
+        Barrab,
+        Jukari,
+        Kurak,
+        Barako,
+        Urali,
+        Sakkhra,
+        #endregion
 		#region FS:ATS Edits
         PetResurrect,
         PetShrink,

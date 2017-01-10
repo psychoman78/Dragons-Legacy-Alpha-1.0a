@@ -18,6 +18,9 @@ namespace Server.Engines.CannedEvil
         Terror,
         Infuse,
         #endregion
+        #region TOL
+        DragonTurtle,
+        #endregion
         //daat99 OWLTR start - MotA champ
         Crafter
         //daat99 OWLTR end - MotA champ
@@ -158,6 +161,17 @@ namespace Server.Engines.CannedEvil
                 new Type[] { typeof(SkeletalDrake), typeof(DreamWraith) }// Level 4
             }),
            #endregion
+			
+			#region TOL
+            new ChampionSpawnInfo( "Valley", typeof( DragonTurtle ), new string[]{ "Huntsman", "Msafiri", "Msafiri" } , new Type[][]
+		    {																											// DragonTurtle
+				new Type[]{ typeof( MyrmidexDrone ), typeof( MyrmidexLarvae ) },										// Level 1
+				new Type[]{ typeof( SilverbackGorilla ), typeof( WildTiger ) },											// Level 2
+				new Type[]{ typeof( GreaterPhoenix  ), typeof( Infernus ) },										    // Level 3
+				new Type[]{ typeof( Dimetrosaur ), typeof( Allosaurus ) }											    // Level 4
+			} ),
+                #endregion
+
             //daat99 OWLTR start - MotA champ mobs
 			new ChampionSpawnInfo( "Master of the Arts", typeof(MasterOfTheArts), new string[]{ "Destoyer", "Smelter", "Crafter" } , new Type[][]
 			{																											// Crafter

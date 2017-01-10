@@ -19,6 +19,7 @@ using Server.Spells.Ninjitsu;
 using Server.Spells.Second;
 using Server.Spells.Spellweaving;
 using Server.Targeting;
+using Server.Spells.SkillMasteries;
 using daat99;
 #endregion
 
@@ -174,15 +175,17 @@ namespace Server.Spells
             if (target != null && RunedSashOfWarding.IsUnderEffects(target, WardingEffect.SpellDamage))
                 sdiBonus -= 10;
 
+			sdiBonus -= Block.GetSpellReduction(target);
+
 			// PvP spell damage increase cap of 15% from an item’s magic property, 30% if spell school focused.
 			if (playerVsPlayer)
 			{
-			    if (SpellHelper.HasSpellMastery(m_Caster) && sdiBonus > 30)
+			    if (SpellHelper.HasSpellFocus(m_Caster, CastSkill) && sdiBonus > 30)
                 {
                     sdiBonus = 30;
                 }
 
-                if (!SpellHelper.HasSpellMastery(m_Caster) && sdiBonus > 15)
+                if (!SpellHelper.HasSpellFocus(m_Caster, CastSkill) && sdiBonus > 15)
                 {
                     sdiBonus = 15;
                 }
@@ -201,6 +204,13 @@ namespace Server.Spells
 			damage = AOS.Scale(damage, evalScale);
 
 			damage = AOS.Scale(damage, (int)(scalar * 100));
+
+			#region Skill Mastery
+            SkillMasterySpell spell = SkillMasterySpell.GetHarmfulSpell(Caster, typeof(TribulationSpell));
+
+            if (spell != null)
+                spell.AbsorbDamage(ref damage);
+            #endregion
 
 			return damage / 100;
 		}
@@ -358,7 +368,7 @@ namespace Server.Spells
             if (OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.USE_STORAGE_RESOURCES) && MasterStorageUtils.ConsumePlayersStorageItems(m_Caster as PlayerMobile, m_Info.Reagents, m_Info.Amounts))
                 return true;
             //daat99 OWLTR end - use SpellCastersKey
-			return false;
+			return true;
 		}
 
 		public virtual double GetInscribeSkill(Mobile m)
@@ -640,13 +650,24 @@ namespace Server.Spells
 			}
 		}
 
-		public virtual bool BlockedByHorrificBeast { get { return true; } }
+		public virtual bool BlockedByHorrificBeast 
+        { 
+            get 
+            {
+                if (TransformationSpellHelper.UnderTransformation(Caster, typeof(HorrificBeastSpell)) &&
+                    SpellHelper.HasSpellFocus(Caster, CastSkill))
+                    return false;
+
+                return true;
+            } 
+        }
+
 		public virtual bool BlockedByAnimalForm { get { return true; } }
 		public virtual bool BlocksMovement { get { return true; } }
 
 		public virtual bool CheckNextSpellTime { get { return !(m_Scroll is BaseWand); } }
 
-		public bool Cast()
+		public virtual bool Cast()
 		{
 			m_StartCastTime = Core.TickCount;
 

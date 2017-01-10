@@ -12,7 +12,7 @@ namespace Server.Items
         public BaseAddonContainer(int itemID)
             : base(itemID)
         {
-			Movable = false;
+            Movable = false;
 
             AddonComponent.ApplyLightTo(this);
 
@@ -150,7 +150,7 @@ namespace Server.Items
             if (house != null)
                 house.Addons.Remove(this);
 
-			List<AddonContainerComponent> components = new List<AddonContainerComponent>(m_Components);
+            List<AddonContainerComponent> components = new List<AddonContainerComponent>(m_Components);
 
             foreach (AddonContainerComponent component in components)
             {
@@ -352,7 +352,7 @@ namespace Server.Items
 
         public virtual void OnComponentUsed(AddonContainerComponent c, Mobile from)
         {
-			if (!Deleted)
+            if (!Deleted)
             {
                 OnDoubleClick(from);
             }

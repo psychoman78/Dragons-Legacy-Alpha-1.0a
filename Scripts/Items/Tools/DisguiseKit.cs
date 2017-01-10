@@ -238,7 +238,7 @@ namespace Server.Items
 
 				DisguiseTimers.CreateTimer(m_From, TimeSpan.FromHours(2.0));
 				DisguiseTimers.StartTimer(m_From);
-
+				
 				BuffInfo.AddBuff(m_From, new BuffInfo(BuffIcon.Disguised, 1075821, 1075820, TimeSpan.FromHours(2.0), m_From));
 			}
 		}
@@ -389,5 +389,4 @@ namespace Server.Items
 			}
 		}
 	}
-
 }

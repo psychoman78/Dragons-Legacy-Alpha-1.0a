@@ -74,7 +74,7 @@ namespace Server.Items
 		}
 
 		public static bool UpdatingBaseLogClass;
-		public override void Deserialize( GenericReader reader )
+		public override void Deserialize(GenericReader reader)
 		{
 			base.Deserialize( reader );
 
@@ -82,7 +82,7 @@ namespace Server.Items
 
 			if (version == 1)
 				UpdatingBaseLogClass = true;
-						m_Resource = (CraftResource)reader.ReadInt();
+			m_Resource = (CraftResource)reader.ReadInt();
 
 			if ( version == 0 )
 				m_Resource = CraftResource.RegularWood;
@@ -92,7 +92,7 @@ namespace Server.Items
 		{
 			if ( Deleted || !from.CanSee( this ) ) 
 				return false;
-			else if ( from.Skills.Carpentry.Value < skill &&
+			if ( from.Skills.Carpentry.Value < skill &&
 				from.Skills.Lumberjacking.Value < skill )
 			{
 				item.Delete();

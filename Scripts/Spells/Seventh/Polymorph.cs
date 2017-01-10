@@ -164,8 +164,8 @@ namespace Server.Spells.Seventh
                             Timer t = new InternalTimer(this.Caster);
 
                             m_Timers[this.Caster] = t;
-
-							BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Polymorph, 1075824, 1075823, t.Delay, Caster, String.Format("{0}\t{1}", GetArticleCliloc(m_NewBody), GetFormCliloc(m_NewBody))));
+                            
+                            BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Polymorph, 1075824, 1075823, t.Delay, Caster, String.Format("{0}\t{1}", GetArticleCliloc(m_NewBody), GetFormCliloc(m_NewBody))));
 
                             t.Start();
                         }
@@ -179,8 +179,8 @@ namespace Server.Spells.Seventh
 
             this.FinishSequence();
         }
-
-		private static TextDefinition GetArticleCliloc(int body)
+        
+        private static TextDefinition GetArticleCliloc(int body)
         {
             if (body == 0x11 || body == 0x01)
                 return "an";
@@ -222,8 +222,8 @@ namespace Server.Spells.Seventh
 
                 BaseArmor.ValidateMobile(m);
                 BaseClothing.ValidateMobile(m);
-
-				BuffInfo.RemoveBuff(m, BuffIcon.Polymorph);
+                
+                BuffInfo.RemoveBuff(m, BuffIcon.Polymorph);
             }
         }
 
@@ -250,5 +250,4 @@ namespace Server.Spells.Seventh
             }
         }
     }
-
 }

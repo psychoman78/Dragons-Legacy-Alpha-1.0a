@@ -9,17 +9,17 @@ namespace Server.Items
     {
         private class BladeWeaveRedirect
         {
-			public WeaponAbility NewAbility;
-			public int ClilocEntry;
+            public WeaponAbility NewAbility;
+            public int ClilocEntry;
 
-        public BladeWeaveRedirect(WeaponAbility ability, int cliloc)
+            public BladeWeaveRedirect(WeaponAbility ability, int cliloc)
             {
-				NewAbility = ability;
+                NewAbility = ability;
                 ClilocEntry = cliloc;
             }
         }
-        
-		private static Dictionary<Mobile, BladeWeaveRedirect> m_NewAttack = new Dictionary<Mobile, BladeWeaveRedirect>();
+
+        private static Dictionary<Mobile, BladeWeaveRedirect> m_NewAttack = new Dictionary<Mobile, BladeWeaveRedirect>();
 
         public static bool BladeWeaving(Mobile attacker, out WeaponAbility a)
         {
@@ -72,6 +72,7 @@ namespace Server.Items
                     return false;
             }
 
+
             return ((BladeWeaveRedirect)m_NewAttack[attacker]).NewAbility.OnBeforeSwing(attacker, defender);
         }
 
@@ -98,7 +99,7 @@ namespace Server.Items
                 else
                     base.OnHit(attacker, defender, damage);
 
-             m_NewAttack.Remove(attacker);
+                m_NewAttack.Remove(attacker);
                 ClearCurrentAbility(attacker);
             }
         }
@@ -111,7 +112,7 @@ namespace Server.Items
             else
                 base.OnMiss(attacker, defender);
 
-			m_NewAttack.Remove(attacker);
+            m_NewAttack.Remove(attacker);
         }
     }
 }

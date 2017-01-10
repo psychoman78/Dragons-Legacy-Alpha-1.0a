@@ -58,7 +58,7 @@ namespace Server
             }
         }
 
-		private readonly bool m_NoTimer;
+        private readonly bool m_NoTimer;
         public bool NoTimer
         {
             get
@@ -151,7 +151,7 @@ namespace Server
                 }));
         }
 
-		public BuffInfo(BuffIcon iconID, int titleCliloc, int secondaryCliloc, TimeSpan length, Mobile m, bool notimer)
+        public BuffInfo(BuffIcon iconID, int titleCliloc, int secondaryCliloc, TimeSpan length, Mobile m, bool notimer)
             : this(iconID, titleCliloc, secondaryCliloc, length, m)
         {
             m_NoTimer = notimer;

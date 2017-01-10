@@ -83,8 +83,8 @@ namespace Server.Items
 
             Timer timer = new OrangePetalsTimer(from);
             timer.Start();
-
-			BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.OrangePetals, 1153785, 1153814, TimeSpan.FromMinutes(5.0), from));
+            
+            BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.OrangePetals, 1153785, 1153814, TimeSpan.FromMinutes(5.0), from));
 
             AddContext(from, new OrangePetalsContext(timer));
 
@@ -160,5 +160,4 @@ namespace Server.Items
             }
         }
     }
-
 }

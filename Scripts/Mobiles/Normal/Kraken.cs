@@ -6,13 +6,13 @@ namespace Server.Mobiles
     [CorpseName("a krakens corpse")]
     public class Kraken : BaseCreature
     {
-		private DateTime m_NextWaterBall;
+        private DateTime m_NextWaterBall;
 
         [Constructable]
         public Kraken()
             : base(AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4)
         {
-			this.m_NextWaterBall = DateTime.UtcNow;
+            this.m_NextWaterBall = DateTime.UtcNow;
 
             this.Name = "a kraken";
             this.Body = 77;
@@ -48,7 +48,7 @@ namespace Server.Mobiles
             this.CanSwim = true;
             this.CantWalk = true;
 
-			this.PackItem(new MessageInABottle());
+            this.PackItem(new MessageInABottle());
 
             //Rope is supposed to be a rare drop.  ref UO Guide Kraken
             if (Utility.RandomDouble() < .05)
@@ -56,7 +56,7 @@ namespace Server.Mobiles
                 Rope rope = new Rope();
                 rope.ItemID = 0x14F8;
                 this.PackItem(rope);
-            }          
+            }                       
         }
 
         public Kraken(Serial serial)
@@ -106,7 +106,7 @@ namespace Server.Mobiles
             base.Deserialize(reader);
             int version = reader.ReadInt();
 
-			 m_NextWaterBall = DateTime.UtcNow;
+            m_NextWaterBall = DateTime.UtcNow;
         }
     }
 }

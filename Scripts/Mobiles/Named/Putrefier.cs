@@ -90,7 +90,7 @@ namespace Server.Mobiles
             }
         }
 
-		public override void OnDamagedBySpell(Mobile attacker)
+        public override void OnDamagedBySpell(Mobile attacker)
         {
             base.OnDamagedBySpell(attacker);
 

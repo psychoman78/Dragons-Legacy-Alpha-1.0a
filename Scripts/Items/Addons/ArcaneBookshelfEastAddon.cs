@@ -2,7 +2,7 @@ using System;
 
 namespace Server.Items
 {
-	public class ArcaneBookShelfAddonEast : BaseAddonContainer
+    public class ArcaneBookShelfAddonEast : BaseAddonContainer
     {
         public override BaseAddonContainerDeed Deed { get { return new ArcaneBookShelfDeedEast(); } }
         public override bool RetainDeedHue { get { return true; } }
@@ -101,7 +101,7 @@ namespace Server.Items
 
             int version = reader.ReadEncodedInt();
 
-			Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
+            Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
         }
 
         private void Replace()
@@ -162,7 +162,7 @@ namespace Server.Items
 
             int version = reader.ReadEncodedInt();
 
-			Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
+            Timer.DelayCall(TimeSpan.FromSeconds(10), Replace);
         }
 
         private void Replace()
@@ -185,10 +185,10 @@ namespace Server.Items
                 deed.IsSecure = IsSecure;
                 deed.Movable = Movable;
 
-                if (house != null && house.LockDowns.Contains(this))
+                if (house != null && house.LockDowns.ContainsKey(this))
                 {
                     house.LockDowns.Remove(this);
-                    house.LockDowns.Add(deed);
+                    house.LockDowns.Add(deed, house.Owner);
                 }
                 else if (house != null && house.Secures.Contains(this))
                 {

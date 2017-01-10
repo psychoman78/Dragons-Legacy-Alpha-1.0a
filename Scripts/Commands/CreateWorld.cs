@@ -53,6 +53,7 @@ namespace Server.Commands
             new CommandEntry("High Seas",       "DecorateHS",       "DeleteHS",             121),
             new CommandEntry("City Loyalty",    "SetupCityLoyaltySystem",   "DeleteCityLoyaltySystem",             122),
             new CommandEntry("Castle Blackthorn",    "GenBlackthorn",       null,                                  123),
+            new CommandEntry("Time of Legends",      "DecorateTOL",         null,                                  124),
 		});
         public CreateWorld()
         {
@@ -190,7 +191,7 @@ namespace Server.Gumps
 
 			int items = CreateWorld.Commands.Count;
 
-			if (!Server.Factions.Settings.Enabled)
+            if (!Server.Factions.Settings.Enabled)
                 items--;
 
 			this.AddBackground(0, 0, 240, 75 + items * 25, 5054);
@@ -210,14 +211,15 @@ namespace Server.Gumps
 			int y = 25;
 			foreach(CreateWorld.CommandEntry entry in CreateWorld.Commands)
 			{
-				if (entry.Name == "Factions" && !Server.Factions.Settings.Enabled)
+                if (entry.Name == "Factions" && !Server.Factions.Settings.Enabled)
                     continue;
+
 				this.AddLabel(20, y + 1, 200, entry.Name);
 				this.AddCheck(180, y - 2, 210, 211, true, entry.checkId);
 				y += 25;
 			}
 
-			y = 25 + (items * 25);
+            y = 25 + (items * 25);
 
 			this.AddButton(60, y + 15, 247, 249, 1, GumpButtonType.Reply, 0);
 			this.AddButton(130, y + 15, 241, 243, 0, GumpButtonType.Reply, 0);

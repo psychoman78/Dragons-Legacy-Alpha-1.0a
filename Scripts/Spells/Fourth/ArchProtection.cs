@@ -172,5 +172,4 @@ namespace Server.Spells.Fourth
             }
         }
     }
-
 }

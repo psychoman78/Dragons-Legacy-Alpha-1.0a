@@ -336,11 +336,14 @@ namespace Server.Engines.Blackthorn
 
         private void DoMessage()
         {
+            if (this.Map == null)
+                return;
+
             IPooledEnumerable eable = this.Map.GetMobilesInRange(Beacon.Location, 20);
 
             foreach (Mobile m in eable)
             {
-                if (m.NetState != null)
+                if (m != null && m.NetState != null)
                     m.PrivateOverheadMessage(Server.Network.MessageType.Regular, 1154, 1154550, m.NetState); // *A sound roars in the distance...Minax's Beacon is vulnerable to attack!!*
             }
 
@@ -625,5 +628,4 @@ namespace Server.Engines.Blackthorn
                 new Point3D(6444, 2553, 0));
         }
 	}
-
 }

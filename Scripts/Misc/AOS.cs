@@ -86,6 +86,19 @@ namespace Server
                 return damage;
             }
 
+            #region Mondain's Legacy
+            if (m != null)
+            {
+                m.Items.ForEach(i =>
+                {
+                    ITalismanProtection prot = i as ITalismanProtection;
+
+                    if (prot != null)
+                        damage = prot.Protection.ScaleDamage(from, damage);
+                });
+            }
+            #endregion
+
             Fix(ref phys);
             Fix(ref fire);
             Fix(ref cold);
@@ -268,11 +281,11 @@ namespace Server
                 }
             }
 
-			#region Berserk
+            #region Berserk
             BestialSetHelper.OnDamage(m, from, ref totalDamage);
             #endregion
 
-			m.Damage(totalDamage, from, true, false);
+            m.Damage(totalDamage, from, true, false);
 
             #region Stygian Abyss
             if (m.Spell != null)
@@ -316,7 +329,13 @@ namespace Server
                 case 10: return Math.Min(100, AosAttributes.GetValue(from, AosAttribute.LowerRegCost));
                 case 11: return AosAttributes.GetValue(from, AosAttribute.SpellDamage);
                 case 12: return Math.Min(6, AosAttributes.GetValue(from, AosAttribute.CastRecovery));
-                case 13:return AosAttributes.GetValue(from, AosAttribute.CastSpeed);
+                case 13:
+                    /*int max = from.Skills[SkillName.Chivalry].Value < 70.0 ? 4 : 2;
+                    if (ProtectionSpell.Registry.ContainsKey(from) || EodonianPotion.IsUnderEffects(from, PotionEffect.Urali))
+                    {
+                        return Math.Min(max - 2, AosAttributes.GetValue(from, AosAttribute.CastSpeed) - 2);
+                    }*/
+                    return AosAttributes.GetValue(from, AosAttribute.CastSpeed);
                 case 14: return Math.Min(40, AosAttributes.GetValue(from, AosAttribute.LowerManaCost)) + BaseArmor.GetInherentLowerManaCost(from);
 				default: return 0;
 			}
@@ -491,11 +510,14 @@ namespace Server
                 if (SkillHandlers.Discordance.GetEffect(m, ref discordanceEffect))
                     value -= discordanceEffect * 2;
 
+				if (Block.IsBlocking(m))
+                    value -= 30;
+
                 #region SA
                 if (TransformationSpellHelper.UnderTransformation(m, typeof(Spells.Mystic.StoneFormSpell)))
                     value -= 10;
 
-				if (m is PlayerMobile && m.Race == Race.Gargoyle)
+                if (m is PlayerMobile && m.Race == Race.Gargoyle)
                 {
                     value += ((PlayerMobile)m).GetRacialBerserkBuff(false);
                 }
@@ -519,7 +541,7 @@ namespace Server
                 if (context != null && context.Spell is ReaperFormSpell)
                     value += ((ReaperFormSpell)context.Spell).SpellDamageBonus;
 
-				#region SA
+                #region SA
                 if (m is PlayerMobile && m.Race == Race.Gargoyle)
                 {
                     value += ((PlayerMobile)m).GetRacialBerserkBuff(true);
@@ -665,12 +687,10 @@ namespace Server
                 if (HitLower.IsUnderDefenseEffect(m))
                     value -= 25; // Under Hit Lower Defense effect -> 25% malus
 
-                int blockBonus = 0;
                 int discordanceEffect = 0;
                 int surpriseMalus = 0;
 
-                if (Block.GetBonus(m, ref blockBonus))
-                    value += blockBonus;
+                value += Block.GetBonus(m);
 
                 if (SurpriseAttack.GetMalus(m, ref surpriseMalus))
                     value -= surpriseMalus;
@@ -1178,7 +1198,6 @@ namespace Server
         UseBestSkill = 0x00400000,
         MageWeapon = 0x00800000,
         DurabilityBonus = 0x01000000,
-        #region Stygian Abyss
         BloodDrinker = 0x02000000,
         BattleLust = 0x04000000,
         HitCurse = 0x08000000,
@@ -1186,7 +1205,7 @@ namespace Server
         HitManaDrain = 0x20000000,
         SplinteringWeapon = 0x40000000,
         ReactiveParalyze = 0x80000000,
-        #endregion
+        MysticWeapon = 0x100000000,
     }
 
     public sealed class AosWeaponAttributes : BaseAttributes
@@ -1722,6 +1741,19 @@ namespace Server
             }
         }
         #endregion
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int MysticWeapon
+        {
+            get
+            {
+                return this[AosWeaponAttribute.MysticWeapon];
+            }
+            set
+            {
+                this[AosWeaponAttribute.MysticWeapon] = value;
+            }
+        }
     }
 
     [Flags]
@@ -3024,5 +3056,4 @@ namespace Server
             return index;
         }
     }
-
 }

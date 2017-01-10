@@ -159,7 +159,7 @@ namespace Server.Items
             return true;
         }
 
-		public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
+        public override bool OnDroppedInto(Mobile from, Container target, Point3D p)
         {
             bool canDrop = base.OnDroppedInto(from, target, p);
 
@@ -202,7 +202,7 @@ namespace Server.Items
             this.DisplayTo(from);
         }
 
-		public void CheckBank(BankBox bank, Mobile from)
+        public void CheckBank(BankBox bank, Mobile from)
         {
             if (AccountGold.Enabled && bank.Owner == from && from.Account != null)
             {

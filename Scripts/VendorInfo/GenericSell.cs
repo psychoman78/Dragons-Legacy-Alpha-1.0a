@@ -94,7 +94,7 @@ namespace Server.Mobiles
 				}
 				//daat99 OWLTR end - resources cost more
 
-				if (price < 1)
+                if (price < 1)
                     price = 1;
             }
             else if (item is BaseBeverage)

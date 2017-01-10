@@ -379,7 +379,7 @@ namespace Server.Items
 
             val += GetPoisonLevel(bc) * 20;
 
-			if (val > 700)
+            if (val > 700)
                 val = 700 + (int)((val - 700) * (3.0 / 11));
 
             val /= 10;
@@ -432,6 +432,13 @@ namespace Server.Items
         public static void SetInstrument(Mobile from, BaseInstrument item)
         {
             m_Instruments[from] = item;
+        }
+
+        public BaseInstrument()
+        {
+            RandomInstrument();
+
+            UsesRemaining = Utility.RandomMinMax(this.InitMinUses, this.InitMaxUses);
         }
 
         public BaseInstrument(int itemID, int wellSound, int badlySound)
