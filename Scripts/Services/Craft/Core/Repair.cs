@@ -371,7 +371,7 @@ namespace Server.Engines.Craft
 							if (OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.CRAFT_GIVE_TOKENS))
 								TokenSystem.GiveTokensToPlayer(from as PlayerMobile, Utility.Random(5));
 							//daat99 OWLTR end - tokens on repairs
-						}
+                        }
                         else
                         {
                             number = (usingDeed) ? 1061137 : 1044280; // You fail to repair the item. [And the contract is destroyed]

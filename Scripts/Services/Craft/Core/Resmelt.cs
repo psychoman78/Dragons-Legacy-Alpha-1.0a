@@ -128,11 +128,11 @@ namespace Server.Engines.Craft
                     if (craftResource.Amount < 2)
                         return SmeltResult.Invalid; // Not enough metal to resmelt
 
-					//daat99 OWLTR start - smelting difficulty
+                    //daat99 OWLTR start - smelting difficulty
 					double difficulty = daat99.ResourceHelper.GetMinSkill(resource);
 					//daat99 OWLTR end - smelting difficulty
 
-					if ( difficulty > from.Skills[SkillName.Mining].Value)
+                    if (difficulty > from.Skills[SkillName.Mining].Value)
                         return SmeltResult.NoSkill;
 
                     Type resourceType = info.ResourceTypes[0];

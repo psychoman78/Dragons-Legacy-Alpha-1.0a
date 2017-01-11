@@ -1,5 +1,6 @@
 using System;
 using Server.Items;
+using daat99;
 
 namespace Server.Engines.Craft
 {
@@ -129,7 +130,7 @@ namespace Server.Engines.Craft
             {
                 index = this.AddCraft(typeof(Board), 1044294, 1027127, 0.0, 0.0, typeof(Log), 1044466, 1, 1044465);
                 this.SetUseAllRes(index, true);
-				//this.SetForceTypeRes(index, true);
+				this.SetForceTypeRes(index, true);
             }
 
             this.AddCraft(typeof(BarrelStaves), 1044294, 1027857, 00.0, 25.0, typeof(Board), 1044041, 5, 1044351);
@@ -235,6 +236,18 @@ namespace Server.Engines.Craft
                 this.AddRes(index, typeof(SmallPieceofBlackrock), 1150016, 10, 1044253);
                 this.AddRes(index, typeof(NexusCore), 1153501, 1, 1044253);
             }         
+            #endregion
+
+            #region TOL
+            index = AddCraft(typeof(CraftableHouseAddonDeed), 1044294, 1155850, 42.1, 77.7, typeof(Log), 1044041, 5, 1044351);
+            SetData(index, CraftableAddonType.LightWoodenSignHanger);
+            SetDisplayID(index, 2969);
+            SetNeededExpansion(index, Expansion.TOL);
+
+            index = AddCraft(typeof(CraftableHouseAddonDeed), 1044294, 1155849, 42.1, 77.7, typeof(Log), 1044041, 5, 1044351);
+            SetData(index, CraftableAddonType.DarkWoodenSignHanger);
+            SetDisplayID(index, 2967);
+            SetNeededExpansion(index, Expansion.TOL);
             #endregion
 
             // Furniture
@@ -848,13 +861,16 @@ namespace Server.Engines.Craft
             this.AddSkill(index, SkillName.Tailoring, 50.0, 55.0);
             this.AddRes(index, typeof(Cloth), 1044286, 60, 1044287);
 
-            this.MarkOption = true;
+			this.SetSubRes(typeof(Board), 1072643);
+
+			//daat99 OWLTR start - custom Wood
+            daat99.ResourceHelper.AddWoodResources(this);
+            //daat99 OWLTR end - custom Wood 
+
+			this.MarkOption = true;
             this.Repair = Core.AOS;
             this.CanEnhance = Core.ML;
 
-            //daat99 OWLTR start - custom resources
-            daat99.ResourceHelper.AddWoodResources(this);
-            //daat99 OWLTR end - custom resources
         }
     }
 }
