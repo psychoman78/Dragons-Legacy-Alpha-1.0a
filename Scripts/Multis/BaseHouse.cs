@@ -3615,7 +3615,7 @@ namespace Server.Multis
             if (list == null)
                 return false;
 
-            for (int i = 1; i < list.Count; ++i)
+            for (int i = 0; i < list.Count; ++i)
             {
                 BaseHouse h = list[i];
 
@@ -3638,8 +3638,8 @@ namespace Server.Multis
 				return true;
 			}
 
-			int count = 1;
-			for (int i = 1; i < a.Length; ++i)
+			int count = 0;
+			for (int i = 0; i < a.Length; ++i)
 			{
 				if (a[i] != null && HasHouse(a[i]))
 				{

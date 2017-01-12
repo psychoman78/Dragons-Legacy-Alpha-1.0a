@@ -26,7 +26,7 @@ namespace Server.Items
             SlayerGroup arachnid = new SlayerGroup();
             SlayerGroup reptilian = new SlayerGroup();
             SlayerGroup fey = new SlayerGroup();
-            SlayerGroup eodon = new SlayerGroup();
+			SlayerGroup eodon = new SlayerGroup();
             SlayerGroup eodonTribe = new SlayerGroup();
             SlayerGroup dino = new SlayerGroup();
             SlayerGroup myrmidex = new SlayerGroup();
@@ -540,7 +540,7 @@ namespace Server.Items
                     )
             };
 
-            eodon.Opposition = new SlayerGroup[] { };
+			eodon.Opposition = new SlayerGroup[] { };
             eodon.FoundOn = new Type[] { };
             eodon.Super = 
                 new SlayerEntry(
@@ -591,19 +591,19 @@ namespace Server.Items
             myrmidex.Entries = new SlayerEntry[] { };
 
             m_Groups = new SlayerGroup[]
-				{
-					humanoid,
-					undead,
-					elemental,
-					abyss,
-					arachnid,
-					reptilian,
-					fey,
-                    eodon,
-                    eodonTribe,
-                    dino, 
-                    myrmidex,
-				};
+            {
+				humanoid,
+				undead,
+				elemental,
+				abyss,
+				arachnid,
+				reptilian,
+				fey,
+                eodon,
+                eodonTribe,
+                dino, 
+                myrmidex,
+			};
 
             m_TotalEntries = CompileEntries(m_Groups);
         }
@@ -710,7 +710,7 @@ namespace Server.Items
                     return true;
             }
 
-            if (m_Super.Name == SlayerName.Eodon && !m_Super.Slays(m))
+			if (m_Super.Name == SlayerName.Eodon && !m_Super.Slays(m))
                 return true;
 
             return false;

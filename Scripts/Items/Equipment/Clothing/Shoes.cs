@@ -601,7 +601,7 @@ namespace Server.Items
         }
     }
 
-    public class JesterShoes : BaseShoes
+	public class JesterShoes : BaseShoes
     {
         public override int LabelNumber { get { return 1109617; } } // Jester Shoes
 

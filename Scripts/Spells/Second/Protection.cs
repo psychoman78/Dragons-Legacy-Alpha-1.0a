@@ -40,8 +40,8 @@ namespace Server.Spells.Second
             * a decreased "resisting spells" skill value by -35 + (Inscription/20),
             * and a slower casting speed modifier (technically, a negative "faster cast speed") of 2 points.
             * The protection spell has an indefinite duration, becoming active when cast, and deactivated when re-cast.
-            * Reactive Armor, Protection, and Magic Reflection will stay on‚Äîeven after logging out,
-            * even after dying‚Äîuntil you ‚Äúturn them off‚Äù by casting them again.
+           * Reactive Armor, Protection, and Magic Reflection will stay onóeven after logging out,
+            * even after dyingóuntil you ìturn them offî by casting them again.
             */
             object[] mods = (object[])m_Table[target];
 
@@ -79,7 +79,7 @@ namespace Server.Spells.Second
                 target.RemoveSkillMod((SkillMod)mods[1]);
 
                 BuffInfo.RemoveBuff(target, BuffIcon.Protection);
-                BuffInfo.RemoveBuff(target, BuffIcon.ArchProtection);
+				BuffInfo.RemoveBuff(target, BuffIcon.ArchProtection);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Server.Spells.Second
                 m.RemoveSkillMod((SkillMod)mods[1]);
 
                 BuffInfo.RemoveBuff(m, BuffIcon.Protection);
-                BuffInfo.RemoveBuff(m, BuffIcon.ArchProtection);
+				BuffInfo.RemoveBuff(m, BuffIcon.ArchProtection);
             }
         }
 
@@ -197,4 +197,5 @@ namespace Server.Spells.Second
             }
         }
     }
+
 }

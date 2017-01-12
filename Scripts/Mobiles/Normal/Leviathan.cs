@@ -36,7 +36,7 @@ namespace Server.Mobiles
         };
 
         private Mobile m_Fisher;
-        private DateTime m_NextWaterBall;
+		private DateTime m_NextWaterBall;
 
         [Constructable]
         public Leviathan()
@@ -49,7 +49,7 @@ namespace Server.Mobiles
             : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4)
         {
             this.m_Fisher = fisher;
-            this.m_NextWaterBall = DateTime.UtcNow;
+			this.m_NextWaterBall = DateTime.UtcNow;
 
             // May not be OSI accurate; mostly copied from krakens
             this.Name = "a leviathan";
@@ -113,7 +113,6 @@ namespace Server.Mobiles
             get { return this.m_Fisher; }
             set { this.m_Fisher = value; }
         }
-
         public override bool HasBreath { get { return true; } }
         public override int BreathPhysicalDamage { get { return 70; } }
         public override int BreathColdDamage { get { return 30; } }
@@ -171,15 +170,17 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
+
             writer.Write((int)0);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
+
             int version = reader.ReadInt();
 
-            m_NextWaterBall = DateTime.UtcNow;
+			m_NextWaterBall = DateTime.UtcNow;
         }
 
         public override void OnKilledBy(Mobile mob)

@@ -204,7 +204,7 @@ namespace Server.Items
             }
         }
 
-        public virtual void OnSOSComplete(Container chest)
+		public virtual void OnSOSComplete(Container chest)
         {
         }
 

@@ -1,14 +1,6 @@
-#region Header
-// **********
-// ServUO - AnimalTrainer.cs
-// **********
-#endregion
-
-#region References
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using Server.ContextMenus;
 using Server.Gumps;
 using Server.Misc;
@@ -17,7 +9,6 @@ using Server.Network;
 using Server.Targeting;
 using Server.Engines.BulkOrders;
 using CustomsFramework.Systems.AnimalBODSystem;
-#endregion
 
 namespace Server.Mobiles
 {
@@ -339,8 +330,7 @@ namespace Server.Mobiles
                 max += (int)((vetern - 90.0) / 10);
 
             return max + Server.Spells.SkillMasteries.MasteryInfo.BoardingSlotIncrease(from);
-		}
-        
+        }
 
         private class StableTarget : Target
         {

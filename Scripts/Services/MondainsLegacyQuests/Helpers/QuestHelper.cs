@@ -726,7 +726,7 @@ namespace Server.Engines.Quests
             return GetQuest( from, typeof( T ) ) != null;
         }
 
-        public static bool HasQuest(PlayerMobile from, Type t)
+		public static bool HasQuest(PlayerMobile from, Type t)
         {
             return GetQuest(from, t) != null;
         }

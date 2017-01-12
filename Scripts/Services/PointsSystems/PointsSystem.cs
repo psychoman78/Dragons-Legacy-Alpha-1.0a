@@ -304,7 +304,7 @@ namespace Server.Engines.Points
 						PointsType type = (PointsType)reader.ReadInt();
 						PointsSystem s = GetSystemInstance(type);
 
-					    s.Deserialize(reader);
+						s.Deserialize(reader);
 					}	
 				});
 		}

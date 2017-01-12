@@ -335,7 +335,7 @@ namespace Server.Items
         }
     }
 
-    public class GuildedKilt : BaseOuterLegs
+	public class GuildedKilt : BaseOuterLegs
     {
         public override int LabelNumber { get { return 1109619; } } // Guilded Kilt
 

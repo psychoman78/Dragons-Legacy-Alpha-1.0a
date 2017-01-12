@@ -2523,7 +2523,7 @@ namespace Server.Items
         }
     }
 
-    public class ChefsToque : BaseHat
+	public class ChefsToque : BaseHat
     {
         public override int LabelNumber { get { return 1109618; } } // Chef's Toque
 

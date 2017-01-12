@@ -527,7 +527,7 @@ namespace Server.Items
             }
         }
 
-        public virtual void OnMapComplete(TreasureMapChest chest)
+		public virtual void OnMapComplete(TreasureMapChest chest)
         {
         }
 
@@ -1340,7 +1340,7 @@ namespace Server.Items
                     m_TreasureMap.Completed = true;
                     m_TreasureMap.CompletedBy = m_From;
 
-                    m_TreasureMap.OnMapComplete(m_Chest);
+					m_TreasureMap.OnMapComplete(m_Chest);
 
                     int spawns;
                     switch (m_TreasureMap.Level)

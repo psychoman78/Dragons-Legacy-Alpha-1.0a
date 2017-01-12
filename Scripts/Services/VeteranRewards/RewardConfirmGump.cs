@@ -57,7 +57,7 @@ namespace Server.Engines.VeteranRewards
                         ((Server.Items.LighthouseAddonDeed)item).Account = this.m_From.Account.Username;
 
                     if (RewardSystem.ConsumeRewardPoint(this.m_From))
-                    {
+					{
                         #region TOL
                         if (item is Server.Engines.Auction.AuctionSafeDeed)
                         {

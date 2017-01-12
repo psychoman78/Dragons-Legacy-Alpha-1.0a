@@ -19,7 +19,7 @@ namespace Server.Spells.SkillMasteries
 		{
 		}
 
-		public override bool CheckCast()
+        public override bool CheckCast()
         {
             return false;
         }

@@ -91,7 +91,7 @@ namespace Server.Engines.Quests
         public Agralem()
             : base("Agralem", "the Bladeweaver")
         {
-            this.SetSkill(SkillName.Throwing, 80.0, 100.0);
+			this.SetSkill(SkillName.Throwing, 80.0, 100.0);
         }
 
         public Agralem(Serial serial)

@@ -69,7 +69,7 @@ namespace Server.Spells.Spellweaving
 
                 m_WeaponDamageTable.Remove(weapon);
 
-                BuffInfo.RemoveBuff(entry.m_Caster, BuffIcon.ImmolatingWeapon);
+				BuffInfo.RemoveBuff(entry.m_Caster, BuffIcon.ImmolatingWeapon);
 
                 weapon.InvalidateProperties();
             }
@@ -112,7 +112,7 @@ namespace Server.Spells.Spellweaving
 
                     m_WeaponDamageTable[weapon] = new ImmolatingWeaponEntry(damage, stopTimer, this.Caster);
 
-                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.ImmolatingWeapon, 1071028, 1153782, damage));
+					BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.ImmolatingWeapon, 1071028, 1153782, damage));
 
                     weapon.InvalidateProperties();
                 }

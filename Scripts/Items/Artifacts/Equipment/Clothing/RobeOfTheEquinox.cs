@@ -20,7 +20,7 @@ namespace Server.Items
         {
         }
 
-        public override Race RequiredRace
+		public override Race RequiredRace
         {
             get
             {

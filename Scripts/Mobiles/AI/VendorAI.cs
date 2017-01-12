@@ -149,7 +149,7 @@ namespace Server.Mobiles
             }
         }
 
-        public override double TransformMoveDelay(double delay)
+		public override double TransformMoveDelay(double delay)
         {
             return (double)Utility.RandomMinMax(30, 120);
         }

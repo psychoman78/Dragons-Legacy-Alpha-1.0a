@@ -20,7 +20,6 @@ using Server.Spells.Second;
 using Server.Spells.Spellweaving;
 using Server.Targeting;
 using Server.Spells.SkillMasteries;
-using daat99;
 #endregion
 
 namespace Server.Spells
@@ -175,7 +174,7 @@ namespace Server.Spells
             if (target != null && RunedSashOfWarding.IsUnderEffects(target, WardingEffect.SpellDamage))
                 sdiBonus -= 10;
 
-			sdiBonus -= Block.GetSpellReduction(target);
+            sdiBonus -= Block.GetSpellReduction(target);
 
 			// PvP spell damage increase cap of 15% from an item’s magic property, 30% if spell school focused.
 			if (playerVsPlayer)
@@ -205,7 +204,7 @@ namespace Server.Spells
 
 			damage = AOS.Scale(damage, (int)(scalar * 100));
 
-			#region Skill Mastery
+            #region Skill Mastery
             SkillMasterySpell spell = SkillMasterySpell.GetHarmfulSpell(Caster, typeof(TribulationSpell));
 
             if (spell != null)
@@ -364,11 +363,8 @@ namespace Server.Spells
 			{
 				return true;
 			}
-            //daat99 OWLTR start - use SpellCastersKey
-            if (OWLTROptionsManager.IsEnabled(OWLTROptionsManager.OPTIONS_ENUM.USE_STORAGE_RESOURCES) && MasterStorageUtils.ConsumePlayersStorageItems(m_Caster as PlayerMobile, m_Info.Reagents, m_Info.Amounts))
-                return true;
-            //daat99 OWLTR end - use SpellCastersKey
-			return true;
+
+			return false;
 		}
 
 		public virtual double GetInscribeSkill(Mobile m)
@@ -949,7 +945,7 @@ namespace Server.Spells
 			int fcMax = 4;
 
 			if (CastSkill == SkillName.Magery || CastSkill == SkillName.Necromancy ||
-				(CastSkill == SkillName.Chivalry && (m_Caster.Skills[SkillName.Magery].Value >= 70.0 || m_Caster.Skills[SkillName.Mysticism].Value >= 70.0)))
+                (CastSkill == SkillName.Chivalry && (m_Caster.Skills[SkillName.Magery].Value >= 70.0 || m_Caster.Skills[SkillName.Mysticism].Value >= 70.0)))
 			{
 				fcMax = 2;
 			}

@@ -29,7 +29,7 @@ namespace Server.Misc
                 aggressed.LocalOverheadMessage(MessageType.Regular, Hue, true, String.Format(AggressedFormat, aggressor.Name));
             }
 
-            BuffInfo.AddBuff(aggressor, new BuffInfo(BuffIcon.HeatOfBattleStatus, 1153801, 1153827, TimeSpan.FromMinutes(2), aggressor, true));
+			BuffInfo.AddBuff(aggressor, new BuffInfo(BuffIcon.HeatOfBattleStatus, 1153801, 1153827, TimeSpan.FromMinutes(2), aggressor, true));
             BuffInfo.AddBuff(aggressed, new BuffInfo(BuffIcon.HeatOfBattleStatus, 1153801, 1153827, TimeSpan.FromMinutes(2), aggressed, true));
         }
 

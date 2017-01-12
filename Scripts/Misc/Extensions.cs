@@ -236,7 +236,7 @@ namespace Server
         }
     }
 
-    public static class ColUtility
+	public static class ColUtility
     {
         public static void Free<T>(List<T> l)
         {

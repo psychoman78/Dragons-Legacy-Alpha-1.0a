@@ -46,13 +46,13 @@ namespace Server.Engines.Harvest
                                     player.SendLocalizedMessage(1055037); // You finish your grim work, finding some of the specific bones listed in the Hag's recipe.
                                     obj.Complete();
 
-                                    return;
+                                return;
                                 }
                             }
                         }
                     }
                 }
-                else if (targeted is LandTarget && ((LandTarget)targeted).TileID >= 113 && ((LandTarget)targeted).TileID <= 120)
+				else if (targeted is LandTarget && ((LandTarget)targeted).TileID >= 113 && ((LandTarget)targeted).TileID <= 120)
                 {
                     if (Server.Engines.Quests.TheGreatVolcanoQuest.OnHarvest(from, m_Tool))
                         return;

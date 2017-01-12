@@ -235,8 +235,9 @@ namespace Server.Items
 
             BankBox box = from.FindBankNoCreate();
             CommodityDeedBox cox = CommodityDeedBox.Find(this);
-            GalleonHold hold = this.RootParent as GalleonHold;
 
+			GalleonHold hold = this.RootParent as GalleonHold;
+			
             // Veteran Rewards mods
             if (this.m_Commodity != null)
             {
@@ -263,7 +264,7 @@ namespace Server.Items
                     else
                         number = 1080525; // The commodity deed box must be secured before you can use it.
                 }
-                else if (hold != null)
+				else if (hold != null)
                 {
                     number = 1047031; // The commodity has been redeemed.
 
@@ -333,7 +334,7 @@ namespace Server.Items
                 {
                     BankBox box = from.FindBankNoCreate();
                     CommodityDeedBox cox = CommodityDeedBox.Find(this.m_Deed);
-                    GalleonHold hold = ((Item)targeted).RootParent as GalleonHold;
+					GalleonHold hold = ((Item)targeted).RootParent as GalleonHold;
 
                     // Veteran Rewards mods
                     if (box != null && this.m_Deed.IsChildOf(box) && ((Item)targeted).IsChildOf(box) ||

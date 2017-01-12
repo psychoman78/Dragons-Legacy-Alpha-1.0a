@@ -320,7 +320,6 @@ namespace Server
                 return;
 
             int bushido = (int)from.Skills.Bushido.Value;
-
             if (bushido < 50)
                 return;
 
@@ -340,7 +339,7 @@ namespace Server
             {
                 this.m_Source.SendLocalizedMessage(1063255); // You gain in Perfection as you precisely strike your opponent.
 
-                BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.Perfection, 1153786, 1151394, String.Format("{0}\t{1}", m_Target.Name, damagebonus)));
+				BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.Perfection, 1153786, 1151394, String.Format("{0}\t{1}", m_Target.Name, damagebonus)));
             }
         }
 

@@ -109,7 +109,7 @@ namespace Server.Guilds
                 return;
 
             pm.DisplayGuildTitle = info.IsSwitched(0);
-
+			
             switch (info.ButtonID)
             {
                 //1-3 handled by base.OnResponse
@@ -157,7 +157,7 @@ namespace Server.Guilds
                 case 8:
                     if (pm.Young)
                     {
-                        pm.SendLocalizedMessage(1155562); // Young players may not join Vice vs Virtue. Renounce your young player status by saying, "I renounce my young player status" and try again.
+                         pm.SendLocalizedMessage(1155562); // Young players may not join Vice vs Virtue. Renounce your young player status by saying, "I renounce my young player status" and try again.
                     }
                     else
                     {

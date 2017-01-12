@@ -120,7 +120,7 @@ namespace Server.Items
 				m_Resource = CraftResource.RegularWood;
 		}
 	}
-	
+
 	public class Board : BaseWoodBoard
 	{
 		[Constructable]
@@ -157,7 +157,7 @@ namespace Server.Items
 	}
 	//daat99 OWLTR end - adding  base board class
 
-    public class HeartwoodBoard : BaseWoodBoard
+	public class HeartwoodBoard : BaseWoodBoard
     {
         [Constructable]
         public HeartwoodBoard()

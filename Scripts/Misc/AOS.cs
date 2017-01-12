@@ -86,7 +86,7 @@ namespace Server
                 return damage;
             }
 
-            #region Mondain's Legacy
+			#region Mondain's Legacy
             if (m != null)
             {
                 m.Items.ForEach(i =>
@@ -281,11 +281,11 @@ namespace Server
                 }
             }
 
-            #region Berserk
+			#region Berserk
             BestialSetHelper.OnDamage(m, from, ref totalDamage);
             #endregion
 
-            m.Damage(totalDamage, from, true, false);
+			m.Damage(totalDamage, from, true, false);
 
             #region Stygian Abyss
             if (m.Spell != null)
@@ -517,7 +517,7 @@ namespace Server
                 if (TransformationSpellHelper.UnderTransformation(m, typeof(Spells.Mystic.StoneFormSpell)))
                     value -= 10;
 
-                if (m is PlayerMobile && m.Race == Race.Gargoyle)
+				if (m is PlayerMobile && m.Race == Race.Gargoyle)
                 {
                     value += ((PlayerMobile)m).GetRacialBerserkBuff(false);
                 }
@@ -541,7 +541,7 @@ namespace Server
                 if (context != null && context.Spell is ReaperFormSpell)
                     value += ((ReaperFormSpell)context.Spell).SpellDamageBonus;
 
-                #region SA
+				#region SA
                 if (m is PlayerMobile && m.Race == Race.Gargoyle)
                 {
                     value += ((PlayerMobile)m).GetRacialBerserkBuff(true);
@@ -1742,7 +1742,7 @@ namespace Server
         }
         #endregion
 
-        [CommandProperty(AccessLevel.GameMaster)]
+		[CommandProperty(AccessLevel.GameMaster)]
         public int MysticWeapon
         {
             get
@@ -3056,4 +3056,5 @@ namespace Server
             return index;
         }
     }
+
 }

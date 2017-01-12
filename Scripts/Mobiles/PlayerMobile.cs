@@ -465,7 +465,7 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public bool HasValiantStatReward { get { return GetFlag(PlayerFlag.HasValiantStatReward); } set { SetFlag(PlayerFlag.HasValiantStatReward, value); } }
 
-        [CommandProperty(AccessLevel.GameMaster)]
+		[CommandProperty(AccessLevel.GameMaster)]
         public bool RefuseTrades
         {
             get { return GetFlag(PlayerFlag.RefuseTrades); }
@@ -1332,7 +1332,8 @@ namespace Server.Mobiles
 							moved = true;
 						}
 					}
-                    else if (item is BaseQuiver)
+
+					else if (item is BaseQuiver)
                     {
                         if (Race == Race.Gargoyle)
                         {
@@ -1703,7 +1704,7 @@ namespace Server.Mobiles
 						strOffs += 20;
 					}
 
-                    // Skill Masteries
+					// Skill Masteries
                     if(Core.TOL)
                         strOffs += ToughnessSpell.GetHPBonus(this);
 				}
@@ -1858,7 +1859,7 @@ namespace Server.Mobiles
 			return (newX >= startX && newY >= startY && newX < endX && newY < endY && Map == foundation.Map);
 		}
 
-        public override void OnHitsChange(int oldValue)
+		public override void OnHitsChange(int oldValue)
         {
             if (Race == Race.Gargoyle)
             {
@@ -2071,6 +2072,7 @@ namespace Server.Mobiles
 
                     if (Core.SA)
                         list.Add(new CallbackEntry(1114299, new ContextCallback(OpenItemInsuranceMenu)));
+
                     else
                     {
                         if (AutoRenewInsurance)
@@ -2084,7 +2086,7 @@ namespace Server.Mobiles
                     }
 				}
 
-                if (Core.HS)
+				if (Core.HS)
                     list.Add(new CallbackEntry(RefuseTrades ? 1154112 : 1154113, new ContextCallback(ToggleTrades))); // Allow Trades / Refuse Trades
 
 				BaseHouse house = BaseHouse.FindHouseAt(this);
@@ -2109,12 +2111,12 @@ namespace Server.Mobiles
 
                 Region r = Region.Find(this.Location, this.Map);
 
-                #region Void Pool
+				#region Void Pool
                 if (r is Server.Engines.VoidPool.VoidPoolRegion && ((Server.Engines.VoidPool.VoidPoolRegion)r).Controller != null)
                     list.Add(new Server.Engines.Points.VoidPoolInfo(this));
-                #endregion
+				#endregion
 
-                #region TOL Shadowguard
+				 #region TOL Shadowguard
                 if (Server.Engines.Shadowguard.ShadowguardController.GetInstance(this.Location, this.Map) != null)
                     list.Add(new Server.Engines.Shadowguard.ExitEntry(this));
                 #endregion
@@ -2123,8 +2125,8 @@ namespace Server.Mobiles
 				{
 					list.Add(new CallbackEntry(6210, ToggleChampionTitleDisplay));
 				}
-
-				if (DisabledPvpWarning)
+			
+                if (DisabledPvpWarning)
                     list.Add(new CallbackEntry(1113797, new ContextCallback(EnablePvpWarning)));
             }
 			else
@@ -2643,7 +2645,7 @@ namespace Server.Mobiles
 
         #endregion
 
-        private void ToggleTrades()
+		private void ToggleTrades()
         {
             RefuseTrades = !RefuseTrades;
         }
@@ -2846,7 +2848,7 @@ namespace Server.Mobiles
 				{
 					msgNum = 1062779; // That person is already involved in a trade
 				}
-                else if (to is PlayerMobile && ((PlayerMobile)to).RefuseTrades)
+				else if (to is PlayerMobile && ((PlayerMobile)to).RefuseTrades)
                 {
                     msgNum = 1154111; // ~1_NAME~ is refusing all trades.
                 }
@@ -3224,20 +3226,20 @@ namespace Server.Mobiles
 		}
 		
 		public override bool Criminal
+        {
+        	get
         	{
-            		get
-            		{
-                		if (this.Alive)
-                		{
-                    			if (base.Criminal)
-                        			BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.CriminalStatus, 1153802, 1153828));
-                    			else
-                        			BuffInfo.RemoveBuff(this, BuffIcon.CriminalStatus);
-                		}
+         		if (this.Alive)
+           		{
+          			if (base.Criminal)
+               			BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.CriminalStatus, 1153802, 1153828));
+               			else
+               			BuffInfo.RemoveBuff(this, BuffIcon.CriminalStatus);
+           		}
 
-                		return base.Criminal;
-            		}
-        	}
+           		return base.Criminal;
+            }
+        }
 
 		public override bool OnBeforeDeath()
 		{
@@ -3247,9 +3249,9 @@ namespace Server.Mobiles
 			{
 				state.CancelAllTrades();
 			}
-			
-			if (Criminal)
-                		BuffInfo.RemoveBuff(this, BuffIcon.CriminalStatus);
+
+			if (Criminal) 
+				BuffInfo.RemoveBuff(this, BuffIcon.CriminalStatus);
 
             DropHolding();
 
@@ -5564,6 +5566,12 @@ namespace Server.Mobiles
 		#region Enemy of One
 		private Type m_EnemyOfOneType;
 
+		//TODO: Figure an efficient way to naming the creature, pluralized!!!
+        /*if (m_EnemyOfOneType != null)
+         {
+			BuffInfo.AddBuff(this.Caster, new BuffInfo(BuffIcon.EnemyOfOne, 1075653, 1075654, TimeSpan.FromMinutes(delay), this.Caster, String.Format("{0}\t{1}\t{2}\t{3}", "50", )));
+         }*/
+
 		public Type EnemyOfOneType
 		{
 			get { return m_EnemyOfOneType; }
@@ -5578,13 +5586,6 @@ namespace Server.Mobiles
 				}
 
 				m_EnemyOfOneType = value;
-
-                //TODO: Figure an efficient way to naming the creature, pluralized!!!
-                /*if (m_EnemyOfOneType != null)
-                {
-                    BuffInfo.AddBuff(this.Caster, new BuffInfo(BuffIcon.EnemyOfOne, 1075653, 1075654, TimeSpan.FromMinutes(delay), this.Caster, 
-                        String.Format("{0}\t{1}\t{2}\t{3}", "50", )));
-                }*/
 
 				DeltaEnemies(oldType, newType);
 			}

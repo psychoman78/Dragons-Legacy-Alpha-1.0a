@@ -21,7 +21,7 @@ namespace Server.Items
         Diamond
     }
 
-    public abstract class BaseJewel : Item, ICraftable, ISetItem, IWearableDurability, IVvVItem, IOwnerRestricted, ITalismanProtection
+	public abstract class BaseJewel : Item, ICraftable, ISetItem, IWearableDurability, IVvVItem, IOwnerRestricted, ITalismanProtection
     {
         private int m_MaxHitPoints;
         private int m_HitPoints;
@@ -48,14 +48,14 @@ namespace Server.Items
         private ReforgedSuffix m_ReforgedSuffix;
         #endregion
 
-        private TalismanAttribute m_TalismanProtection;
+		private TalismanAttribute m_TalismanProtection;
 
         private bool _VvVItem;
         private Mobile _Owner;
         private string _OwnerName;
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public TalismanAttribute Protection
+		public TalismanAttribute Protection
         {
             get { return m_TalismanProtection; }
             set { m_TalismanProtection = value; InvalidateProperties(); }
@@ -437,7 +437,7 @@ namespace Server.Items
             jewel.m_AosResistances = new AosElementAttributes(newItem, this.m_AosResistances);
             jewel.m_AosSkillBonuses = new AosSkillBonuses(newItem, this.m_AosSkillBonuses);
             jewel.m_NegativeAttributes = new NegativeAttributes(newItem, this.m_NegativeAttributes);
-            jewel.m_TalismanProtection = new TalismanAttribute(m_TalismanProtection);
+			jewel.m_TalismanProtection = new TalismanAttribute(m_TalismanProtection);
 
             #region Mondain's Legacy
             jewel.m_SetAttributes = new AosAttributes(newItem, this.m_SetAttributes);
@@ -514,7 +514,7 @@ namespace Server.Items
             this.m_SetSkillBonuses = new AosSkillBonuses(this);
             this.m_SAAbsorptionAttributes = new SAAbsorptionAttributes(this);
             m_NegativeAttributes = new NegativeAttributes(this);
-            m_TalismanProtection = new TalismanAttribute();
+			m_TalismanProtection = new TalismanAttribute();
         }
 
         #region Stygian Abyss
@@ -711,7 +711,7 @@ namespace Server.Items
             Server.Engines.XmlSpawner2.XmlAttach.CheckOnRemoved(this, parent);
         }
 
-        public virtual void SetProtection(Type type, TextDefinition name, int amount)
+		public virtual void SetProtection(Type type, TextDefinition name, int amount)
         {
             m_TalismanProtection = new TalismanAttribute(type, name, amount);
         }
@@ -796,7 +796,7 @@ namespace Server.Items
             {
                 list.Add(1080240, this.Pieces.ToString()); // Part of a Jewelry Set (~1_val~ pieces)
 
-                if (SetID == SetItem.Bestial)
+				if (SetID == SetItem.Bestial)
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
 
                 if (this.BardMasteryBonus)
@@ -825,7 +825,7 @@ namespace Server.Items
             if ((prop = this.ArtifactRarity) > 0)
                 list.Add(1061078, prop.ToString()); // artifact rarity ~1_val~
 
-            if (m_TalismanProtection != null && !m_TalismanProtection.IsEmpty && m_TalismanProtection.Amount > 0)
+			if (m_TalismanProtection != null && !m_TalismanProtection.IsEmpty && m_TalismanProtection.Amount > 0)
                 list.Add(1072387, "{0}\t{1}", m_TalismanProtection.Name != null ? m_TalismanProtection.Name.ToString() : "Unknown", m_TalismanProtection.Amount); // ~1_NAME~ Protection: +~2_val~%
 
             if ((prop = this.m_AosAttributes.WeaponDamage) != 0)
@@ -1153,7 +1153,7 @@ namespace Server.Items
             if (m_NegativeAttributes == null)
                 m_NegativeAttributes = new NegativeAttributes(this);
 
-            if (m_TalismanProtection == null)
+			if (m_TalismanProtection == null)
                 m_TalismanProtection = new TalismanAttribute();
 
             #region Mondain's Legacy Sets

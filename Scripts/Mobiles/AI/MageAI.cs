@@ -50,7 +50,7 @@ namespace Server.Mobiles
         protected const double HealChance = 0.10;// 10% chance to heal at gm magery
         protected const double DispelChance = 0.75;// 75% chance to dispel at gm magery
 
-        protected double TeleportChance { get { return m_Mobile.TeleportChance; } }
+		protected double TeleportChance { get { return m_Mobile.TeleportChance; } }
 
         private DateTime m_NextCastTime;
         private DateTime m_NextHealTime;

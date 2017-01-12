@@ -250,9 +250,9 @@ namespace Server.Items
 				defenseValue -= 25;
 			}
 
-            defenseValue += Block.GetBonus(defender);
+			defenseValue += Block.GetBonus(defender);
 
-            int refBonus = 0;
+			int refBonus = 0;
 
 			if (SkillHandlers.Discordance.GetEffect(attacker, ref refBonus))
 			{

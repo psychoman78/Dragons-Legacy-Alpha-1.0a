@@ -379,7 +379,7 @@ namespace Server.Items
 
             val += GetPoisonLevel(bc) * 20;
 
-            if (val > 700)
+			if (val > 700)
                 val = 700 + (int)((val - 700) * (3.0 / 11));
 
             val /= 10;
@@ -434,7 +434,7 @@ namespace Server.Items
             m_Instruments[from] = item;
         }
 
-        public BaseInstrument()
+		public BaseInstrument()
         {
             RandomInstrument();
 

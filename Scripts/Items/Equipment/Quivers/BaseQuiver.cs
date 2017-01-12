@@ -423,7 +423,7 @@ namespace Server.Items
 
         public override bool CanEquip(Mobile m)
         {
-            #region Stygian Abyss
+			#region Stygian Abyss
             if (m.Race == Race.Gargoyle)
             {
                 m.SendLocalizedMessage(1111708); // Gargoyles can't wear this.
@@ -617,7 +617,7 @@ namespace Server.Items
             {
                 list.Add(1073491, this.Pieces.ToString()); // Part of a Weapon/Armor Set (~1_val~ pieces)
 
-                if (SetID == SetItem.Bestial)
+				if (SetID == SetItem.Bestial)
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
 
                 if (this.BardMasteryBonus)

@@ -65,7 +65,7 @@ namespace Server.Mobiles
 		public virtual bool HasHonestyDiscount { get { return true; } }
 
 		public virtual NpcGuild NpcGuild { get { return NpcGuild.None; } }
-		
+
 		public virtual bool ChangeRace { get { return true; } }
 
 		public override bool IsInvulnerable { get { return true; } }
@@ -364,7 +364,7 @@ namespace Server.Mobiles
 		{
 			if (!ChangeRace)
                 return;
-			
+
 			if (CheckGargoyle())
 			{
 				return;

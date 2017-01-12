@@ -615,7 +615,7 @@ namespace Server.Mobiles
         private WayPoint m_CurrentWayPoint;
         private IPoint2D m_TargetLocation;
 
-        private int _CurrentNavPoint;
+		private int _CurrentNavPoint;
         private Dictionary<Map, List<Point2D>> _NavPoints;
 
         private Mobile m_SummonMaster;
@@ -647,7 +647,7 @@ namespace Server.Mobiles
 
         private bool m_IsChampionSpawn;
 
-        private Mobile m_InitialFocus;
+		private Mobile m_InitialFocus;
         #endregion
 
         public virtual InhumanSpeech SpeechType { get { return null; } }
@@ -817,7 +817,7 @@ namespace Server.Mobiles
         }
         #endregion
 
-        public virtual bool AutoRearms { get { return false; } }
+		public virtual bool AutoRearms { get { return false; } }
 
         public virtual double WeaponAbilityChance { get { return 0.4; } }
 
@@ -948,7 +948,7 @@ namespace Server.Mobiles
             }
         }
 
-        [CommandProperty(AccessLevel.GameMaster)]
+		[CommandProperty(AccessLevel.GameMaster)]
         public Mobile InitialFocus
         {
             get { return m_InitialFocus; }
@@ -1021,7 +1021,7 @@ namespace Server.Mobiles
         // at difficulty - focus we have 0%, at difficulty + focus we have 100%
         public virtual bool DisplayWeight { get { return Backpack is StrongBackpack; } }
 
-        public virtual double TeleportChance { get { return 0.05; } }
+		public virtual double TeleportChance { get { return 0.05; } }
         public virtual bool AttacksFocus { get { return false; } }
         public virtual bool ShowSpellMantra { get { return false; } }
         public virtual bool FreezeOnCast { get { return ShowSpellMantra; } }
@@ -1755,7 +1755,6 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public WayPoint CurrentWayPoint { get { return m_CurrentWayPoint; } set { m_CurrentWayPoint = value; } }
 
-        [CommandProperty(AccessLevel.GameMaster)]
         public int CurrentNavPoint
         {
             get
@@ -3096,7 +3095,7 @@ namespace Server.Mobiles
 			// white wyrms eat gold..
 			typeof(Gold)
         };
-		//Daat 99 Edit
+
         private static readonly Type[] m_Metal = new[]
         {
 			// Some Stygian Abyss Monsters eat Metal..
@@ -3104,7 +3103,7 @@ namespace Server.Mobiles
             typeof(GoldIngot), typeof(AgapiteIngot), typeof(VeriteIngot), typeof(ValoriteIngot), typeof(BlazeIngot),
 			typeof(IceIngot), typeof(ToxicIngot), typeof(ElectrumIngot), typeof(PlatinumIngot)
         };
-		//End
+
         public virtual bool CheckFoodPreference(Item f)
         {
             if (CheckFoodPreference(f, FoodType.Eggs, m_Eggs))
@@ -5086,7 +5085,7 @@ namespace Server.Mobiles
 
         public virtual void GenerateLoot(bool spawning)
         {
-            if (m_NoLootOnDeath)
+			if (m_NoLootOnDeath)
                 return;
 
             m_Spawning = spawning;
@@ -5653,7 +5652,6 @@ namespace Server.Mobiles
 			#endregion
 
             int treasureLevel = TreasureMapLevel;
-			GetLootingRights();
 
 			#region FS:ATS Edits
 			if ( this is BaseBioCreature || this is BioCreature || this is BioMount )
@@ -6207,7 +6205,6 @@ namespace Server.Mobiles
                     var fame = new List<int>();
                     var karma = new List<int>();
 
-                    bool givenQuestKill = false;
                     bool givenFactionKill = false;
                     bool givenToTKill = false;
                     bool givenVASKill = false;
@@ -6306,17 +6303,11 @@ namespace Server.Mobiles
                         {
                             QuestHelper.CheckCreature(pm, this); // This line moved up...
 
-                            if (givenQuestKill)
-                            {
-                                continue;
-                            }
-
                             QuestSystem qs = pm.Quest;
 
                             if (qs != null)
                             {
                                 qs.OnKill(this, c);
-                                givenQuestKill = true;
                             }
                         }
                     }
@@ -6545,7 +6536,7 @@ namespace Server.Mobiles
 
             m_Summoning = false;
 
-            // Skill Masteries
+			// Skill Masteries
             creature.HitsMaxSeed += MasteryInfo.EnchantedSummoningBonus(creature);
             creature.Hits = creature.HitsMaxSeed;
 
@@ -7059,7 +7050,7 @@ namespace Server.Mobiles
         public virtual bool CanPeace { get { return false; } }
         public virtual bool CanProvoke { get { return false; } }
 
-        public virtual bool PlayInstrumentSound { get { return true; } }
+		public virtual bool PlayInstrumentSound { get { return true; } }
 
         public virtual TimeSpan DiscordInterval { get { return TimeSpan.FromSeconds(Utility.RandomMinMax(60, 120)); } }
         public virtual TimeSpan PeaceInterval { get { return TimeSpan.FromSeconds(Utility.RandomMinMax(60, 120)); } }

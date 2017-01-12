@@ -70,8 +70,8 @@ namespace Server.Spells.Seventh
                         continue;
 
                     double dispelChance = (50.0 + ((100 * (this.Caster.Skills.Magery.Value - bc.GetDispelDifficulty())) / (bc.DispelFocus * 2))) / 100;
-                    
-                    // Skill Masteries
+
+					// Skill Masteries
                     dispelChance -= ((double)SkillMasteries.MasteryInfo.EnchantedSummoningBonus(bc) / 100);
 
                     if (dispelChance > Utility.RandomDouble())

@@ -1784,8 +1784,6 @@ namespace Server.Items
 
 			if (!blocked)
 			{
-				double positionChance = Utility.RandomDouble();
-
                 Layer randomLayer = _DamageLayers[Utility.Random(_DamageLayers.Length)];
                 Item armorItem = defender.FindItemOnLayer(randomLayer);
 
@@ -1803,6 +1801,7 @@ namespace Server.Items
 
         private Layer[] _DamageLayers =
         {
+			Layer.OneHanded,
             Layer.Talisman,
             Layer.InnerLegs,
             Layer.InnerTorso,
@@ -2289,7 +2288,7 @@ namespace Server.Items
 				}
 			}
 
-			percentageBonus -= Block.GetMeleeReduction(defender);
+            percentageBonus -= Block.GetMeleeReduction(defender);
 
 			#region Stygian Abyss
 			percentageBonus += BattleLust.GetBonus(attacker, defender);
@@ -4870,7 +4869,7 @@ namespace Server.Items
 			{
 				list.Add(1073491, Pieces.ToString()); // Part of a Weapon/Armor Set (~1_val~ pieces)
 
-                if (SetID == SetItem.Bestial)
+				if (SetID == SetItem.Bestial)
                     list.Add(1151541, BestialSetHelper.GetTotalBerserk(this).ToString()); // Berserk ~1_VAL~
 
                 if (this.BardMasteryBonus)
@@ -4884,7 +4883,7 @@ namespace Server.Items
 			}
 			#endregion
 
-            if (m_AosAttributes.Brittle != 0)
+            if (m_NegativeAttributes.Brittle == 0 && m_AosAttributes.Brittle != 0)
             {
                 list.Add(1116209); // Brittle
             }

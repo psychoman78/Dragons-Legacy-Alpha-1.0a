@@ -1547,7 +1547,7 @@ namespace Server.Items
         }
     }
 
-    public class FloweredDress : BaseOuterTorso
+	public class FloweredDress : BaseOuterTorso
     {
         public override int LabelNumber { get { return 1109622; } } // Flowered Dress
 

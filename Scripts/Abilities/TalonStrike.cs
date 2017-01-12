@@ -59,7 +59,7 @@ namespace Server.Items
 
             Timer t = new InternalTimer(defender, (int)(10.0 * (attacker.Skills[SkillName.Ninjitsu].Value - 50.0) / 70.0 + 5), attacker);	//5 - 15 damage
 
-            BuffInfo.AddBuff(defender, new BuffInfo(BuffIcon.TalonStrike, 1028856, 1151309, TimeSpan.FromSeconds(5.0), defender, "40"));
+			BuffInfo.AddBuff(defender, new BuffInfo(BuffIcon.TalonStrike, 1028856, 1151309, TimeSpan.FromSeconds(5.0), defender, "40"));
 
             t.Start();
 

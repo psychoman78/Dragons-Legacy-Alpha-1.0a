@@ -1,7 +1,6 @@
 using System;
 using Server;
 using Server.Engines.Craft;
-
 namespace Server.Items
 {
     public class RunicSewingKit : BaseRunicTool

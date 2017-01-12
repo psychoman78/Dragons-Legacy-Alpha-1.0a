@@ -99,4 +99,5 @@ namespace Server.Spells.Sixth
             }
         }
     }
+
 }
